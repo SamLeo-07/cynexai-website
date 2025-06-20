@@ -2,12 +2,12 @@ import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { 
-  ArrowLeft, 
-  Clock, 
-  Users, 
-  Star, 
-  CheckCircle, 
+import {
+  ArrowLeft,
+  Clock,
+  Briefcase, // Changed from Users to Briefcase for placement icon
+  Star,
+  CheckCircle,
   Play,
   Download,
   Award,
@@ -30,11 +30,9 @@ const CourseDetail = () => {
       description: 'Comprehensive program covering statistical analysis, machine learning algorithms, and AI implementation for real-world business applications.',
       image: 'https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=1200',
       duration: '6 months',
-      students: '150+',
+      placement: '100%',
       rating: 4.9,
       level: 'Intermediate',
-      price: '₹89,999',
-      originalPrice: '₹1,20,000',
       modules: [
         'Python Programming Fundamentals',
         'Statistics and Probability',
@@ -75,11 +73,9 @@ const CourseDetail = () => {
       description: 'Advanced machine learning course covering supervised, unsupervised learning, neural networks, and cutting-edge ML techniques.',
       image: 'https://images.pexels.com/photos/8386434/pexels-photo-8386434.jpeg?auto=compress&cs=tinysrgb&w=1200',
       duration: '4 months',
-      students: '200+',
+      placement: '100%',
       rating: 4.8,
       level: 'Advanced',
-      price: '₹79,999',
-      originalPrice: '₹1,00,000',
       modules: [
         'ML Fundamentals and Mathematics',
         'Supervised Learning Algorithms',
@@ -114,7 +110,312 @@ const CourseDetail = () => {
         'NLP Engineer'
       ]
     },
-    // Add more courses as needed...
+    'llm-engineering': {
+      title: 'LLM Engineering',
+      subtitle: 'Building the Future with Large Language Models',
+      description: 'Explore the cutting edge of AI with our LLM Engineering course. Learn to design, develop, and deploy powerful applications leveraging large language models like GPT and BERT.',
+      image: 'https://images.pexels.com/photos/1181677/pexels-photo-1181677.jpeg?auto=compress&cs=tinysrgb&w=1200', // Placeholder image
+      duration: '5 months',
+      placement: '100%',
+      rating: 4.7,
+      level: 'Advanced',
+      modules: [
+        'Introduction to Large Language Models',
+        'Transformer Architecture Deep Dive',
+        'Fine-tuning and Prompt Engineering',
+        'Retrieval-Augmented Generation (RAG)',
+        'Deployment of LLMs',
+        'Ethical Considerations in LLMs',
+        'LLM Security and Privacy',
+        'Building LLM-powered Applications',
+        'Evaluation Metrics for LLMs',
+        'Capstone Project: LLM Application Development'
+      ],
+      skills: ['Python', 'PyTorch', 'TensorFlow', 'Hugging Face Transformers', 'LangChain', 'Faiss', 'Docker', 'AWS'],
+      outcomes: [
+        'Design and implement applications using state-of-the-art LLMs',
+        'Master prompt engineering for optimal LLM performance',
+        'Develop and deploy custom fine-tuned LLMs',
+        'Integrate LLMs with various data sources',
+        'Understand and mitigate ethical biases in AI models',
+        'Build scalable and robust LLM solutions'
+      ],
+      prerequisites: [
+        'Solid Python programming skills',
+        'Basic understanding of machine learning concepts',
+        'Familiarity with neural networks is a plus'
+      ],
+      career: [
+        'LLM Engineer',
+        'AI/ML Engineer',
+        'Prompt Engineer',
+        'Applied AI Scientist',
+        'Natural Language Processing Engineer'
+      ]
+    },
+    'generative-ai': {
+      title: 'Generative AI',
+      subtitle: 'Unleash Creativity with AI-Powered Content Creation',
+      description: 'Dive into the world of Generative AI, covering GANs, VAEs, and Diffusion Models. Learn to create realistic images, text, and other media using advanced AI techniques.',
+      image: 'https://images.pexels.com/photos/8410226/pexels-photo-8410226.jpeg?auto=compress&cs=tinysrgb&w=1200', // Placeholder image
+      duration: '4 months',
+      placement: '100%',
+      rating: 4.8,
+      level: 'Intermediate',
+      modules: [
+        'Introduction to Generative Models',
+        'Generative Adversarial Networks (GANs)',
+        'Variational Autoencoders (VAEs)',
+        'Diffusion Models for Image Generation',
+        'Text Generation with Transformers',
+        'Music and Art Generation',
+        'Ethical Implications of Generative AI',
+        'Evaluating Generative Models',
+        'Deployment Strategies for Generative AI',
+        'Final Project: Generative AI Application'
+      ],
+      skills: ['Python', 'TensorFlow', 'PyTorch', 'Keras', 'OpenAI API', 'Midjourney', 'Stable Diffusion'],
+      outcomes: [
+        'Understand the core principles of various generative models',
+        'Generate high-quality images, text, and other creative content',
+        'Implement and fine-tune generative models',
+        'Apply generative AI to real-world creative and design problems',
+        'Evaluate the quality and diversity of generated outputs',
+        'Explore the ethical landscape of AI creativity'
+      ],
+      prerequisites: [
+        'Intermediate Python programming',
+        'Basic understanding of neural networks and deep learning',
+        'Familiarity with linear algebra'
+      ],
+      career: [
+        'Generative AI Engineer',
+        'Creative AI Developer',
+        'AI Artist',
+        'Machine Learning Researcher (Generative Focus)',
+        'Content Automation Specialist'
+      ]
+    },
+    'java-python': {
+      title: 'Full Stack Development with Java & Python',
+      subtitle: 'Build Robust Web Applications from Frontend to Backend',
+      description: 'A comprehensive program to master both Java and Python for full-stack web development, covering popular frameworks, databases, and deployment strategies.',
+      image: 'https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=1200', // Placeholder image
+      duration: '7 months',
+      placement: '100%',
+      rating: 4.9,
+      level: 'Intermediate',
+      modules: [
+        'Core Java Programming',
+        'Spring Boot Framework',
+        'RESTful APIs with Java',
+        'Python Fundamentals',
+        'Django/Flask Web Frameworks',
+        'Database Management (SQL & NoSQL)',
+        'Frontend Development (React/Angular)',
+        'Cloud Deployment (AWS/Azure)',
+        'Microservices Architecture',
+        'Version Control with Git',
+        'Project: E-commerce Application'
+      ],
+      skills: ['Java', 'Python', 'Spring Boot', 'Django', 'Flask', 'React', 'Angular', 'SQL', 'MongoDB', 'REST APIs', 'Git', 'Docker'],
+      outcomes: [
+        'Develop robust and scalable backend systems with Java and Python',
+        'Create dynamic and interactive frontends',
+        'Design and manage relational and non-relational databases',
+        'Deploy applications to cloud platforms',
+        'Understand and implement microservices architecture',
+        'Collaborate effectively using version control systems'
+      ],
+      prerequisites: [
+        'Basic programming logic',
+        'Understanding of web concepts (HTML, CSS)',
+        'No prior Java or Python experience required'
+      ],
+      career: [
+        'Full Stack Developer (Java/Python)',
+        'Backend Developer',
+        'Frontend Developer',
+        'Software Engineer',
+        'DevOps Engineer (related)'
+      ]
+    },
+    'devops-aws': {
+      title: 'DevOps & AWS Cloud Engineering',
+      subtitle: 'Automate, Deploy, and Scale Applications on the Cloud',
+      description: 'Master the essential tools and practices for DevOps and cloud computing with a focus on Amazon Web Services (AWS). Learn CI/CD, infrastructure as code, and cloud security.',
+      image: 'https://images.pexels.com/photos/1181298/pexels-photo-1181298.jpeg?auto=compress&cs=tinysrgb&w=1200', // Placeholder image
+      duration: '5 months',
+      placement: '100%',
+      rating: 4.7,
+      level: 'Intermediate',
+      modules: [
+        'Introduction to DevOps Principles',
+        'Linux Fundamentals',
+        'Version Control with Git',
+        'AWS Cloud Fundamentals',
+        'Infrastructure as Code (Terraform/CloudFormation)',
+        'CI/CD with Jenkins/GitLab CI',
+        'Docker and Containerization',
+        'Kubernetes for Orchestration',
+        'Monitoring and Logging (Prometheus, Grafana)',
+        'Cloud Security Best Practices',
+        'Project: Automated CI/CD Pipeline on AWS'
+      ],
+      skills: ['AWS', 'Docker', 'Kubernetes', 'Terraform', 'Jenkins', 'GitLab CI', 'Ansible', 'Python', 'Bash', 'Linux', 'Monitoring'],
+      outcomes: [
+        'Design and implement robust CI/CD pipelines',
+        'Automate infrastructure provisioning and management',
+        'Deploy and scale applications efficiently on AWS',
+        'Understand containerization and orchestration',
+        'Implement monitoring and logging solutions',
+        'Ensure cloud security best practices'
+      ],
+      prerequisites: [
+        'Basic understanding of operating systems',
+        'Familiarity with command-line interface',
+        'No prior cloud experience necessary'
+      ],
+      career: [
+        'DevOps Engineer',
+        'Cloud Engineer (AWS)',
+        'Site Reliability Engineer (SRE)',
+        'Automation Engineer',
+        'Cloud Architect (Associate)'
+      ]
+    },
+    'web-development': {
+      title: 'Full Stack Web Development',
+      subtitle: 'Become a Modern Web Developer from Scratch',
+      description: 'Learn to build dynamic and responsive web applications using HTML, CSS, JavaScript, React, Node.js, and databases. Covers both frontend and backend technologies.',
+      image: 'https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=1200', // Placeholder image
+      duration: '6 months',
+      placement: '100%',
+      rating: 4.8,
+      level: 'Beginner',
+      modules: [
+        'HTML5 & CSS3 Essentials',
+        'Modern JavaScript (ES6+)',
+        'Responsive Web Design',
+        'Frontend Frameworks (React.js)',
+        'Node.js & Express.js',
+        'Database Integration (MongoDB/SQL)',
+        'Authentication and Authorization',
+        'API Development',
+        'Deployment to Cloud Platforms',
+        'Version Control with Git',
+        'Portfolio Project'
+      ],
+      skills: ['HTML', 'CSS', 'JavaScript', 'React.js', 'Node.js', 'Express.js', 'MongoDB', 'SQL', 'Git', 'REST APIs', 'Responsive Design'],
+      outcomes: [
+        'Build interactive and user-friendly web interfaces',
+        'Develop powerful backend APIs',
+        'Manage and interact with databases effectively',
+        'Deploy web applications to live servers',
+        'Create a professional development portfolio',
+        'Understand and apply modern web development best practices'
+      ],
+      prerequisites: [
+        'Basic computer literacy',
+        'No prior coding experience required',
+        'A passion for building web applications'
+      ],
+      career: [
+        'Full Stack Web Developer',
+        'Frontend Developer',
+        'Backend Developer',
+        'JavaScript Developer',
+        'UI/UX Developer'
+      ]
+    },
+    'testing': {
+      title: 'Software Testing & QA Automation',
+      subtitle: 'Ensure Quality with Advanced Testing Techniques',
+      description: 'Master the principles of software testing, quality assurance, and automation using industry-leading tools and methodologies. Prepare for a career in QA.',
+      image: 'https://images.pexels.com/photos/3184325/pexels-photo-3184325.jpeg?auto=compress&cs=tinysrgb&w=1200', // Placeholder image
+      duration: '4 months',
+      placement: '100%',
+      rating: 4.6,
+      level: 'Beginner',
+      modules: [
+        'Fundamentals of Software Testing',
+        'Manual Testing Techniques',
+        'Test Case Design and Execution',
+        'Introduction to Automation Testing',
+        'Selenium WebDriver with Java/Python',
+        'API Testing (Postman/Rest Assured)',
+        'Performance Testing (JMeter)',
+        'Mobile App Testing',
+        'Database Testing',
+        'Agile Testing Methodologies',
+        'Project: Automated Test Suite Development'
+      ],
+      skills: ['Manual Testing', 'Automation Testing', 'Selenium', 'Java', 'Python', 'JMeter', 'Postman', 'SQL', 'Jira', 'Agile'],
+      outcomes: [
+        'Conduct various types of software testing efficiently',
+        'Design and execute comprehensive test plans',
+        'Automate web and API tests using popular frameworks',
+        'Identify and report defects effectively',
+        'Work collaboratively in Agile development environments',
+        'Ensure high-quality software delivery'
+      ],
+      prerequisites: [
+        'Basic computer knowledge',
+        'Attention to detail',
+        'No prior testing experience necessary'
+      ],
+      career: [
+        'QA Engineer',
+        'Automation Test Engineer',
+        'Software Tester',
+        'Test Analyst',
+        'Performance Test Engineer'
+      ]
+    },
+    'sap': {
+      title: 'SAP Consulting & Implementation',
+      subtitle: 'Become an Expert in Enterprise Resource Planning',
+      description: 'Learn to implement, configure, and manage SAP modules, gaining essential skills for a career in SAP consulting. Covers key areas like ECC, S/4HANA, and specific modules.',
+      image: 'https://images.pexels.com/photos/669617/pexels-photo-669617.jpeg?auto=compress&cs=tinysrgb&w=1200', // Placeholder image
+      duration: '6 months',
+      placement: '100%',
+      rating: 4.5,
+      level: 'Intermediate',
+      modules: [
+        'Introduction to SAP ERP',
+        'SAP NetWeaver Fundamentals',
+        'SAP ECC Overview',
+        'Introduction to SAP S/4HANA',
+        'SAP Financial Accounting (FI)',
+        'SAP Controlling (CO)',
+        'SAP Sales and Distribution (SD)',
+        'SAP Materials Management (MM)',
+        'SAP Human Capital Management (HCM)',
+        'SAP ABAP Programming (Basics)',
+        'SAP Project Implementation Methodologies'
+      ],
+      skills: ['SAP ERP', 'SAP S/4HANA', 'FI/CO', 'SD', 'MM', 'HCM', 'ABAP', 'SAP Activate', 'Business Process Management', 'Consulting'],
+      outcomes: [
+        'Understand the core architecture and modules of SAP',
+        'Configure and customize SAP systems to business needs',
+        'Perform data migration and integration in SAP',
+        'Troubleshoot common SAP issues',
+        'Work as an effective SAP consultant or end-user',
+        'Prepare for SAP certification exams'
+      ],
+      prerequisites: [
+        'Basic understanding of business processes',
+        'Familiarity with enterprise software concepts',
+        'No prior SAP experience is strictly required'
+      ],
+      career: [
+        'SAP Consultant (Functional/Technical)',
+        'SAP Analyst',
+        'SAP FICO Consultant',
+        'SAP MM Consultant',
+        'SAP ABAP Developer'
+      ]
+    },
   };
 
   const course = courseData[courseId as keyof typeof courseData];
@@ -227,8 +528,8 @@ const CourseDetail = () => {
                     {course.duration}
                   </div>
                   <div className="flex items-center text-gray-300">
-                    <Users className="w-5 h-5 mr-2 text-purple-400" />
-                    {course.students} enrolled
+                    <Briefcase className="w-5 h-5 mr-2 text-purple-400" /> {/* Changed icon */}
+                    Job/Internship Placement: {course.placement} {/* Updated text */}
                   </div>
                   <div className="flex items-center text-gray-300">
                     <Star className="w-5 h-5 mr-2 text-yellow-400" />
@@ -250,19 +551,17 @@ const CourseDetail = () => {
                 </motion.div>
               </div>
 
+              {/* Course Info Card (formerly Pricing) */}
               <motion.div
                 variants={itemVariants}
                 className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20"
               >
                 <div className="text-center mb-6">
                   <div className="text-3xl font-bold text-white mb-2">
-                    {course.price}
+                    Start Your Journey Today!
                   </div>
-                  <div className="text-gray-400 line-through text-lg">
-                    {course.originalPrice}
-                  </div>
-                  <div className="text-green-400 font-medium">
-                    Save {Math.round((1 - parseInt(course.price.replace(/[₹,]/g, '')) / parseInt(course.originalPrice.replace(/[₹,]/g, ''))) * 100)}%
+                  <div className="text-gray-400 text-lg">
+                    Invest in your future with our industry-leading program.
                   </div>
                 </div>
 
@@ -276,8 +575,8 @@ const CourseDetail = () => {
                     <span className="text-white font-medium">{course.level}</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-300">Students</span>
-                    <span className="text-white font-medium">{course.students}</span>
+                    <span className="text-gray-300">Job/Internship Placement</span> {/* Changed text */}
+                    <span className="text-white font-medium">{course.placement}</span> {/* Changed text */}
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-gray-300">Certificate</span>

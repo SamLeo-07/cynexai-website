@@ -34,7 +34,7 @@ function App() {
   return (
     <Router>
       <ScrollToTop />
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+      <div className="min-h-screen bg-gradient-to-br from-slate-800 via-purple-700 to-slate-900">
         <Header />
         <Routes>
           <Route path="/" element={<HomePage />} />

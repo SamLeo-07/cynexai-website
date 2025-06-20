@@ -29,9 +29,9 @@ export default {
           900: '#581c87',
         },
         gradient: {
-          from: '#a855f7',
-          via: '#7c3aed',
-          to: '#0ea5e9',
+          from: '#d8b4fe',
+          via: '#c084fc',
+          to: '#7dd3fc',
         }
       },
       fontFamily: {

@@ -1,7 +1,22 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { ArrowRight, Sparkles, Code, Brain, Rocket } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import {
+  ArrowRight,
+  Sparkles,
+  Code,
+  Brain,
+  Rocket,
+  // Removed Users, Target, Handshake imports if you're NOT using Lucide for stats
+} from 'lucide-react';
+
+// Import your PNG image assets
+// !! IMPORTANT: Make sure these paths correctly point to your PNG files !!
+import studentsIcon from '../assets/students.png';
+import jobPlacementIcon from '../assets/job-placement.png';
+import partnersIcon from '../assets/partners.png';
+
 
 const Hero = () => {
   const [ref, inView] = useInView({
@@ -40,7 +55,7 @@ const Hero = () => {
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-indigo-500/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '4s' }}></div>
       </div>
 
-      {/* Floating Icons */}
+      {/* Floating Icons (these still use Lucide as requested previously and are generally better as SVGs/Components) */}
       <div className="absolute inset-0 pointer-events-none">
         <Code className="absolute top-1/4 left-1/4 text-purple-400/30 w-8 h-8 animate-float" style={{ animationDelay: '1s' }} />
         <Brain className="absolute top-1/3 right-1/4 text-cyan-400/30 w-10 h-10 animate-float" style={{ animationDelay: '3s' }} />
@@ -80,7 +95,7 @@ const Hero = () => {
             variants={itemVariants}
             className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed"
           >
-            Join CynexAI's cutting-edge programs and unlock your potential in AI, Machine Learning, 
+            Join CynexAI's cutting-edge programs and unlock your potential in AI, Machine Learning,
             and emerging technologies. Learn from industry experts and build the skills that matter.
           </motion.p>
 
@@ -88,15 +103,19 @@ const Hero = () => {
             variants={itemVariants}
             className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12"
           >
-            <motion.button
+            <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="group bg-gradient-to-r from-purple-600 to-cyan-600 text-white px-8 py-4 rounded-full font-semibold text-lg shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 flex items-center"
             >
-              Explore Courses
-              <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </motion.button>
-            
+              <Link
+                to="/#courses"
+                className="group bg-gradient-to-r from-purple-600 to-cyan-600 text-white px-8 py-4 rounded-full font-semibold text-lg shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 flex items-center"
+              >
+                Explore Courses
+                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </motion.div>
+
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -111,16 +130,26 @@ const Hero = () => {
             className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto"
           >
             {[
-              { number: "500+", label: "Students Trained", icon: "👥" },
-              { number: "95%", label: "Job Placement Rate", icon: "🎯" },
-              { number: "50+", label: "Industry Partners", icon: "🤝" },
+              // Stat data updated to use imported PNG paths
+              { number: "500+", label: "Students Trained", icon: studentsIcon, alt: "Students icon" },
+              { number: "95%", label: "Job Placement Rate", icon: jobPlacementIcon, alt: "Target icon" },
+              { number: "50+", label: "Industry Partners", icon: partnersIcon, alt: "Handshake icon" },
             ].map((stat, index) => (
               <motion.div
                 key={index}
                 whileHover={{ y: -5 }}
-                className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:border-purple-400/30 transition-all duration-300"
+                className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:border-purple-400/30 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/10"
               >
-                <div className="text-3xl mb-2">{stat.icon}</div>
+                {/* Render the image icon using <img> tag */}
+                <div className="text-3xl mb-2 flex justify-center items-center">
+                  {/*
+                    The 'filter brightness-150' below attempts to lighten the PNG if it's too dark.
+                    However, PNGs are raster graphics, so their color cannot be changed directly with CSS
+                    like SVGs can (e.g., using 'text-purple-400').
+                    You'll need to download/create PNGs in your desired color.
+                  */}
+                  <img src={stat.icon} alt={stat.alt} className="w-8 h-8 filter brightness-150" />
+                </div>
                 <div className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent mb-1">
                   {stat.number}
                 </div>

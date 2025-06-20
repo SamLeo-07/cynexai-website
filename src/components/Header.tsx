@@ -9,8 +9,7 @@ const navItems = [
   { name: 'Courses', href: '#courses' },
   { name: 'Skills',  href: '#skills' },
   { name: 'Reviews', href: '#reviews' },
-  { name: 'Contact', href: '#contact' },
-  { name: 'Webinar', href: '/webinar' },
+  { name: 'Contact', href: '#contact' }
 ];
 
 export default function Header() {
