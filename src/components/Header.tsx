@@ -56,7 +56,7 @@ export default function Header() {
             className="flex items-center space-x-3"
           >
             <img
-              src="C:\Users\kk\Documents\cynexai-website\public\CynexAi.png"
+              src="/CynexAi.png"
               alt="CynexAI Logo"
               className="h-10 w-10 lg:h-12 lg:w-12 object-contain"
             />
