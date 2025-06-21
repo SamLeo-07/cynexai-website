@@ -36,7 +36,6 @@ const Footer = () => {
     support: [
       { name: 'Help Center', href: '#help' },
       { name: 'Student Portal', href: '#portal' },
-      { name: 'Webinar Access', href: '/webinar' },
       { name: 'Technical Support', href: '#support' },
       { name: 'FAQ', href: '#faq' },
     ],
