@@ -14,42 +14,42 @@ const Skills = () => {
       icon: Brain,
       title: 'Critical Thinking',
       description: 'Develop analytical skills to solve complex problems and make data-driven decisions in technology.',
-      // All color properties changed to use the gold theme
-      color: 'from-[#D4AC34] to-yellow-500', // Subtle gradient from main gold to a slightly lighter yellow
-      bgColor: 'bg-[#D4AC34]/10',
-      borderColor: 'border-[#D4AC34]/30',
-      textColor: 'text-black', // Set text color for the title
-      descriptionColor: 'text-gray-700', // Set text color for description
+      // All color properties explicitly set to the gold theme
+      color: 'from-[#D4AC34] to-amber-500', // Gold gradient for icons
+      bgColor: 'bg-white', // Card background
+      borderColor: 'border-[#D4AC34]/30', // Card border
+      titleColor: 'text-black', // Title text color
+      descriptionColor: 'text-gray-800', // Description text color
     },
     {
       icon: Target,
       title: 'Problem Solving',
       description: 'Master systematic approaches to identify, analyze, and resolve technical challenges efficiently.',
-      color: 'from-[#D4AC34] to-orange-500', // Another gold-based gradient
-      bgColor: 'bg-[#D4AC34]/10',
+      color: 'from-[#D4AC34] to-yellow-500',
+      bgColor: 'bg-white',
       borderColor: 'border-[#D4AC34]/30',
-      textColor: 'text-black',
-      descriptionColor: 'text-gray-700',
+      titleColor: 'text-black',
+      descriptionColor: 'text-gray-800',
     },
     {
       icon: Lightbulb,
       title: 'Creative Thinking',
       description: 'Foster innovation and creativity to develop unique solutions and breakthrough technologies.',
-      color: 'from-[#D4AC34] to-amber-500', // Another gold-based gradient
-      bgColor: 'bg-[#D4AC34]/10',
+      color: 'from-[#D4AC34] to-orange-500',
+      bgColor: 'bg-white',
       borderColor: 'border-[#D4AC34]/30',
-      textColor: 'text-black',
-      descriptionColor: 'text-gray-700',
+      titleColor: 'text-black',
+      descriptionColor: 'text-gray-800',
     },
     {
       icon: Users,
       title: 'Interpersonal Skills',
       description: 'Build strong communication and collaboration skills essential for team success in tech.',
-      color: 'from-[#D4AC34] to-yellow-600', // Another gold-based gradient
-      bgColor: 'bg-[#D4AC34]/10',
+      color: 'from-[#D4AC34] to-yellow-600',
+      bgColor: 'bg-white',
       borderColor: 'border-[#D4AC34]/30',
-      textColor: 'text-black',
-      descriptionColor: 'text-gray-700',
+      titleColor: 'text-black',
+      descriptionColor: 'text-gray-800',
     },
   ];
 
@@ -76,7 +76,7 @@ const Skills = () => {
   };
 
   return (
-    <section id="skills" className="py-20 relative bg-white"> {/* Changed section background to white */}
+    <section id="skills" className="py-20 relative bg-white"> {/* Section background changed to white */}
       {/* Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-1/4 -left-20 w-40 h-40 bg-[#D4AC34]/10 rounded-full blur-3xl"></div> {/* Gold tint */}
@@ -93,15 +93,15 @@ const Skills = () => {
         >
           <motion.h2
             variants={itemVariants}
-            className="text-4xl md:text-5xl font-display font-bold mb-6 text-black" // Changed text to black
+            className="text-4xl md:text-5xl font-display font-bold mb-6 text-black" // Heading text to black
           >
-            <span className="text-[#D4AC34]"> {/* Changed to gold text */}
+            <span className="text-[#D4AC34]"> {/* Highlighted text to gold */}
               Essential Skills
             </span>
           </motion.h2>
           <motion.p
             variants={itemVariants}
-            className="text-xl text-black/80 max-w-3xl mx-auto" // Changed text to black/80
+            className="text-xl text-black/80 max-w-3xl mx-auto" // Paragraph text to black/80
           >
             Beyond technical expertise, we develop the core skills that make you a well-rounded technology professional
           </motion.p>
@@ -120,13 +120,13 @@ const Skills = () => {
                 key={index}
                 variants={itemVariants}
                 whileHover={{ y: -10, scale: 1.05 }}
-                className={`group bg-white rounded-2xl p-8 border ${skill.borderColor} hover:border-opacity-60 transition-all duration-300 hover:shadow-xl text-center`} // Changed background to white, hover shadow
+                className={`group ${skill.bgColor} rounded-2xl p-8 border ${skill.borderColor} hover:border-[#D4AC34]/60 transition-all duration-300 hover:shadow-xl text-center`} // Using skill.bgColor and skill.borderColor
               >
                 <div className={`inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-r ${skill.color} mb-6 group-hover:scale-110 transition-transform duration-300`}>
                   <IconComponent className="w-8 h-8 text-white" />
                 </div>
                 
-                <h3 className={`text-xl font-semibold ${skill.textColor} mb-4 group-hover:text-[#D4AC34] transition-colors`}> {/* Dynamic text color, gold on hover */}
+                <h3 className={`text-xl font-semibold ${skill.titleColor} mb-4 group-hover:text-[#D4AC34] transition-colors`}> {/* Dynamic title color, gold on hover */}
                   {skill.title}
                 </h3>
                 
@@ -156,8 +156,8 @@ const Skills = () => {
           animate={inView ? "visible" : "hidden"}
           className="mt-20 text-center"
         >
-          <div className="bg-[#D4AC34]/10 backdrop-blur-sm rounded-3xl p-8 border border-[#D4AC34]/30 shadow-lg"> {/* Gold tinted background, gold border */}
-            <h3 className="text-2xl font-semibold text-black mb-6"> {/* Black text */}
+          <div className="bg-[#D4AC34]/10 rounded-3xl p-8 border border-[#D4AC34]/30 shadow-lg"> {/* Gold tinted background, gold border */}
+            <h3 className="text-2xl font-semibold text-black mb-6"> {/* Text to black */}
               Why These Skills Matter
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
