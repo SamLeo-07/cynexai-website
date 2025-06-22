@@ -1,4 +1,3 @@
-// src/components/Header.tsx
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -27,28 +26,33 @@ export default function Header() {
   const handleNavClick = (href: string, e: React.MouseEvent) => {
     e.preventDefault(); // Always prevent default, we're handling navigation
     setIsOpen(false); // Close mobile menu on click
-    console.log(`[Header] Link clicked: ${href}`); // <-- THIS LOG IS CRITICAL
-    console.log(`[Header] Current path: ${location.pathname}, Current hash: ${location.hash}`); // <-- ADD THIS FOR MORE INFO
+    console.log(`[Header] Link clicked: ${href}`);
+    console.log(`[Header] Current path: ${location.pathname}, Current hash: ${location.hash}`);
 
     if (href.startsWith('/')) { // It's a regular path like '/'
       navigate(href);
-      console.log(`[Header] Navigating to path: ${href}`); // <-- THIS LOG IS CRITICAL
+      console.log(`[Header] Navigating to path: ${href}`);
     } else if (href.startsWith('#')) { // It's a hash link like '#courses'
       const targetId = href.substring(1);
 
       if (location.pathname === '/') {
         // If we are already on the home page, just scroll to the element
-        console.log(`[Header] On home page. Attempting to scroll to ID: ${targetId}`); // <-- THIS LOG IS CRITICAL
+        console.log(`[Header] On home page. Attempting to scroll to ID: ${targetId}`);
         const element = document.getElementById(targetId);
+
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-          console.log(`[Header] Scrolled to element with ID: ${targetId}`); // <-- THIS LOG IS CRITICAL
+          console.log(`[Header] FOUND element with ID: ${targetId}. Scheduling scroll.`);
+          // --- ADDED setTimeout HERE ---
+          setTimeout(() => {
+            element.scrollIntoView({ behavior: 'smooth' });
+            console.log(`[Header] Scrolled to element with ID: ${targetId} (after timeout).`);
+          }, 300); // 300ms delay to allow menu animation to complete
         } else {
-          console.warn(`[Header] Element with ID '${targetId}' not found on the current (Home) page.`); // <-- THIS LOG IS CRITICAL
+          console.warn(`[Header] Element with ID '${targetId}' NOT FOUND on the current (Home) page.`);
         }
       } else {
         // If we are on a different page, navigate to home and pass state to scroll there
-        console.log(`[Header] Not on home page. Navigating to / with state: { scrollToId: '${targetId}' }`); // <-- THIS LOG IS CRITICAL
+        console.log(`[Header] Not on home page. Navigating to / with state: { scrollToId: '${targetId}' }`);
         navigate('/', { state: { scrollToId: targetId } });
       }
     }
