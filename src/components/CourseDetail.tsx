@@ -5,7 +5,7 @@ import { useInView } from 'react-intersection-observer';
 import {
   ArrowLeft,
   Clock,
-  Briefcase, // Changed from Users to Briefcase for placement icon
+  Briefcase,
   Star,
   CheckCircle,
   Play,
@@ -422,10 +422,10 @@ const CourseDetail = () => {
 
   if (!course) {
     return (
-      <div className="min-h-screen flex items-center justify-center pt-20">
+      <div className="min-h-screen flex items-center justify-center pt-20 bg-white"> {/* Changed background */}
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-white mb-4">Course Not Found</h1>
-          <Link to="/" className="text-purple-400 hover:text-purple-300">
+          <h1 className="text-2xl font-bold text-black mb-4">Course Not Found</h1> {/* Changed text color */}
+          <Link to="/" className="text-[#D4AC34] hover:text-yellow-600"> {/* Changed text color */}
             Return to Home
           </Link>
         </div>
@@ -456,7 +456,7 @@ const CourseDetail = () => {
   };
 
   return (
-    <div className="min-h-screen pt-20">
+    <div className="min-h-screen pt-20 bg-white text-black"> {/* Overall background and default text color */}
       {/* Hero Section */}
       <section className="relative py-20 overflow-hidden">
         <div className="absolute inset-0">
@@ -465,7 +465,7 @@ const CourseDetail = () => {
             alt={course.title}
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/80"></div>
+          <div className="absolute inset-0 bg-black/80"></div> {/* Solid black overlay */}
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -478,7 +478,7 @@ const CourseDetail = () => {
             <motion.div variants={itemVariants} className="mb-6">
               <Link
                 to="/"
-                className="inline-flex items-center text-purple-300 hover:text-purple-200 transition-colors"
+                className="inline-flex items-center text-[#D4AC34] hover:text-yellow-600 transition-colors" // Gold link
               >
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back to Courses
@@ -488,33 +488,33 @@ const CourseDetail = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
                 <motion.div variants={itemVariants} className="mb-4">
-                  <span className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${
-                    course.level === 'Beginner' ? 'bg-green-500/20 text-green-300 border border-green-500/30' :
-                    course.level === 'Intermediate' ? 'bg-yellow-500/20 text-yellow-300 border border-yellow-500/30' :
-                    course.level === 'Advanced' ? 'bg-orange-500/20 text-orange-300 border border-orange-500/30' :
-                    'bg-red-500/20 text-red-300 border border-red-500/30'
-                  }`}>
+                  <span className={`inline-block px-3 py-1 rounded-full text-sm font-medium border
+                    ${course.level === 'Beginner' ? 'bg-[#D4AC34]/20 text-[#D4AC34] border-[#D4AC34]/30' : // Gold for Beginner
+                    course.level === 'Intermediate' ? 'bg-[#D4AC34]/20 text-[#D4AC34] border-[#D4AC34]/30' : // Gold for Intermediate
+                    course.level === 'Advanced' ? 'bg-[#D4AC34]/20 text-[#D4AC34] border-[#D4AC34]/30' : // Gold for Advanced
+                    'bg-[#D4AC34]/20 text-[#D4AC34] border-[#D4AC34]/30' // Default to gold
+                    }`}>
                     {course.level}
                   </span>
                 </motion.div>
 
                 <motion.h1
                   variants={itemVariants}
-                  className="text-4xl md:text-5xl font-display font-bold text-white mb-4"
+                  className="text-4xl md:text-5xl font-display font-bold text-white mb-4" // Main title remains white for contrast
                 >
                   {course.title}
                 </motion.h1>
 
                 <motion.p
                   variants={itemVariants}
-                  className="text-xl text-purple-200 mb-6"
+                  className="text-gray-300 mb-6" // Subtitle slightly lighter gray
                 >
                   {course.subtitle}
                 </motion.p>
 
                 <motion.p
                   variants={itemVariants}
-                  className="text-gray-300 mb-8 leading-relaxed"
+                  className="text-gray-400 mb-8 leading-relaxed" // Description a bit lighter gray
                 >
                   {course.description}
                 </motion.p>
@@ -524,15 +524,15 @@ const CourseDetail = () => {
                   className="flex flex-wrap items-center gap-6 mb-8"
                 >
                   <div className="flex items-center text-gray-300">
-                    <Clock className="w-5 h-5 mr-2 text-purple-400" />
+                    <Clock className="w-5 h-5 mr-2 text-[#D4AC34]" /> {/* Gold icon */}
                     {course.duration}
                   </div>
                   <div className="flex items-center text-gray-300">
-                    <Briefcase className="w-5 h-5 mr-2 text-purple-400" /> {/* Changed icon */}
-                    Job/Internship Placement: {course.placement} {/* Updated text */}
+                    <Briefcase className="w-5 h-5 mr-2 text-[#D4AC34]" /> {/* Gold icon */}
+                    Job/Internship Placement: {course.placement}
                   </div>
                   <div className="flex items-center text-gray-300">
-                    <Star className="w-5 h-5 mr-2 text-yellow-400" />
+                    <Star className="w-5 h-5 mr-2 text-yellow-400" /> {/* Stars usually remain yellow */}
                     {course.rating} rating
                   </div>
                 </motion.div>
@@ -540,21 +540,21 @@ const CourseDetail = () => {
                 <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4">
                   <Link
                     to={`/apply/${courseId}`}
-                    className="bg-primary text-secondary hover:bg-primary-600 px-8 py-4 rounded-lg font-semibold text-center hover:from-purple-700 hover:to-cyan-700 transition-all duration-300"
+                    className="bg-[#D4AC34] text-black hover:bg-yellow-600 px-8 py-4 rounded-lg font-semibold text-center transition-all duration-300" // Gold background, black text
                   >
                     Join the Course
                   </Link>
-                  <button className="border-2 border-purple-400 text-purple-300 px-8 py-4 rounded-lg font-semibold hover:bg-purple-400/10 transition-all duration-300 flex items-center justify-center">
+                  <button className="border-2 border-[#D4AC34] text-[#D4AC34] px-8 py-4 rounded-lg font-semibold hover:bg-[#D4AC34]/10 transition-all duration-300 flex items-center justify-center"> {/* Gold border, gold text */}
                     <Play className="w-5 h-5 mr-2" />
                     Watch Preview
                   </button>
                 </motion.div>
               </div>
 
-              {/* Course Info Card (formerly Pricing) */}
+              {/* Course Info Card */}
               <motion.div
                 variants={itemVariants}
-                className="bg-background-100 text-background rounded-2xlp-8 border border-white/20"
+                className="bg-black/50 backdrop-blur-sm rounded-2xl p-8 border border-white/20" // Darker card for contrast
               >
                 <div className="text-center mb-6">
                   <div className="text-3xl font-bold text-white mb-2">
@@ -575,8 +575,8 @@ const CourseDetail = () => {
                     <span className="text-white font-medium">{course.level}</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-300">Job/Internship Placement</span> {/* Changed text */}
-                    <span className="text-white font-medium">{course.placement}</span> {/* Changed text */}
+                    <span className="text-gray-300">Job/Internship Placement</span>
+                    <span className="text-white font-medium">{course.placement}</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-gray-300">Certificate</span>
@@ -586,7 +586,7 @@ const CourseDetail = () => {
 
                 <Link
                   to={`/apply/${courseId}`}
-                  className="w-full bg-primary text-secondary hover:bg-primary-600 py-4 px-6 rounded-lg font-semibold text-center block hover:from-purple-700 hover:to-cyan-700 transition-all duration-300"
+                  className="w-full bg-[#D4AC34] text-black hover:bg-yellow-600 py-4 px-6 rounded-lg font-semibold text-center block transition-all duration-300" // Gold background, black text
                 >
                   Enroll Now
                 </Link>
@@ -597,7 +597,7 @@ const CourseDetail = () => {
       </section>
 
       {/* What You'll Learn Section */}
-      <section className="py-20">
+      <section className="py-20 bg-white"> {/* Section background changed to white */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             variants={containerVariants}
@@ -606,9 +606,9 @@ const CourseDetail = () => {
           >
             <motion.h2
               variants={itemVariants}
-              className="text-3xl md:text-4xl font-display font-bold text-center mb-16"
+              className="text-3xl md:text-4xl font-display font-bold text-center mb-16 text-black" // Heading text to black
             >
-              <span className="bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">
+              <span className="text-[#D4AC34]"> {/* Highlighted text to gold */}
                 What You'll Learn
               </span>
             </motion.h2>
@@ -616,15 +616,15 @@ const CourseDetail = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
               {/* Learning Outcomes */}
               <motion.div variants={itemVariants}>
-                <h3 className="text-2xl font-semibold text-white mb-6 flex items-center">
-                  <Target className="w-6 h-6 mr-3 text-purple-400" />
+                <h3 className="text-2xl font-semibold text-black mb-6 flex items-center"> {/* Heading text to black */}
+                  <Target className="w-6 h-6 mr-3 text-[#D4AC34]" /> {/* Gold icon */}
                   Learning Outcomes
                 </h3>
                 <div className="space-y-4">
                   {course.outcomes.map((outcome, index) => (
                     <div key={index} className="flex items-start">
-                      <CheckCircle className="w-5 h-5 text-green-400 mr-3 mt-1 flex-shrink-0" />
-                      <span className="text-gray-300">{outcome}</span>
+                      <CheckCircle className="w-5 h-5 text-[#D4AC34] mr-3 mt-1 flex-shrink-0" /> {/* Gold icon */}
+                      <span className="text-gray-800">{outcome}</span> {/* Text to darker gray */}
                     </div>
                   ))}
                 </div>
@@ -632,15 +632,15 @@ const CourseDetail = () => {
 
               {/* Skills You'll Gain */}
               <motion.div variants={itemVariants}>
-                <h3 className="text-2xl font-semibold text-white mb-6 flex items-center">
-                  <Award className="w-6 h-6 mr-3 text-cyan-400" />
+                <h3 className="text-2xl font-semibold text-black mb-6 flex items-center"> {/* Heading text to black */}
+                  <Award className="w-6 h-6 mr-3 text-[#D4AC34]" /> {/* Gold icon */}
                   Skills You'll Gain
                 </h3>
                 <div className="flex flex-wrap gap-3">
                   {course.skills.map((skill, index) => (
                     <span
                       key={index}
-                      className="px-4 py-2 bg-gradient-to-r from-purple-500/20 to-cyan-500/20 text-purple-300 rounded-lg border border-purple-500/30 font-medium"
+                      className="px-4 py-2 bg-[#D4AC34]/10 text-black rounded-lg border border-[#D4AC34]/30 font-medium" // Gold tint background, gold border, black text
                     >
                       {skill}
                     </span>
@@ -653,7 +653,7 @@ const CourseDetail = () => {
       </section>
 
       {/* Course Modules */}
-      <section className="py-20 bg-black/20">
+      <section className="py-20 bg-gray-100"> {/* Changed background to a light gray */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             variants={containerVariants}
@@ -662,9 +662,9 @@ const CourseDetail = () => {
           >
             <motion.h2
               variants={itemVariants}
-              className="text-3xl md:text-4xl font-display font-bold text-center mb-16"
+              className="text-3xl md:text-4xl font-display font-bold text-center mb-16 text-black" // Heading text to black
             >
-              <span className="bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">
+              <span className="text-[#D4AC34]"> {/* Highlighted text to gold */}
                 Course Curriculum
               </span>
             </motion.h2>
@@ -674,17 +674,17 @@ const CourseDetail = () => {
                 {course.modules.map((module, index) => (
                   <div
                     key={index}
-                    className="bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10 hover:border-purple-400/30 transition-all duration-300"
+                    className="bg-white rounded-lg p-6 border border-gray-200 hover:border-[#D4AC34]/50 transition-all duration-300" // White background, light gray border, gold hover
                   >
                     <div className="flex items-center">
-                      <div className="flex items-center justify-center w-10 h-10 bg-background rounded-full text-white font-bold mr-4">
+                      <div className="flex items-center justify-center w-10 h-10 bg-[#D4AC34] rounded-full text-white font-bold mr-4"> {/* Gold circle */}
                         {index + 1}
                       </div>
                       <div className="flex-1">
-                        <h4 className="text-lg font-semibold text-white mb-1">{module}</h4>
-                        <p className="text-gray-400 text-sm">Module {index + 1}</p>
+                        <h4 className="text-lg font-semibold text-black mb-1">{module}</h4> {/* Black text */}
+                        <p className="text-gray-600 text-sm">Module {index + 1}</p> {/* Darker gray text */}
                       </div>
-                      <BookOpen className="w-5 h-5 text-purple-400" />
+                      <BookOpen className="w-5 h-5 text-[#D4AC34]" /> {/* Gold icon */}
                     </div>
                   </div>
                 ))}
@@ -695,7 +695,7 @@ const CourseDetail = () => {
       </section>
 
       {/* Prerequisites & Career Paths */}
-      <section className="py-20">
+      <section className="py-20 bg-white"> {/* Section background changed to white */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Prerequisites */}
@@ -703,14 +703,14 @@ const CourseDetail = () => {
               variants={itemVariants}
               initial="hidden"
               animate={inView ? "visible" : "hidden"}
-              className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10"
+              className="bg-gray-50 rounded-2xl p-8 border border-gray-200" // Light gray background, light gray border
             >
-              <h3 className="text-2xl font-semibold text-white mb-6">Prerequisites</h3>
+              <h3 className="text-2xl font-semibold text-black mb-6">Prerequisites</h3> {/* Black text */}
               <div className="space-y-4">
                 {course.prerequisites.map((prereq, index) => (
                   <div key={index} className="flex items-start">
-                    <CheckCircle className="w-5 h-5 text-purple-400 mr-3 mt-1 flex-shrink-0" />
-                    <span className="text-gray-300">{prereq}</span>
+                    <CheckCircle className="w-5 h-5 text-[#D4AC34] mr-3 mt-1 flex-shrink-0" /> {/* Gold icon */}
+                    <span className="text-gray-800">{prereq}</span> {/* Darker gray text */}
                   </div>
                 ))}
               </div>
@@ -721,16 +721,16 @@ const CourseDetail = () => {
               variants={itemVariants}
               initial="hidden"
               animate={inView ? "visible" : "hidden"}
-              className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10"
+              className="bg-gray-50 rounded-2xl p-8 border border-gray-200" // Light gray background, light gray border
             >
-              <h3 className="text-2xl font-semibold text-white mb-6">Career Opportunities</h3>
+              <h3 className="text-2xl font-semibold text-black mb-6">Career Opportunities</h3> {/* Black text */}
               <div className="space-y-3">
                 {course.career.map((role, index) => (
                   <div
                     key={index}
-                    className="px-4 py-3 bg-gradient-to-r from-purple-500/10 to-cyan-500/10 rounded-lg border border-purple-500/20"
+                    className="px-4 py-3 bg-[#D4AC34]/10 rounded-lg border border-[#D4AC34]/20" // Gold tint background, gold border
                   >
-                    <span className="text-white font-medium">{role}</span>
+                    <span className="text-black font-medium">{role}</span> {/* Black text */}
                   </div>
                 ))}
               </div>
@@ -740,7 +740,7 @@ const CourseDetail = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-purple-900/50 to-cyan-900/50">
+      <section className="py-20 bg-gradient-to-r from-black via-gray-900 to-black"> {/* Dark gradient */}
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             variants={containerVariants}
@@ -749,13 +749,13 @@ const CourseDetail = () => {
           >
             <motion.h2
               variants={itemVariants}
-              className="text-3xl md:text-4xl font-display font-bold text-white mb-6"
+              className="text-3xl md:text-4xl font-display font-bold text-white mb-6" // Title remains white
             >
               Ready to Transform Your Career?
             </motion.h2>
             <motion.p
               variants={itemVariants}
-              className="text-xl text-gray-300 mb-8"
+              className="text-gray-300 mb-8" // Text remains gray-300
             >
               Join thousands of successful graduates and take the first step towards your dream tech career.
             </motion.p>
@@ -765,11 +765,11 @@ const CourseDetail = () => {
             >
               <Link
                 to={`/apply/${courseId}`}
-                className="bg-primary text-secondary hover:bg-primary-600 px-8 py-4 rounded-lg font-semibold hover:from-purple-700 hover:to-cyan-700 transition-all duration-300"
+                className="bg-[#D4AC34] text-black hover:bg-yellow-600 px-8 py-4 rounded-lg font-semibold transition-all duration-300" // Gold background, black text
               >
                 Enroll Now
               </Link>
-              <button className="border-2 border-purple-400 text-purple-300 px-8 py-4 rounded-lg font-semibold hover:bg-purple-400/10 transition-all duration-300 flex items-center justify-center">
+              <button className="border-2 border-[#D4AC34] text-[#D4AC34] px-8 py-4 rounded-lg font-semibold hover:bg-[#D4AC34]/10 transition-all duration-300 flex items-center justify-center"> {/* Gold border, gold text */}
                 <Download className="w-5 h-5 mr-2" />
                 Download Brochure
               </button>
