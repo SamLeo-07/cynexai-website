@@ -60,7 +60,7 @@ export default function Header() {
             onClick={(e) => handleNavClick('/', e)}
             // The parent of the image needs to be 'relative' if you want to explicitly size it
             // or implicitly provide a fixed height if the img is h-full
-            className="flex items-center h-full" // Make the anchor take full height of its parent div (h-16 or h-20)
+            className="flex items-center h-full px-4" // Make the anchor take full height of its parent div (h-16 or h-20)
           >
             <img
               src="/CynexAI.in.svg"
