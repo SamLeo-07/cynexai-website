@@ -79,7 +79,7 @@ export default function Header() {
                   className={`relative font-medium transition-colors duration-200 group ${
                     scrolled
                       ? isActive ? 'text-white' : 'text-gray-100 hover:text-white' // White text when scrolled
-                      : isActive ? 'text-black' : 'text-gray-700 hover:text-black' // Black text when not scrolled
+                      : isActive ? 'text-black' : 'text-black hover:text-gray-700' // Black text when not scrolled, black for active
                   }`}
                 >
                   {name}
