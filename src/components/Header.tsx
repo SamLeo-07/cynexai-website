@@ -27,21 +27,28 @@ export default function Header() {
   const handleNavClick = (href: string, e: React.MouseEvent) => {
     e.preventDefault(); // Always prevent default, we're handling navigation
     setIsOpen(false); // Close mobile menu on click
+    console.log(`[Header] Link clicked: ${href}`); // <-- THIS LOG IS CRITICAL
+    console.log(`[Header] Current path: ${location.pathname}, Current hash: ${location.hash}`); // <-- ADD THIS FOR MORE INFO
 
     if (href.startsWith('/')) { // It's a regular path like '/'
       navigate(href);
+      console.log(`[Header] Navigating to path: ${href}`); // <-- THIS LOG IS CRITICAL
     } else if (href.startsWith('#')) { // It's a hash link like '#courses'
       const targetId = href.substring(1);
 
       if (location.pathname === '/') {
         // If we are already on the home page, just scroll to the element
+        console.log(`[Header] On home page. Attempting to scroll to ID: ${targetId}`); // <-- THIS LOG IS CRITICAL
         const element = document.getElementById(targetId);
         if (element) {
           element.scrollIntoView({ behavior: 'smooth' });
+          console.log(`[Header] Scrolled to element with ID: ${targetId}`); // <-- THIS LOG IS CRITICAL
+        } else {
+          console.warn(`[Header] Element with ID '${targetId}' not found on the current (Home) page.`); // <-- THIS LOG IS CRITICAL
         }
       } else {
         // If we are on a different page, navigate to home and pass state to scroll there
-        // The Home component (or relevant page) will need to listen for this state
+        console.log(`[Header] Not on home page. Navigating to / with state: { scrollToId: '${targetId}' }`); // <-- THIS LOG IS CRITICAL
         navigate('/', { state: { scrollToId: targetId } });
       }
     }
@@ -65,15 +72,11 @@ export default function Header() {
           <a
             href="/"
             onClick={(e) => handleNavClick('/', e)}
-            className="flex items-center h-full" // Maintain h-full on anchor for clickable area
+            className="flex items-center h-full"
           >
             <img
               src="/CynexAI.in.svg"
               alt="CynexAI Logo"
-              // *** THE KEY CHANGE IS HERE: Explicitly set logo size slightly smaller than header height ***
-              // h-14 is 56px (fits in h-16/64px with 8px top/bottom padding)
-              // lg:h-16 is 64px (fits in lg:h-20/80px with 8px top/bottom padding)
-              // Use w-auto to maintain aspect ratio perfectly.
               className="h-14 w-auto lg:h-19" // Adjusted to be a bit smaller than header's max height (lg:h-19 is a custom size, make sure it's defined or use h-16)
             />
           </a>
@@ -92,10 +95,7 @@ export default function Header() {
                 <a
                   key={name}
                   href={href}
-                  // IMPORTANT: For desktop, `handleNavClick` is still good if you want to handle smooth scroll
-                  // But if you prefer default link behavior for desktop, you could remove `onClick` or change its logic here.
-                  // For now, keeping it consistent with the mobile, which means it will use the smooth scroll logic.
-                  onClick={(e) => handleNavClick(href, e)}
+                  onClick={(e) => handleNavClick(href, e)} // IMPORTANT: For desktop, `handleNavClick` is still good
                   className={`relative font-medium transition-colors duration-200 group ${
                     scrolled
                       ? isActive ? 'text-white' : 'text-gray-100 hover:text-white'
