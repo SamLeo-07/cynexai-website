@@ -40,7 +40,6 @@ export default function Header() {
     }
   };
 
-
   return (
     <motion.header
       initial={{ y: -100 }}
@@ -52,21 +51,19 @@ export default function Header() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Adjusted header height to accommodate larger logo */}
-        {/* Using h-20 for default and h-24 for large screens */}
-        <div className="flex justify-between items-center h-20 lg:h-24"> {/* Changed to h-20 lg:h-24 */}
-          {/* Logo */}
+        <div className="flex justify-between items-center h-20 lg:h-24">
+          {/* Logo - Text name removed */}
           <a
             href="/"
             onClick={(e) => handleNavClick('/', e)}
-            className="flex items-center space-x-3"
+            className="flex items-center space-x-3" // space-x-3 might be removed if only logo img
           >
             <img
               src="/CynexAI.in.svg"
               alt="CynexAI Logo"
-              // Increased logo image size here: h-16 w-16 lg:h-20 lg:w-20
-              className="h-16 w-16 lg:h-30 lg:w-30"
+              className="h-16 w-16 lg:h-20 lg:w-20"
             />
+            {/* Removed the <span> for "CynexAI" text */}
           </a>
 
           {/* Desktop nav */}
