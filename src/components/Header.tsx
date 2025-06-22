@@ -61,7 +61,7 @@ export default function Header() {
             <img
               src="/CynexAI.in.svg"
               alt="CynexAI Logo"
-              className="h-16 w-16 lg:h-30 lg:w-30"
+              className="h-20 w-20 lg:h-28 lg:w-28"
             />
             {/* Removed the <span> for "CynexAI" text */}
           </a>
