@@ -72,10 +72,6 @@ const Footer = () => {
                     className="h-10 w-auto object-contain"
                   />
                 </div>
-                 {/* Added the text logo back for consistency */}
-                <span className="text-2xl font-display font-bold text-black">
-                    CynexAI
-                </span>
               </Link>
 
               <p className="text-gray-600 mb-6 leading-relaxed">

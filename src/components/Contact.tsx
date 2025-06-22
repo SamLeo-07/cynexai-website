@@ -7,8 +7,8 @@ const Contact = () => {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
 
   const contactInfo = [
-    { icon: Phone, label: 'Phone', value: '+91 9494949494', href: 'tel:+919494949494' },
-    { icon: Mail, label: 'Email', value: 'example@Cynexai.com', href: 'mailto:example@Cynexai.com' },
+    { icon: Phone, label: 'Phone', value: '+91 9966639869', href: 'tel:+919966639869' },
+    { icon: Mail, label: 'Email', value: 'contact@Cynexai.in', href: 'mailto:contact@Cynexai.in' },
     { icon: Globe, label: 'Website', value: 'CynexAI.in', href: 'https://CynexAI.in' },
     { icon: MapPin, label: 'Location', value: 'KPHB Phase I, Kukatpally, Hyderabad', href: 'https://maps.app.goo.gl/cMq38RHfxHpgEDKn9' },
   ];
