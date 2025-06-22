@@ -161,8 +161,8 @@ const AdminPanel = () => {
                   onClick={() => setActiveTab(tab.id)}
                   className={`flex items-center px-4 py-2 rounded-md font-medium transition-all duration-300 ${
                     activeTab === tab.id
-                      ? 'bg-gradient-to-r from-purple-600 to-cyan-600 text-white'
-                      : 'text-gray-300 hover:text-white'
+                      ? 'bg-primary text-secondary hover:bg-primary-600'
+                      : 'text-secondary hover:text-primary'
                   }`}
                 >
                   <IconComponent className="w-4 h-4 mr-2" />
@@ -206,7 +206,7 @@ const AdminPanel = () => {
                   </select>
                   <button
                     onClick={handleExportData}
-                    className="flex items-center px-4 py-3 bg-gradient-to-r from-purple-600 to-cyan-600 text-white rounded-lg font-medium hover:from-purple-700 hover:to-cyan-700 transition-all duration-300"
+                    className="flex items-center px-4 py-3 bg-primary text-secondary hover:bg-primary-600 rounded-lg font-medium hover:from-purple-700 hover:to-cyan-700 transition-all duration-300"
                   >
                     <Download className="w-4 h-4 mr-2" />
                     Export
@@ -298,7 +298,7 @@ const AdminPanel = () => {
           >
             {/* Create Session Button */}
             <div className="flex justify-end">
-              <button className="flex items-center px-6 py-3 bg-gradient-to-r from-purple-600 to-cyan-600 text-white rounded-lg font-medium hover:from-purple-700 hover:to-cyan-700 transition-all duration-300">
+              <button className="flex items-center px-6 py-3 bg-primary text-secondary hover:bg-primary-600 rounded-lg font-medium hover:from-purple-700 hover:to-cyan-700 transition-all duration-300">
                 <Plus className="w-4 h-4 mr-2" />
                 Create Session
               </button>
@@ -402,7 +402,7 @@ const AdminPanel = () => {
                   />
                 </div>
 
-                <button className="bg-gradient-to-r from-purple-600 to-cyan-600 text-white px-6 py-3 rounded-lg font-medium hover:from-purple-700 hover:to-cyan-700 transition-all duration-300">
+                <button className="bg-primary text-secondary hover:bg-primary-600 px-6 py-3 rounded-lg font-medium hover:from-purple-700 hover:to-cyan-700 transition-all duration-300">
                   Save Settings
                 </button>
               </div>

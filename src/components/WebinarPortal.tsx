@@ -136,7 +136,7 @@ const WebinarPortal = () => {
               onClick={() => setActiveTab('join')}
               className={`px-6 py-3 rounded-md font-medium transition-all duration-300 ${
                 activeTab === 'join'
-                  ? 'bg-gradient-to-r from-purple-600 to-cyan-600 text-white'
+                  ? 'bg-primary text-secondary hover:bg-primary-600'
                   : 'text-gray-300 hover:text-white'
               }`}
             >
@@ -146,7 +146,7 @@ const WebinarPortal = () => {
               onClick={() => setActiveTab('schedule')}
               className={`px-6 py-3 rounded-md font-medium transition-all duration-300 ${
                 activeTab === 'schedule'
-                  ? 'bg-gradient-to-r from-purple-600 to-cyan-600 text-white'
+                  ? 'bg-primary text-secondary hover:bg-primary-600'
                   : 'text-gray-300 hover:text-white'
               }`}
             >
@@ -163,7 +163,7 @@ const WebinarPortal = () => {
             className="max-w-2xl mx-auto"
           >
             {joinStatus === 'success' ? (
-              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 text-center">
+              <div className="bg-background-100 text-background rounded-2xl p-8 border border-white/20 text-center">
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
@@ -204,13 +204,13 @@ const WebinarPortal = () => {
                     setJoinStatus('idle');
                     setJoinForm({ email: '', sessionId: '', password: '' });
                   }}
-                  className="bg-gradient-to-r from-purple-600 to-cyan-600 text-white px-6 py-3 rounded-lg font-medium hover:from-purple-700 hover:to-cyan-700 transition-all duration-300"
+                  className="bg-primary text-secondary hover:bg-primary-600 px-6 py-3 rounded-lg font-medium hover:from-purple-700 hover:to-cyan-700 transition-all duration-300"
                 >
                   Join Another Session
                 </button>
               </div>
             ) : (
-              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
+              <div className="bg-background-100 text-background rounded-2xl p-8 border border-white/20">
                 <div className="flex items-center mb-6">
                   <Video className="w-8 h-8 text-purple-400 mr-3" />
                   <h2 className="text-2xl font-bold text-white">Join Live Session</h2>
@@ -334,7 +334,7 @@ const WebinarPortal = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:border-purple-400/30 transition-all duration-300"
+                className="bg-background-100 text-background rounded-2xl p-6 border border-white/20 hover:border-purple-400/30 transition-all duration-300"
               >
                 <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
                   <div className="flex-1">
@@ -379,7 +379,7 @@ const WebinarPortal = () => {
                       className={`px-6 py-3 rounded-lg font-medium transition-all duration-300 ${
                         session.status === 'live'
                           ? 'bg-gradient-to-r from-red-600 to-pink-600 text-white hover:from-red-700 hover:to-pink-700'
-                          : 'bg-gradient-to-r from-purple-600 to-cyan-600 text-white hover:from-purple-700 hover:to-cyan-700'
+                          : 'bg-primary text-secondary hover:bg-primary-600 hover:from-purple-700 hover:to-cyan-700'
                       }`}
                     >
                       {session.status === 'live' ? 'Join Now' : 'Register'}
@@ -398,7 +398,7 @@ const WebinarPortal = () => {
                   </div>
                   <div className="w-full bg-white/10 rounded-full h-2">
                     <div 
-                      className="bg-gradient-to-r from-purple-500 to-cyan-500 h-2 rounded-full transition-all duration-300"
+                      className="bg-background h-2 rounded-full transition-all duration-300"
                       style={{ width: `${(session.participants / session.maxParticipants) * 100}%` }}
                     ></div>
                   </div>

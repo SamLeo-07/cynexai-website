@@ -171,7 +171,7 @@ const Courses = () => {
               key={course.id}
               variants={itemVariants}
               whileHover={{ y: -10, scale: 1.02 }}
-              className="group bg-white/5 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/10 hover:border-purple-400/30 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/10"
+              className="group bg-background-100 text-background rounded-2xl overflow-hidden border border-white/10 hover:border-purple-400/30 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/10"
             >
               <div className="relative overflow-hidden">
                 <img
@@ -233,7 +233,7 @@ const Courses = () => {
 
                 <Link
                   to={`/course/${course.id}`}
-                  className="group/btn w-full bg-gradient-to-r from-purple-600 to-cyan-600 text-white py-3 px-4 rounded-lg font-medium hover:from-purple-700 hover:to-cyan-700 transition-all duration-300 flex items-center justify-center"
+                  className="group/btn w-full bg-primary text-secondary hover:bg-primary-600 py-3 px-4 rounded-lg font-medium hover:from-purple-700 hover:to-cyan-700 transition-all duration-300 flex items-center justify-center"
                 >
                   Learn More
                   <ArrowRight className="ml-2 w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />

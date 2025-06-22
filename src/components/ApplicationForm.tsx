@@ -63,7 +63,7 @@ const ApplicationForm = () => {
           animate={{ scale: 1, opacity: 1 }}
           className="max-w-md mx-auto px-4"
         >
-          <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 text-center">
+          <div className="bg-background-100 text-background rounded-2xl p-8 border border-white/20 text-center">
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
@@ -100,7 +100,7 @@ const ApplicationForm = () => {
             <div className="space-y-3">
               <Link
                 to="/"
-                className="w-full bg-gradient-to-r from-purple-600 to-cyan-600 text-white py-3 px-4 rounded-lg font-medium hover:from-purple-700 hover:to-cyan-700 transition-all duration-300 block text-center"
+                className="w-full bg-primary text-secondary hover:bg-primary-600 py-3 px-4 rounded-lg font-medium hover:from-purple-700 hover:to-cyan-700 transition-all duration-300 block text-center"
               >
                 Back to Home
               </Link>
@@ -148,7 +148,7 @@ const ApplicationForm = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20"
+          className="bg-background-100 text-background rounded-2xl p-8 border border-white/20"
         >
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Name Field */}

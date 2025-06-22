@@ -540,7 +540,7 @@ const CourseDetail = () => {
                 <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4">
                   <Link
                     to={`/apply/${courseId}`}
-                    className="bg-gradient-to-r from-purple-600 to-cyan-600 text-white px-8 py-4 rounded-lg font-semibold text-center hover:from-purple-700 hover:to-cyan-700 transition-all duration-300"
+                    className="bg-primary text-secondary hover:bg-primary-600 px-8 py-4 rounded-lg font-semibold text-center hover:from-purple-700 hover:to-cyan-700 transition-all duration-300"
                   >
                     Join the Course
                   </Link>
@@ -554,7 +554,7 @@ const CourseDetail = () => {
               {/* Course Info Card (formerly Pricing) */}
               <motion.div
                 variants={itemVariants}
-                className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20"
+                className="bg-background-100 text-background rounded-2xlp-8 border border-white/20"
               >
                 <div className="text-center mb-6">
                   <div className="text-3xl font-bold text-white mb-2">
@@ -586,7 +586,7 @@ const CourseDetail = () => {
 
                 <Link
                   to={`/apply/${courseId}`}
-                  className="w-full bg-gradient-to-r from-purple-600 to-cyan-600 text-white py-4 px-6 rounded-lg font-semibold text-center block hover:from-purple-700 hover:to-cyan-700 transition-all duration-300"
+                  className="w-full bg-primary text-secondary hover:bg-primary-600 py-4 px-6 rounded-lg font-semibold text-center block hover:from-purple-700 hover:to-cyan-700 transition-all duration-300"
                 >
                   Enroll Now
                 </Link>
@@ -677,7 +677,7 @@ const CourseDetail = () => {
                     className="bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10 hover:border-purple-400/30 transition-all duration-300"
                   >
                     <div className="flex items-center">
-                      <div className="flex items-center justify-center w-10 h-10 bg-gradient-to-r from-purple-500 to-cyan-500 rounded-full text-white font-bold mr-4">
+                      <div className="flex items-center justify-center w-10 h-10 bg-background rounded-full text-white font-bold mr-4">
                         {index + 1}
                       </div>
                       <div className="flex-1">
@@ -765,7 +765,7 @@ const CourseDetail = () => {
             >
               <Link
                 to={`/apply/${courseId}`}
-                className="bg-gradient-to-r from-purple-600 to-cyan-600 text-white px-8 py-4 rounded-lg font-semibold hover:from-purple-700 hover:to-cyan-700 transition-all duration-300"
+                className="bg-primary text-secondary hover:bg-primary-600 px-8 py-4 rounded-lg font-semibold hover:from-purple-700 hover:to-cyan-700 transition-all duration-300"
               >
                 Enroll Now
               </Link>

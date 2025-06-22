@@ -143,7 +143,7 @@ const Reviews = () => {
                         className="w-full h-full object-cover rounded-full"
                       />
                     </div>
-                    <div className="absolute -top-2 -right-2 bg-gradient-to-r from-purple-500 to-cyan-500 rounded-full p-2">
+                    <div className="absolute -top-2 -right-2 bg-background rounded-full p-2">
                       <Quote className="w-4 h-4 text-white" />
                     </div>
                   </div>
