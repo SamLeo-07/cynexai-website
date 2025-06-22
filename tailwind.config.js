@@ -5,29 +5,23 @@ export default {
     extend: {
       colors: {
         primary: {
-          50: '#f5f5f5',
-          100: '#e5e5e5',
-          200: '#cccccc',
-          300: '#b2b2b2',
-          400: '#999999',
-          500: '#007CF0',
-          600: '#0063C0',
-          700: '#004A90',
-          800: '#003260',
-          900: '#001930',
+          DEFAULT: '#D4AC34',  // gold accent
+          50:  '#FEF9E7',
+          100: '#FCF3CF',
+          200: '#F9E7A0',
+          300: '#F7DB70',
+          400: '#F4CF41',
+          500: '#D4AC34', // same
+          600: '#A68328',
+          700: '#7B5A1D',
+          800: '#523112',
+          900: '#291907'
         },
-        secondary: {
-          50: '#faf5ff',
-          100: '#f3e8ff',
-          200: '#e9d5ff',
-          300: '#d8b4fe',
-          400: '#c084fc',
-          500: '#a855f7',
-          600: '#9333ea',
-          700: '#7c3aed',
-          800: '#6b21a8',
-          900: '#581c87',
+        background: {
+          DEFAULT: '#010203', // near-black page bg
+          100: '#FFFFFF'      // for card backgrounds/text blocks
         },
+        secondary: '#FFFFFF',
         gradient: {
           from: '#d8b4fe',
           via: '#c084fc',
