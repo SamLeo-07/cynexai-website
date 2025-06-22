@@ -43,7 +43,7 @@ export default function Header() {
       animate={{ y: 0 }}
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-slate-900/95 backdrop-blur-md border-b border-purple-500/20'
+          ? 'bg-[#D4AC34]/95 backdrop-blur-md border-b border-[#D4AC34]/20'
           : 'bg-transparent'
       }`}
     >
@@ -58,7 +58,7 @@ export default function Header() {
             <img
               src="/CynexAI.in.svg"
               alt="CynexAI Logo"
-              className="h-20 w-15 lg:h-12 lg:w-12 object-contain"
+              className="h-10 w-10 lg:h-12 lg:w-12 object-contain"
             />
           </a>
 

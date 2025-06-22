@@ -39,74 +39,57 @@ const ApplicationForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-
-    // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 2000));
-
-    // Here you would typically send the data to your backend
-    console.log('Application submitted:', {
-      ...formData,
-      courseId,
-      courseName,
-      submittedAt: new Date().toISOString()
-    });
-
+    console.log('Application submitted:', { ...formData, courseId, courseName, submittedAt: new Date().toISOString() });
     setIsLoading(false);
     setIsSubmitted(true);
   };
 
   if (isSubmitted) {
     return (
-      <div className="min-h-screen pt-20 flex items-center justify-center">
+      <div className="min-h-screen pt-20 flex items-center justify-center bg-[#FFFFFF]">
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           className="max-w-md mx-auto px-4"
         >
-          <div className="bg-background-100 text-background rounded-2xl p-8 border border-white/20 text-center">
+          <div className="bg-[#FFFFFF] text-[#010203] rounded-2xl p-8 border border-[#D4AC34]/20 text-center">
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
-              transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-              className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6"
+              transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
+              className="w-16 h-16 bg-[#D4AC34] rounded-full flex items-center justify-center mx-auto mb-6"
             >
               <CheckCircle className="w-8 h-8 text-white" />
             </motion.div>
-            
-            <h1 className="text-2xl font-bold text-white mb-4">
-              Thank You for Applying!
-            </h1>
-            
-            <p className="text-gray-300 mb-6">
-              Your application for <span className="text-purple-300 font-medium">{courseName}</span> has been submitted successfully. 
-              Our team will review your application and contact you within 24-48 hours.
+            <h1 className="text-2xl font-bold mb-4">Thank You for Applying!</h1>
+            <p className="text-[#010203]/80 mb-6">
+              Your application for <span className="text-[#D4AC34] font-medium">{courseName}</span> has been submitted successfully. Our team will review your application and contact you within 24-48 hours.
             </p>
-            
-            <div className="space-y-3 mb-8">
+            <div className="space-y-3 mb-8 text-[#010203]/80">
               <div className="flex items-center justify-between text-sm">
-                <span className="text-gray-400">Application ID:</span>
-                <span className="text-white font-mono">CX{Date.now().toString().slice(-6)}</span>
+                <span>Application ID:</span>
+                <span className="font-mono">CX{Date.now().toString().slice(-6)}</span>
               </div>
               <div className="flex items-center justify-between text-sm">
-                <span className="text-gray-400">Course:</span>
-                <span className="text-white">{courseName}</span>
+                <span>Course:</span>
+                <span>{courseName}</span>
               </div>
               <div className="flex items-center justify-between text-sm">
-                <span className="text-gray-400">Status:</span>
-                <span className="text-green-400">Under Review</span>
+                <span>Status:</span>
+                <span className="text-[#D4AC34] font-medium">Under Review</span>
               </div>
             </div>
-            
             <div className="space-y-3">
               <Link
                 to="/"
-                className="w-full bg-primary text-secondary hover:bg-primary-600 py-3 px-4 rounded-lg font-medium hover:from-purple-700 hover:to-cyan-700 transition-all duration-300 block text-center"
+                className="w-full bg-[#D4AC34] text-white py-3 px-4 rounded-lg font-medium block text-center hover:bg-[#c09a2f] transition-colors duration-300"
               >
                 Back to Home
               </Link>
               <Link
                 to={`/course/${courseId}`}
-                className="w-full border-2 border-purple-400 text-purple-300 py-3 px-4 rounded-lg font-medium hover:bg-purple-400/10 transition-all duration-300 block text-center"
+                className="w-full border-2 border-[#D4AC34] text-[#010203] py-3 px-4 rounded-lg font-medium block text-center hover:bg-[#D4AC34]/10 transition-colors duration-300"
               >
                 View Course Details
               </Link>
@@ -118,44 +101,28 @@ const ApplicationForm = () => {
   }
 
   return (
-    <div className="min-h-screen pt-20">
+    <div className="min-h-screen pt-20 bg-[#FFFFFF]">
       <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-8"
-        >
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
           <Link
             to={`/course/${courseId}`}
-            className="inline-flex items-center text-purple-300 hover:text-purple-200 transition-colors mb-6"
+            className="inline-flex items-center text-[#D4AC34] hover:text-[#a3852c] transition-colors mb-6"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Course
           </Link>
-          
-          <h1 className="text-3xl md:text-4xl font-display font-bold text-white mb-4">
-            Apply for <span className="bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">
-              {courseName}
-            </span>
+          <h1 className="text-3xl md:text-4xl font-display font-bold text-[#010203] mb-4">
+            Apply for <span className="text-[#D4AC34]">{courseName}</span>
           </h1>
-          
-          <p className="text-gray-300 text-lg">
+          <p className="text-[#010203]/80 text-lg">
             Take the first step towards transforming your career. Fill out the form below and our team will get in touch with you.
           </p>
         </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="bg-background-100 text-background rounded-2xl p-8 border border-white/20"
-        >
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="bg-[#FFFFFF] text-[#010203] rounded-2xl p-8 border border-[#D4AC34]/20">
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Name Field */}
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
-                <User className="w-4 h-4 inline mr-2" />
-                Full Name *
+              <label className="block text-sm font-medium text-[#010203] mb-2">
+                <User className="w-4 h-4 inline mr-2" /> Full Name *
               </label>
               <input
                 type="text"
@@ -163,16 +130,13 @@ const ApplicationForm = () => {
                 value={formData.name}
                 onChange={handleInputChange}
                 required
-                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-400/20 transition-all duration-300"
+                className="w-full px-4 py-3 bg-[#F5F5F5] border border-[#D4AC34]/20 rounded-lg text-[#010203] placeholder-[#010203]/50 focus:outline-none focus:ring-2 focus:ring-[#D4AC34]/20 transition-colors duration-300"
                 placeholder="Enter your full name"
               />
             </div>
-
-            {/* Email Field */}
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
-                <Mail className="w-4 h-4 inline mr-2" />
-                Email Address *
+              <label className="block text-sm font-medium text-[#010203] mb-2">
+                <Mail className="w-4 h-4 inline mr-2" /> Email Address *
               </label>
               <input
                 type="email"
@@ -180,16 +144,13 @@ const ApplicationForm = () => {
                 value={formData.email}
                 onChange={handleInputChange}
                 required
-                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-400/20 transition-all duration-300"
+                className="w-full px-4 py-3 bg-[#F5F5F5] border border-[#D4AC34]/20 rounded-lg text-[#010203] placeholder-[#010203]/50 focus:outline-none focus:ring-2 focus:ring-[#D4AC34]/20 transition-colors duration-300"
                 placeholder="Enter your email address"
               />
             </div>
-
-            {/* Phone Field */}
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
-                <Phone className="w-4 h-4 inline mr-2" />
-                Phone Number *
+              <label className="block text-sm font-medium text-[#010203] mb-2">
+                <Phone className="w-4 h-4 inline mr-2" /> Phone Number *
               </label>
               <input
                 type="tel"
@@ -197,53 +158,46 @@ const ApplicationForm = () => {
                 value={formData.phone}
                 onChange={handleInputChange}
                 required
-                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-400/20 transition-all duration-300"
+                className="w-full px-4 py-3 bg-[#F5F5F5] border border-[#D4AC34]/20 rounded-lg text-[#010203] placeholder-[#010203]/50 focus:outline-none focus:ring-2 focus:ring-[#D4AC34]/20 transition-colors duration-300"
                 placeholder="Enter your phone number"
               />
             </div>
-
-            {/* Type Field */}
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
-                <Briefcase className="w-4 h-4 inline mr-2" />
-                Current Status *
+              <label className="block text-sm font-medium text-[#010203] mb-2">
+                <Briefcase className="w-4 h-4 inline mr-2" /> Current Status *
               </label>
               <select
                 name="type"
                 value={formData.type}
                 onChange={handleInputChange}
                 required
-                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-400/20 transition-all duration-300"
+                className="w-full px-4 py-3 bg-[#F5F5F5] border border-[#D4AC34]/20 rounded-lg text-[#010203] focus:outline-none focus:ring-2 focus:ring-[#D4AC34]/20 transition-colors duration-300"
               >
-                <option value="student" className="bg-gray-800">Student</option>
-                <option value="employed" className="bg-gray-800">Employed</option>
+                <option value="student" className="bg-[#FFFFFF]">Student</option>
+                <option value="employed" className="bg-[#FFFFFF]">Employed</option>
               </select>
             </div>
-
-            {/* Course Info */}
-            <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4">
-              <h3 className="text-lg font-semibold text-white mb-2">Course Details</h3>
-              <p className="text-purple-300">{courseName}</p>
-              <p className="text-gray-400 text-sm mt-1">
+            <div className="bg-[#D4AC34]/10 border border-[#D4AC34]/20 rounded-lg p-4">
+              <h3 className="text-lg font-semibold text-[#010203] mb-2">Course Details</h3>
+              <p className="text-[#010203] font-medium">{courseName}</p>
+              <p className="text-[#010203]/70 text-sm mt-1">
                 You are applying for this course. Our team will provide you with detailed information about the curriculum, schedule, and fees.
               </p>
             </div>
-
-            {/* Submit Button */}
             <motion.button
               type="submit"
               disabled={isLoading}
               whileHover={{ scale: isLoading ? 1 : 1.02 }}
               whileTap={{ scale: isLoading ? 1 : 0.98 }}
-              className={`w-full py-4 px-6 rounded-lg font-semibold text-white transition-all duration-300 ${
+              className={`w-full py-4 px-6 rounded-lg font-semibold transition-colors duration-300 ${
                 isLoading
-                  ? 'bg-gray-600 cursor-not-allowed'
-                  : 'bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-700 hover:to-cyan-700 shadow-lg hover:shadow-purple-500/25'
+                  ? 'bg-[#CCCCCC] cursor-not-allowed'
+                  : 'bg-[#D4AC34] text-[#010203] hover:bg-[#c09a2f]'
               }`}
             >
               {isLoading ? (
                 <div className="flex items-center justify-center">
-                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2"></div>
+                  <div className="w-5 h-5 border-2 border-[#010203]/30 border-t-[#010203] rounded-full animate-spin mr-2"></div>
                   Submitting Application...
                 </div>
               ) : (
@@ -251,11 +205,9 @@ const ApplicationForm = () => {
               )}
             </motion.button>
           </form>
-
-          {/* Additional Info */}
-          <div className="mt-8 p-4 bg-white/5 rounded-lg border border-white/10">
-            <h4 className="text-white font-medium mb-2">What happens next?</h4>
-            <ul className="text-gray-400 text-sm space-y-1">
+          <div className="mt-8 p-4 bg-[#F5F5F5] rounded-lg border border-[#D4AC34]/20">
+            <h4 className="text-[#010203] font-medium mb-2">What happens next?</h4>
+            <ul className="text-[#010203]/70 text-sm space-y-1">
               <li>• Our team will review your application within 24-48 hours</li>
               <li>• You'll receive a call to discuss the course details and your goals</li>
               <li>• We'll provide information about batch schedules and payment options</li>
