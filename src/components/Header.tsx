@@ -25,18 +25,25 @@ export default function Header() {
   }, []);
 
   const handleNavClick = (href: string, e: React.MouseEvent) => {
-    e.preventDefault();
+    e.preventDefault(); // Always prevent default, we're handling navigation
     setIsOpen(false); // Close mobile menu on click
 
-    if (location.pathname === '/' && href.startsWith('#')) {
-      const element = document.getElementById(href.substring(1));
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    } else if (href.startsWith('#')) {
-      navigate(`/${href}`);
-    } else {
+    if (href.startsWith('/')) { // It's a regular path like '/'
       navigate(href);
+    } else if (href.startsWith('#')) { // It's a hash link like '#courses'
+      const targetId = href.substring(1);
+
+      if (location.pathname === '/') {
+        // If we are already on the home page, just scroll to the element
+        const element = document.getElementById(targetId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      } else {
+        // If we are on a different page, navigate to home and pass state to scroll there
+        // The Home component (or relevant page) will need to listen for this state
+        navigate('/', { state: { scrollToId: targetId } });
+      }
     }
   };
 
@@ -67,7 +74,7 @@ export default function Header() {
               // h-14 is 56px (fits in h-16/64px with 8px top/bottom padding)
               // lg:h-16 is 64px (fits in lg:h-20/80px with 8px top/bottom padding)
               // Use w-auto to maintain aspect ratio perfectly.
-              className="h-14 w-auto lg:h-19" // Adjusted to be a bit smaller than header's max height
+              className="h-14 w-auto lg:h-19" // Adjusted to be a bit smaller than header's max height (lg:h-19 is a custom size, make sure it's defined or use h-16)
             />
           </a>
 
@@ -85,6 +92,9 @@ export default function Header() {
                 <a
                   key={name}
                   href={href}
+                  // IMPORTANT: For desktop, `handleNavClick` is still good if you want to handle smooth scroll
+                  // But if you prefer default link behavior for desktop, you could remove `onClick` or change its logic here.
+                  // For now, keeping it consistent with the mobile, which means it will use the smooth scroll logic.
                   onClick={(e) => handleNavClick(href, e)}
                   className={`relative font-medium transition-colors duration-200 group ${
                     scrolled
@@ -130,7 +140,7 @@ export default function Header() {
                   <a
                     key={name}
                     href={href}
-                    onClick={(e) => handleNavClick(href, e)}
+                    onClick={(e) => handleNavClick(href, e)} // This onClick is critical for mobile
                     className="block text-black hover:text-[#D4AC34] transition-colors duration-200 py-2 text-lg font-medium"
                   >
                     {name}
