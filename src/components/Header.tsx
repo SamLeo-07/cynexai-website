@@ -40,6 +40,7 @@ export default function Header() {
     }
   };
 
+
   return (
     <motion.header
       initial={{ y: -100 }}
@@ -51,19 +52,23 @@ export default function Header() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20 lg:h-24">
-          {/* Logo - Text name removed */}
+        {/* REVERTING HEADER HEIGHT TO ORIGINAL */}
+        <div className="flex justify-between items-center h-16 lg:h-20"> {/* Original height */}
+          {/* Logo */}
           <a
             href="/"
             onClick={(e) => handleNavClick('/', e)}
-            className="flex items-center space-x-3" // space-x-3 might be removed if only logo img
+            // The parent of the image needs to be 'relative' if you want to explicitly size it
+            // or implicitly provide a fixed height if the img is h-full
+            className="flex items-center h-full" // Make the anchor take full height of its parent div (h-16 or h-20)
           >
             <img
               src="/CynexAI.in.svg"
               alt="CynexAI Logo"
-              className="h-20 w-20 lg:h-28 lg:w-28"
+              // The key change: h-full (take 100% height of parent 'a'), and w-auto (maintain aspect ratio)
+              // This will make the logo as tall as the header allows, without distorting.
+              className="h-full w-auto"
             />
-            {/* Removed the <span> for "CynexAI" text */}
           </a>
 
           {/* Desktop nav */}
