@@ -52,22 +52,22 @@ export default function Header() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* REVERTING HEADER HEIGHT TO ORIGINAL */}
-        <div className="flex justify-between items-center h-16 lg:h-20"> {/* Original height */}
+        {/* HEADER CONTAINER: Fixed height back to original compact size */}
+        <div className="flex justify-between items-center h-16 lg:h-20"> {/* Original compact height */}
           {/* Logo */}
           <a
             href="/"
             onClick={(e) => handleNavClick('/', e)}
-            // The parent of the image needs to be 'relative' if you want to explicitly size it
-            // or implicitly provide a fixed height if the img is h-full
-            className="flex items-center h-full px-8" // Make the anchor take full height of its parent div (h-16 or h-20)
+            className="flex items-center h-full" // Maintain h-full on anchor for clickable area
           >
             <img
               src="/CynexAI.in.svg"
               alt="CynexAI Logo"
-              // The key change: h-full (take 100% height of parent 'a'), and w-auto (maintain aspect ratio)
-              // This will make the logo as tall as the header allows, without distorting.
-              className="h-full w-auto"
+              // *** THE KEY CHANGE IS HERE: Explicitly set logo size slightly smaller than header height ***
+              // h-14 is 56px (fits in h-16/64px with 8px top/bottom padding)
+              // lg:h-16 is 64px (fits in lg:h-20/80px with 8px top/bottom padding)
+              // Use w-auto to maintain aspect ratio perfectly.
+              className="h-14 w-auto lg:h-19" // Adjusted to be a bit smaller than header's max height
             />
           </a>
 
