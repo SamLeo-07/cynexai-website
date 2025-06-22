@@ -41,7 +41,6 @@ const Footer = () => {
     ],
   };
 
-  // Social links will now default to gray and turn gold on hover
   const socialLinks = [
     { icon: Facebook, href: '#', hoverColor: 'hover:text-[#D4AC34]' },
     { icon: Twitter, href: '#', hoverColor: 'hover:text-[#D4AC34]' },
@@ -51,11 +50,12 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="relative bg-black/80 border-t border-white/10 text-gray-300"> {/* Darker footer background, default text color */}
-      {/* Background Elements - Changed to subtle gold tints */}
+    // Changed background to white, text to black/gray for contrast
+    <footer className="relative bg-white border-t border-gray-200 text-gray-700">
+      {/* Background Elements - Changed to subtle gold tints on a light background */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-0 left-1/4 w-64 h-64 bg-[#D4AC34]/5 rounded-full blur-3xl"></div> {/* Gold tint */}
-        <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-[#D4AC34]/5 rounded-full blur-3xl"></div> {/* Gold tint */}
+        <div className="absolute top-0 left-1/4 w-64 h-64 bg-[#D4AC34]/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-[#D4AC34]/5 rounded-full blur-3xl"></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -69,29 +69,31 @@ const Footer = () => {
                   <img
                     src="/CynexAI.in.svg"
                     alt="CynexAI"
-                    className="h-10 w-auto object-contain" // Removed the problematic background div
+                    className="h-10 w-auto object-contain"
                   />
-                  {/* Removed: <div className="absolute inset-0 bg-background rounded-full opacity-20 animate-pulse-slow"></div> */}
                 </div>
+                <span className="text-2xl font-display font-bold text-black"> {/* Text changed to black */}
+                  CynexAI
+                </span>
               </Link>
 
-              <p className="text-gray-400 mb-6 leading-relaxed">
+              <p className="text-gray-600 mb-6 leading-relaxed"> {/* Text changed to darker gray */}
                 Transforming careers through cutting-edge technology education.
                 Join thousands of students who have successfully transitioned into
                 high-paying tech roles with our industry-aligned programs.
               </p>
 
               <div className="space-y-3">
-                <div className="flex items-center text-gray-400">
-                  <Phone className="w-4 h-4 mr-3 text-[#D4AC34]" /> {/* Gold icon */}
+                <div className="flex items-center text-gray-600"> {/* Text changed to darker gray */}
+                  <Phone className="w-4 h-4 mr-3 text-[#D4AC34]" />
                   <span>+91 9966639869</span>
                 </div>
-                <div className="flex items-center text-gray-400">
-                  <Mail className="w-4 h-4 mr-3 text-[#D4AC34]" /> {/* Gold icon */}
+                <div className="flex items-center text-gray-600"> {/* Text changed to darker gray */}
+                  <Mail className="w-4 h-4 mr-3 text-[#D4AC34]" />
                   <span>contact@Cynexai.in</span>
                 </div>
-                <div className="flex items-start text-gray-400">
-                  <MapPin className="w-4 h-4 mr-3 mt-1 text-[#D4AC34] flex-shrink-0" /> {/* Gold icon */}
+                <div className="flex items-start text-gray-600"> {/* Text changed to darker gray */}
+                  <MapPin className="w-4 h-4 mr-3 mt-1 text-[#D4AC34] flex-shrink-0" />
                   <span className="text-sm">
                     MIG-215, Rd Number 1, KPHB Phase I,
                     Kukatpally, Hyderabad, Telangana 500072
@@ -102,13 +104,13 @@ const Footer = () => {
 
             {/* Courses */}
             <div>
-              <h3 className="text-white font-semibold mb-6">Popular Courses</h3>
+              <h3 className="text-black font-semibold mb-6">Popular Courses</h3> {/* Text changed to black */}
               <ul className="space-y-3">
                 {footerLinks.courses.map((link, index) => (
                   <li key={index}>
                     <Link
                       to={link.href}
-                      className="text-gray-400 hover:text-[#D4AC34] transition-colors duration-200 text-sm" // Gold hover
+                      className="text-gray-600 hover:text-[#D4AC34] transition-colors duration-200 text-sm" // Text changed to darker gray
                     >
                       {link.name}
                     </Link>
@@ -119,13 +121,13 @@ const Footer = () => {
 
             {/* Company */}
             <div>
-              <h3 className="text-white font-semibold mb-6">Company</h3>
+              <h3 className="text-black font-semibold mb-6">Company</h3> {/* Text changed to black */}
               <ul className="space-y-3">
                 {footerLinks.company.map((link, index) => (
                   <li key={index}>
                     <a
                       href={link.href}
-                      className="text-gray-400 hover:text-[#D4AC34] transition-colors duration-200 text-sm" // Gold hover
+                      className="text-gray-600 hover:text-[#D4AC34] transition-colors duration-200 text-sm" // Text changed to darker gray
                     >
                       {link.name}
                     </a>
@@ -136,13 +138,13 @@ const Footer = () => {
 
             {/* Support */}
             <div>
-              <h3 className="text-white font-semibold mb-6">Support</h3>
+              <h3 className="text-black font-semibold mb-6">Support</h3> {/* Text changed to black */}
               <ul className="space-y-3">
                 {footerLinks.support.map((link, index) => (
                   <li key={index}>
                     <Link
                       to={link.href}
-                      className="text-gray-400 hover:text-[#D4AC34] transition-colors duration-200 text-sm" // Gold hover
+                      className="text-gray-600 hover:text-[#D4AC34] transition-colors duration-200 text-sm" // Text changed to darker gray
                     >
                       {link.name}
                     </Link>
@@ -154,11 +156,11 @@ const Footer = () => {
         </div>
 
         {/* Newsletter Section */}
-        <div className="py-8 border-t border-white/10">
+        <div className="py-8 border-t border-gray-200"> {/* Border changed to light gray */}
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div>
-              <h3 className="text-white font-semibold mb-2">Stay Updated</h3>
-              <p className="text-gray-400 text-sm">
+              <h3 className="text-black font-semibold mb-2">Stay Updated</h3> {/* Text changed to black */}
+              <p className="text-gray-600 text-sm"> {/* Text changed to darker gray */}
                 Get the latest updates on new courses and tech trends
               </p>
             </div>
@@ -166,12 +168,12 @@ const Footer = () => {
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 md:w-64 px-4 py-3 bg-black/20 border border-[#D4AC34]/30 rounded-l-lg text-white placeholder-gray-400 focus:outline-none focus:border-[#D4AC34] focus:ring-2 focus:ring-[#D4AC34]/20" // Gold border for input
+                className="flex-1 md:w-64 px-4 py-3 bg-gray-100 border border-gray-300 rounded-l-lg text-black placeholder-gray-500 focus:outline-none focus:border-[#D4AC34] focus:ring-2 focus:ring-[#D4AC34]/20" // Input background and text adjusted for light theme
               />
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-6 py-3 bg-[#D4AC34] text-black hover:bg-yellow-600 rounded-r-lg font-medium transition-all duration-300" // Gold button, black text
+                className="px-6 py-3 bg-[#D4AC34] text-black hover:bg-yellow-600 rounded-r-lg font-medium transition-all duration-300"
               >
                 Subscribe
               </motion.button>
@@ -180,9 +182,9 @@ const Footer = () => {
         </div>
 
         {/* Bottom Footer */}
-        <div className="py-6 border-t border-white/10">
+        <div className="py-6 border-t border-gray-200"> {/* Border changed to light gray */}
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="text-gray-400 text-sm">
+            <div className="text-gray-600 text-sm"> {/* Text changed to darker gray */}
               © 2025 CynexAI. All rights reserved. | Privacy Policy | Terms of Service
             </div>
 
@@ -194,7 +196,7 @@ const Footer = () => {
                     key={index}
                     href={social.href}
                     whileHover={{ scale: 1.2, y: -2 }}
-                    className={`text-gray-400 ${social.hoverColor} transition-colors duration-200`} // Gold hover for social icons
+                    className={`text-gray-500 ${social.hoverColor} transition-colors duration-200`} // Default social icons to gray-500 for light background
                   >
                     <IconComponent className="w-5 h-5" />
                   </motion.a>
@@ -210,7 +212,6 @@ const Footer = () => {
         onClick={scrollToTop}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
-        // Adjusted positioning and styling for better visibility and theme integration
         className="fixed bottom-4 right-4 z-50 bg-[#D4AC34] text-black p-3 rounded-full shadow-lg hover:bg-yellow-600 transition-colors duration-300"
       >
         <ArrowUp className="w-5 h-5" />
