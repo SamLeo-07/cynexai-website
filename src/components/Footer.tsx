@@ -66,7 +66,7 @@ const Footer = () => {
               <Link to="/" className="flex items-center space-x-3 mb-6">
                 <div className="relative">
                   <img 
-                    src="/CynexAi.png" 
+                    src="/CynexAI.in.svg" 
                     alt="CynexAI" 
                     className="h-10 w-10 object-contain"
                   />
