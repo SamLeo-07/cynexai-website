@@ -43,7 +43,7 @@ const Hero = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 bg-[#010203]">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 bg-[#FFFFFF]">
       {/* Background Bubbles */}
       <div className="absolute inset-0">
         <div className="absolute top-20 left-10 w-72 h-72 bg-[#D4AC34]/10 rounded-full blur-3xl animate-float"></div>
@@ -76,7 +76,7 @@ const Hero = () => {
 
           <motion.h1
             variants={itemVariants}
-            className="text-4xl md:text-6xl lg:text-7xl font-display font-bold mb-6 text-white"
+            className="text-4xl md:text-6xl lg:text-7xl font-display font-bold mb-6 text-black"
           >
             Master the Future of
             <br />
@@ -85,7 +85,7 @@ const Hero = () => {
 
           <motion.p
             variants={itemVariants}
-            className="text-xl md:text-2xl text-white/80 mb-8 max-w-3xl mx-auto leading-relaxed"
+            className="text-xl md:text-2xl text-black/80 mb-8 max-w-3xl mx-auto leading-relaxed"
           >
             Join our cutting-edge programs and unlock your potential in AI, Machine Learning,
             and emerging technologies. Learn from industry experts and build the skills that matter.
@@ -129,7 +129,7 @@ const Hero = () => {
               <motion.div
                 key={index}
                 whileHover={{ y: -5 }}
-                className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:border-[#D4AC34]/30 transition-all duration-300 hover:shadow-2xl hover:shadow-[#D4AC34]/10"
+                className="bg-[#FFFFFF] rounded-2xl p-6 border border-[#D4AC34]/30 transition-all duration-300"
               >
                 <div className="text-3xl mb-2 flex justify-center items-center">
                   <img src={stat.icon} alt={stat.alt} className="w-8 h-8 filter brightness-150" />
@@ -137,7 +137,7 @@ const Hero = () => {
                 <div className="text-3xl font-bold text-[#D4AC34] mb-1">
                   {stat.number}
                 </div>
-                <div className="text-white/70 text-sm">{stat.label}</div>
+                <div className="text-black/70 text-sm">{stat.label}</div>
               </motion.div>
             ))}
           </motion.div>
@@ -150,8 +150,8 @@ const Hero = () => {
         transition={{ delay: 2 }}
         className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
       >
-        <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
-          <div className="w-1 h-3 bg-white/50 rounded-full mt-2 animate-bounce"></div>
+        <div className="w-6 h-10 border-2 border-[#000000]/30 rounded-full flex justify-center">
+          <div className="w-1 h-3 bg-black/50 rounded-full mt-2 animate-bounce"></div>
         </div>
       </motion.div>
     </section>
