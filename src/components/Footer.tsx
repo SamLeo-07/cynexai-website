@@ -51,7 +51,7 @@ const Footer = () => {
 
   return (
     // Changed background to white, text to black/gray for contrast
-    <footer className="relative bg-white border-t border-gray-200 text-gray-700">
+    <footer className="relative bg-white border-t border-gray-200 text-gray-700 overflow-hidden"> {/* Added overflow-hidden here for the extra black space issue */}
       {/* Background Elements - Changed to subtle gold tints on a light background */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-0 left-1/4 w-64 h-64 bg-[#D4AC34]/5 rounded-full blur-3xl"></div>
@@ -72,24 +72,28 @@ const Footer = () => {
                     className="h-10 w-auto object-contain"
                   />
                 </div>
+                 {/* Added the text logo back for consistency */}
+                <span className="text-2xl font-display font-bold text-black">
+                    CynexAI
+                </span>
               </Link>
 
-              <p className="text-gray-600 mb-6 leading-relaxed"> {/* Text changed to darker gray */}
+              <p className="text-gray-600 mb-6 leading-relaxed">
                 Transforming careers through cutting-edge technology education.
                 Join thousands of students who have successfully transitioned into
                 high-paying tech roles with our industry-aligned programs.
               </p>
 
               <div className="space-y-3">
-                <div className="flex items-center text-gray-600"> {/* Text changed to darker gray */}
+                <div className="flex items-center text-gray-600">
                   <Phone className="w-4 h-4 mr-3 text-[#D4AC34]" />
                   <span>+91 9966639869</span>
                 </div>
-                <div className="flex items-center text-gray-600"> {/* Text changed to darker gray */}
+                <div className="flex items-center text-gray-600">
                   <Mail className="w-4 h-4 mr-3 text-[#D4AC34]" />
                   <span>contact@Cynexai.in</span>
                 </div>
-                <div className="flex items-start text-gray-600"> {/* Text changed to darker gray */}
+                <div className="flex items-start text-gray-600">
                   <MapPin className="w-4 h-4 mr-3 mt-1 text-[#D4AC34] flex-shrink-0" />
                   <span className="text-sm">
                     MIG-215, Rd Number 1, KPHB Phase I,
@@ -101,13 +105,13 @@ const Footer = () => {
 
             {/* Courses */}
             <div>
-              <h3 className="text-black font-semibold mb-6">Popular Courses</h3> {/* Text changed to black */}
+              <h3 className="text-black font-semibold mb-6">Popular Courses</h3>
               <ul className="space-y-3">
                 {footerLinks.courses.map((link, index) => (
                   <li key={index}>
                     <Link
                       to={link.href}
-                      className="text-gray-600 hover:text-[#D4AC34] transition-colors duration-200 text-sm" // Text changed to darker gray
+                      className="text-gray-600 hover:text-[#D4AC34] transition-colors duration-200 text-sm"
                     >
                       {link.name}
                     </Link>
@@ -118,13 +122,13 @@ const Footer = () => {
 
             {/* Company */}
             <div>
-              <h3 className="text-black font-semibold mb-6">Company</h3> {/* Text changed to black */}
+              <h3 className="text-black font-semibold mb-6">Company</h3>
               <ul className="space-y-3">
                 {footerLinks.company.map((link, index) => (
                   <li key={index}>
                     <a
                       href={link.href}
-                      className="text-gray-600 hover:text-[#D4AC34] transition-colors duration-200 text-sm" // Text changed to darker gray
+                      className="text-gray-600 hover:text-[#D4AC34] transition-colors duration-200 text-sm"
                     >
                       {link.name}
                     </a>
@@ -135,13 +139,13 @@ const Footer = () => {
 
             {/* Support */}
             <div>
-              <h3 className="text-black font-semibold mb-6">Support</h3> {/* Text changed to black */}
+              <h3 className="text-black font-semibold mb-6">Support</h3>
               <ul className="space-y-3">
                 {footerLinks.support.map((link, index) => (
                   <li key={index}>
                     <Link
                       to={link.href}
-                      className="text-gray-600 hover:text-[#D4AC34] transition-colors duration-200 text-sm" // Text changed to darker gray
+                      className="text-gray-600 hover:text-[#D4AC34] transition-colors duration-200 text-sm"
                     >
                       {link.name}
                     </Link>
@@ -153,24 +157,27 @@ const Footer = () => {
         </div>
 
         {/* Newsletter Section */}
-        <div className="py-8 border-t border-gray-200"> {/* Border changed to light gray */}
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="py-8 border-t border-gray-200">
+          {/* Changed 'flex' to 'block' on small screens for full width, then back to flex on md+ */}
+          {/* Added 'w-full' to the parent div of input/button to ensure it takes available space */}
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4"> {/* Reduced gap slightly for mobile */}
             <div>
-              <h3 className="text-black font-semibold mb-2">Stay Updated</h3> {/* Text changed to black */}
-              <p className="text-gray-600 text-sm"> {/* Text changed to darker gray */}
+              <h3 className="text-black font-semibold mb-2">Stay Updated</h3>
+              <p className="text-gray-600 text-sm">
                 Get the latest updates on new courses and tech trends
               </p>
             </div>
-            <div className="flex w-full md:w-auto">
+            {/* Added flex-nowrap to prevent wrapping, use min-w-0 on input for shrinking */}
+            <div className="flex w-full md:w-auto flex-nowrap">
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 md:w-64 px-4 py-3 bg-gray-100 border border-gray-300 rounded-l-lg text-black placeholder-gray-500 focus:outline-none focus:border-[#D4AC34] focus:ring-2 focus:ring-[#D4AC34]/20" // Input background and text adjusted for light theme
+                className="flex-1 min-w-0 px-4 py-3 bg-gray-100 border border-gray-300 rounded-l-lg text-black placeholder-gray-500 focus:outline-none focus:border-[#D4AC34] focus:ring-2 focus:ring-[#D4AC34]/20" // Input takes available space, allows shrinking
               />
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-6 py-3 bg-[#D4AC34] text-black hover:bg-yellow-600 rounded-r-lg font-medium transition-all duration-300"
+                className="px-6 py-3 bg-[#D4AC34] text-black hover:bg-yellow-600 rounded-r-lg font-medium transition-all duration-300 flex-shrink-0" // Add flex-shrink-0 to button
               >
                 Subscribe
               </motion.button>
@@ -179,9 +186,9 @@ const Footer = () => {
         </div>
 
         {/* Bottom Footer */}
-        <div className="py-6 border-t border-gray-200"> {/* Border changed to light gray */}
+        <div className="py-6 border-t border-gray-200">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="text-gray-600 text-sm"> {/* Text changed to darker gray */}
+            <div className="text-gray-600 text-sm text-center md:text-left"> {/* Added text-center for mobile */}
               © 2025 CynexAI. All rights reserved. | Privacy Policy | Terms of Service
             </div>
 
@@ -193,7 +200,7 @@ const Footer = () => {
                     key={index}
                     href={social.href}
                     whileHover={{ scale: 1.2, y: -2 }}
-                    className={`text-gray-500 ${social.hoverColor} transition-colors duration-200`} // Default social icons to gray-500 for light background
+                    className={`text-gray-500 ${social.hoverColor} transition-colors duration-200`}
                   >
                     <IconComponent className="w-5 h-5" />
                   </motion.a>
