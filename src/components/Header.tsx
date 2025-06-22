@@ -59,7 +59,7 @@ export default function Header() {
             <img
               src="/CynexAI.in.svg"
               alt="CynexAI Logo"
-              className="h-12 w-12 lg:h-16 lg:w-16 object-contain" // Made logo bigger
+              className="h-12 w-12 lg:h-16 lg:w-22 object-contain" // Made logo bigger
             />
           </a>
 
