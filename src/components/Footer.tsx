@@ -72,9 +72,6 @@ const Footer = () => {
                     className="h-10 w-auto object-contain"
                   />
                 </div>
-                <span className="text-2xl font-display font-bold text-black"> {/* Text changed to black */}
-                  CynexAI
-                </span>
               </Link>
 
               <p className="text-gray-600 mb-6 leading-relaxed"> {/* Text changed to darker gray */}
