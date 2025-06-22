@@ -14,33 +14,42 @@ const Skills = () => {
       icon: Brain,
       title: 'Critical Thinking',
       description: 'Develop analytical skills to solve complex problems and make data-driven decisions in technology.',
-      color: 'from-purple-500 to-pink-500',
-      bgColor: 'bg-purple-500/10',
-      borderColor: 'border-purple-500/30',
+      // All color properties changed to use the gold theme
+      color: 'from-[#D4AC34] to-yellow-500', // Subtle gradient from main gold to a slightly lighter yellow
+      bgColor: 'bg-[#D4AC34]/10',
+      borderColor: 'border-[#D4AC34]/30',
+      textColor: 'text-black', // Set text color for the title
+      descriptionColor: 'text-gray-700', // Set text color for description
     },
     {
       icon: Target,
       title: 'Problem Solving',
       description: 'Master systematic approaches to identify, analyze, and resolve technical challenges efficiently.',
-      color: 'from-cyan-500 to-blue-500',
-      bgColor: 'bg-cyan-500/10',
-      borderColor: 'border-cyan-500/30',
+      color: 'from-[#D4AC34] to-orange-500', // Another gold-based gradient
+      bgColor: 'bg-[#D4AC34]/10',
+      borderColor: 'border-[#D4AC34]/30',
+      textColor: 'text-black',
+      descriptionColor: 'text-gray-700',
     },
     {
       icon: Lightbulb,
       title: 'Creative Thinking',
       description: 'Foster innovation and creativity to develop unique solutions and breakthrough technologies.',
-      color: 'from-yellow-500 to-orange-500',
-      bgColor: 'bg-yellow-500/10',
-      borderColor: 'border-yellow-500/30',
+      color: 'from-[#D4AC34] to-amber-500', // Another gold-based gradient
+      bgColor: 'bg-[#D4AC34]/10',
+      borderColor: 'border-[#D4AC34]/30',
+      textColor: 'text-black',
+      descriptionColor: 'text-gray-700',
     },
     {
       icon: Users,
       title: 'Interpersonal Skills',
       description: 'Build strong communication and collaboration skills essential for team success in tech.',
-      color: 'from-green-500 to-emerald-500',
-      bgColor: 'bg-green-500/10',
-      borderColor: 'border-green-500/30',
+      color: 'from-[#D4AC34] to-yellow-600', // Another gold-based gradient
+      bgColor: 'bg-[#D4AC34]/10',
+      borderColor: 'border-[#D4AC34]/30',
+      textColor: 'text-black',
+      descriptionColor: 'text-gray-700',
     },
   ];
 
@@ -67,11 +76,11 @@ const Skills = () => {
   };
 
   return (
-    <section id="skills" className="py-20 relative">
+    <section id="skills" className="py-20 relative bg-white"> {/* Changed section background to white */}
       {/* Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 -left-20 w-40 h-40 bg-purple-500/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-1/4 -right-20 w-60 h-60 bg-cyan-500/10 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/4 -left-20 w-40 h-40 bg-[#D4AC34]/10 rounded-full blur-3xl"></div> {/* Gold tint */}
+        <div className="absolute bottom-1/4 -right-20 w-60 h-60 bg-[#D4AC34]/10 rounded-full blur-3xl"></div> {/* Gold tint */}
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -84,15 +93,15 @@ const Skills = () => {
         >
           <motion.h2
             variants={itemVariants}
-            className="text-4xl md:text-5xl font-display font-bold mb-6"
+            className="text-4xl md:text-5xl font-display font-bold mb-6 text-black" // Changed text to black
           >
-            <span className="bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">
+            <span className="text-[#D4AC34]"> {/* Changed to gold text */}
               Essential Skills
             </span>
           </motion.h2>
           <motion.p
             variants={itemVariants}
-            className="text-xl text-gray-300 max-w-3xl mx-auto"
+            className="text-xl text-black/80 max-w-3xl mx-auto" // Changed text to black/80
           >
             Beyond technical expertise, we develop the core skills that make you a well-rounded technology professional
           </motion.p>
@@ -111,17 +120,17 @@ const Skills = () => {
                 key={index}
                 variants={itemVariants}
                 whileHover={{ y: -10, scale: 1.05 }}
-                className={`group ${skill.bgColor} backdrop-blur-sm rounded-2xl p-8 border ${skill.borderColor} hover:border-opacity-60 transition-all duration-300 hover:shadow-2xl text-center`}
+                className={`group bg-white rounded-2xl p-8 border ${skill.borderColor} hover:border-opacity-60 transition-all duration-300 hover:shadow-xl text-center`} // Changed background to white, hover shadow
               >
                 <div className={`inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-r ${skill.color} mb-6 group-hover:scale-110 transition-transform duration-300`}>
                   <IconComponent className="w-8 h-8 text-white" />
                 </div>
                 
-                <h3 className="text-xl font-semibold text-white mb-4 group-hover:text-purple-300 transition-colors">
+                <h3 className={`text-xl font-semibold ${skill.textColor} mb-4 group-hover:text-[#D4AC34] transition-colors`}> {/* Dynamic text color, gold on hover */}
                   {skill.title}
                 </h3>
                 
-                <p className="text-gray-400 leading-relaxed">
+                <p className={`${skill.descriptionColor} leading-relaxed`}> {/* Dynamic description color */}
                   {skill.description}
                 </p>
 
@@ -147,21 +156,21 @@ const Skills = () => {
           animate={inView ? "visible" : "hidden"}
           className="mt-20 text-center"
         >
-          <div className="bg-white/5 backdrop-blur-sm rounded-3xl p-8 border border-white/10">
-            <h3 className="text-2xl font-semibold text-white mb-6">
+          <div className="bg-[#D4AC34]/10 backdrop-blur-sm rounded-3xl p-8 border border-[#D4AC34]/30 shadow-lg"> {/* Gold tinted background, gold border */}
+            <h3 className="text-2xl font-semibold text-black mb-6"> {/* Black text */}
               Why These Skills Matter
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
               <div>
-                <h4 className="text-lg font-medium text-purple-300 mb-3">In the Workplace</h4>
-                <p className="text-gray-400">
+                <h4 className="text-lg font-medium text-[#D4AC34] mb-3">In the Workplace</h4> {/* Gold text */}
+                <p className="text-gray-800"> {/* Darker gray text */}
                   These soft skills complement your technical abilities, making you a valuable team member 
                   who can communicate effectively, solve problems creatively, and adapt to changing requirements.
                 </p>
               </div>
               <div>
-                <h4 className="text-lg font-medium text-cyan-300 mb-3">For Career Growth</h4>
-                <p className="text-gray-400">
+                <h4 className="text-lg font-medium text-[#D4AC34] mb-3">For Career Growth</h4> {/* Gold text */}
+                <p className="text-gray-800"> {/* Darker gray text */}
                   Leadership positions require more than technical knowledge. These skills prepare you 
                   for management roles and help you become a well-rounded technology professional.
                 </p>
