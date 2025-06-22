@@ -67,14 +67,6 @@ export default function Header() {
               // Increased logo image size here: h-16 w-16 lg:h-20 lg:w-20
               className="h-16 w-16 lg:h-20 lg:w-20 object-contain"
             />
-            <span
-                // Increased font size for the text logo: text-3xl lg:text-4xl
-                className={`font-display font-bold text-3xl lg:text-4xl transition-colors duration-200 ${
-                    scrolled ? 'text-white' : 'text-black'
-                }`}
-            >
-                CynexAI
-            </span>
           </a>
 
           {/* Desktop nav */}
