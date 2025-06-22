@@ -22,11 +22,6 @@ export default {
           100: '#FFFFFF'      // for card backgrounds/text blocks
         },
         secondary: '#FFFFFF',
-        gradient: {
-          from: '#d8b4fe',
-          via: '#c084fc',
-          to: '#7dd3fc',
-        }
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
