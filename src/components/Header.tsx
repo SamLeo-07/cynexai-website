@@ -71,14 +71,6 @@ export default function Header() {
               alt="CynexAI Logo"
               className="h-12 w-12 lg:h-16 lg:w-22 object-contain" // Made logo bigger
             />
-            {/* Added the text logo back, using black when transparent, white when gold */}
-            <span
-                className={`font-display font-bold text-2xl lg:text-3xl transition-colors duration-200 ${
-                    scrolled ? 'text-white' : 'text-black'
-                }`}
-            >
-                CynexAI
-            </span>
           </a>
 
           {/* Desktop nav */}
