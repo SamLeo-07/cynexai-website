@@ -27,7 +27,7 @@ const Courses = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div ref={ref} variants={containerVariants} initial="hidden" animate={inView ? 'visible' : 'hidden'} className="text-center mb-16">
           <motion.h2 variants={itemVariants} className="text-4xl md:text-5xl font-display font-bold mb-6">
-            <span className="text-[#72b8f8]">Transform Your Skills</span>
+            <span className="text-[#26abff]">Transform Your Skills</span>
           </motion.h2>
           <motion.p variants={itemVariants} className="text-xl text-gray-700 max-w-3xl mx-auto">
             Choose from our comprehensive range of courses designed to prepare you for the future of technology
@@ -36,7 +36,7 @@ const Courses = () => {
 
         <motion.div variants={containerVariants} initial="hidden" animate={inView ? 'visible' : 'hidden'} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {courses.map((course, index) => (
-            <motion.div key={course.id} variants={itemVariants} whileHover={{ y: -10, scale: 1.02 }} className="group bg-gray-50 rounded-2xl overflow-hidden border border-gray-200 hover:border-[#72b8f8] transition-all duration-300 shadow-sm">
+            <motion.div key={course.id} variants={itemVariants} whileHover={{ y: -10, scale: 1.02 }} className="group bg-gray-50 rounded-2xl overflow-hidden border border-gray-200 hover:border-[#26abff] transition-all duration-300 shadow-sm">
               <div className="relative overflow-hidden">
                 <img src={course.image} alt={course.title} className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500" />
               </div>
@@ -57,13 +57,13 @@ const Courses = () => {
                     <Users className="w-4 h-4 mr-1 text-gray-500" />{course.students}
                   </div>
                   <div className="flex items-center">
-                    <Star className="w-4 h-4 mr-1 text-[#72b8f8]" />{course.rating}
+                    <Star className="w-4 h-4 mr-1 text-[#26abff]" />{course.rating}
                   </div>
                 </div>
 
                 <div className="flex flex-wrap gap-2 mb-6">
                   {course.skills.slice(0, 3).map((skill, skillIndex) => (
-                    <span key={skillIndex} className="px-2 py-1 bg-[#72b8f8]/10 text-[#72b8f8] rounded-md text-xs border border-[#72b8f8]/30">
+                    <span key={skillIndex} className="px-2 py-1 bg-[#26abff]/10 text-[#26abff] rounded-md text-xs border border-[#26abff]/30">
                       {skill}
                     </span>
                   ))}
@@ -74,7 +74,7 @@ const Courses = () => {
                   )}
                 </div>
 
-                <Link to={`/course/${course.id}`} className="w-full block bg-[#72b8f8] text-white py-3 px-4 rounded-lg font-medium text-center hover:bg-[#c09a2f] transition-colors duration-300 flex items-center justify-center">
+                <Link to={`/course/${course.id}`} className="w-full block bg-[#26abff] text-white py-3 px-4 rounded-lg font-medium text-center hover:bg-[#c09a2f] transition-colors duration-300 flex items-center justify-center">
                   Learn More
                   <ArrowRight className="ml-2 w-4 h-4 transition-transform" />
                 </Link>

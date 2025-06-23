@@ -53,18 +53,18 @@ const ApplicationForm = () => {
           animate={{ scale: 1, opacity: 1 }}
           className="max-w-md mx-auto px-4"
         >
-          <div className="bg-[#FFFFFF] text-[#010203] rounded-2xl p-8 border border-[#72b8f8]/20 text-center">
+          <div className="bg-[#FFFFFF] text-[#010203] rounded-2xl p-8 border border-[#26abff]/20 text-center">
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
-              className="w-16 h-16 bg-[#72b8f8] rounded-full flex items-center justify-center mx-auto mb-6"
+              className="w-16 h-16 bg-[#26abff] rounded-full flex items-center justify-center mx-auto mb-6"
             >
               <CheckCircle className="w-8 h-8 text-white" />
             </motion.div>
             <h1 className="text-2xl font-bold mb-4">Thank You for Applying!</h1>
             <p className="text-[#010203]/80 mb-6">
-              Your application for <span className="text-[#72b8f8] font-medium">{courseName}</span> has been submitted successfully. Our team will review your application and contact you within 24-48 hours.
+              Your application for <span className="text-[#26abff] font-medium">{courseName}</span> has been submitted successfully. Our team will review your application and contact you within 24-48 hours.
             </p>
             <div className="space-y-3 mb-8 text-[#010203]/80">
               <div className="flex items-center justify-between text-sm">
@@ -77,19 +77,19 @@ const ApplicationForm = () => {
               </div>
               <div className="flex items-center justify-between text-sm">
                 <span>Status:</span>
-                <span className="text-[#72b8f8] font-medium">Under Review</span>
+                <span className="text-[#26abff] font-medium">Under Review</span>
               </div>
             </div>
             <div className="space-y-3">
               <Link
                 to="/"
-                className="w-full bg-[#72b8f8] text-white py-3 px-4 rounded-lg font-medium block text-center hover:bg-[#c09a2f] transition-colors duration-300"
+                className="w-full bg-[#26abff] text-white py-3 px-4 rounded-lg font-medium block text-center hover:bg-[#c09a2f] transition-colors duration-300"
               >
                 Back to Home
               </Link>
               <Link
                 to={`/course/${courseId}`}
-                className="w-full border-2 border-[#72b8f8] text-[#010203] py-3 px-4 rounded-lg font-medium block text-center hover:bg-[#72b8f8]/10 transition-colors duration-300"
+                className="w-full border-2 border-[#26abff] text-[#010203] py-3 px-4 rounded-lg font-medium block text-center hover:bg-[#26abff]/10 transition-colors duration-300"
               >
                 View Course Details
               </Link>
@@ -106,19 +106,19 @@ const ApplicationForm = () => {
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
           <Link
             to={`/course/${courseId}`}
-            className="inline-flex items-center text-[#72b8f8] hover:text-[#a3852c] transition-colors mb-6"
+            className="inline-flex items-center text-[#26abff] hover:text-[#a3852c] transition-colors mb-6"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Course
           </Link>
           <h1 className="text-3xl md:text-4xl font-display font-bold text-[#010203] mb-4">
-            Apply for <span className="text-[#72b8f8]">{courseName}</span>
+            Apply for <span className="text-[#26abff]">{courseName}</span>
           </h1>
           <p className="text-[#010203]/80 text-lg">
             Take the first step towards transforming your career. Fill out the form below and our team will get in touch with you.
           </p>
         </motion.div>
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="bg-[#FFFFFF] text-[#010203] rounded-2xl p-8 border border-[#72b8f8]/20">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="bg-[#FFFFFF] text-[#010203] rounded-2xl p-8 border border-[#26abff]/20">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label className="block text-sm font-medium text-[#010203] mb-2">
@@ -130,7 +130,7 @@ const ApplicationForm = () => {
                 value={formData.name}
                 onChange={handleInputChange}
                 required
-                className="w-full px-4 py-3 bg-[#F5F5F5] border border-[#72b8f8]/20 rounded-lg text-[#010203] placeholder-[#010203]/50 focus:outline-none focus:ring-2 focus:ring-[#72b8f8]/20 transition-colors duration-300"
+                className="w-full px-4 py-3 bg-[#F5F5F5] border border-[#26abff]/20 rounded-lg text-[#010203] placeholder-[#010203]/50 focus:outline-none focus:ring-2 focus:ring-[#26abff]/20 transition-colors duration-300"
                 placeholder="Enter your full name"
               />
             </div>
@@ -144,7 +144,7 @@ const ApplicationForm = () => {
                 value={formData.email}
                 onChange={handleInputChange}
                 required
-                className="w-full px-4 py-3 bg-[#F5F5F5] border border-[#72b8f8]/20 rounded-lg text-[#010203] placeholder-[#010203]/50 focus:outline-none focus:ring-2 focus:ring-[#72b8f8]/20 transition-colors duration-300"
+                className="w-full px-4 py-3 bg-[#F5F5F5] border border-[#26abff]/20 rounded-lg text-[#010203] placeholder-[#010203]/50 focus:outline-none focus:ring-2 focus:ring-[#26abff]/20 transition-colors duration-300"
                 placeholder="Enter your email address"
               />
             </div>
@@ -158,7 +158,7 @@ const ApplicationForm = () => {
                 value={formData.phone}
                 onChange={handleInputChange}
                 required
-                className="w-full px-4 py-3 bg-[#F5F5F5] border border-[#72b8f8]/20 rounded-lg text-[#010203] placeholder-[#010203]/50 focus:outline-none focus:ring-2 focus:ring-[#72b8f8]/20 transition-colors duration-300"
+                className="w-full px-4 py-3 bg-[#F5F5F5] border border-[#26abff]/20 rounded-lg text-[#010203] placeholder-[#010203]/50 focus:outline-none focus:ring-2 focus:ring-[#26abff]/20 transition-colors duration-300"
                 placeholder="Enter your phone number"
               />
             </div>
@@ -171,13 +171,13 @@ const ApplicationForm = () => {
                 value={formData.type}
                 onChange={handleInputChange}
                 required
-                className="w-full px-4 py-3 bg-[#F5F5F5] border border-[#72b8f8]/20 rounded-lg text-[#010203] focus:outline-none focus:ring-2 focus:ring-[#72b8f8]/20 transition-colors duration-300"
+                className="w-full px-4 py-3 bg-[#F5F5F5] border border-[#26abff]/20 rounded-lg text-[#010203] focus:outline-none focus:ring-2 focus:ring-[#26abff]/20 transition-colors duration-300"
               >
                 <option value="student" className="bg-[#FFFFFF]">Student</option>
                 <option value="employed" className="bg-[#FFFFFF]">Employed</option>
               </select>
             </div>
-            <div className="bg-[#72b8f8]/10 border border-[#72b8f8]/20 rounded-lg p-4">
+            <div className="bg-[#26abff]/10 border border-[#26abff]/20 rounded-lg p-4">
               <h3 className="text-lg font-semibold text-[#010203] mb-2">Course Details</h3>
               <p className="text-[#010203] font-medium">{courseName}</p>
               <p className="text-[#010203]/70 text-sm mt-1">
@@ -192,7 +192,7 @@ const ApplicationForm = () => {
               className={`w-full py-4 px-6 rounded-lg font-semibold transition-colors duration-300 ${
                 isLoading
                   ? 'bg-[#CCCCCC] cursor-not-allowed'
-                  : 'bg-[#72b8f8] text-[#010203] hover:bg-[#c09a2f]'
+                  : 'bg-[#26abff] text-[#010203] hover:bg-[#c09a2f]'
               }`}
             >
               {isLoading ? (
@@ -205,7 +205,7 @@ const ApplicationForm = () => {
               )}
             </motion.button>
           </form>
-          <div className="mt-8 p-4 bg-[#F5F5F5] rounded-lg border border-[#72b8f8]/20">
+          <div className="mt-8 p-4 bg-[#F5F5F5] rounded-lg border border-[#26abff]/20">
             <h4 className="text-[#010203] font-medium mb-2">What happens next?</h4>
             <ul className="text-[#010203]/70 text-sm space-y-1">
               <li>• Our team will review your application within 24-48 hours</li>
