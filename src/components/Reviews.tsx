@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, easeOut, easeInOut } from 'framer-motion'; // Added easeOut and easeInOut
 import { useInView } from 'react-intersection-observer';
 import { Star, Quote, ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -79,7 +79,7 @@ const Reviews = () => {
       opacity: 1,
       transition: {
         duration: 0.6,
-        ease: "easeOut",
+        ease: easeOut, // Changed from "easeOut" (string) to easeOut (variable)
       },
     },
   };
@@ -127,11 +127,13 @@ const Reviews = () => {
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentReview}
-                // --- CORRECTED ANIMATION: Always slides in from right, exits to left ---
                 initial={{ opacity: 0, x: '100%' }} // Always slide in from the right
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: '-100%' }} // Always slide out to the left
-                transition={{ duration: 0.5 }}
+                // --- MODIFIED TRANSITION FOR SMOOTHER SLIDE ---
+                transition={{ duration: 0.7, ease: [0.6, 0.05, 0.01, 0.9] }} // Using a custom cubic-bezier for a smoother feel
+                // If you prefer a named ease, you could use:
+                // transition={{ duration: 0.7, ease: easeInOut }}
                 className="bg-white rounded-3xl p-8 md:p-12 border border-[#26abff]/30 shadow-xl transition-all duration-300"
               >
                 <div className="flex flex-col md:flex-row items-center gap-8">
