@@ -17,7 +17,7 @@ const Reviews = () => {
       course: 'Data Science with AI',
       rating: 5,
       text: 'CynexAI transformed my career completely. The hands-on approach and real-world projects gave me the confidence to transition from a non-tech background to becoming a data scientist at a top company.',
-      image: '/images/Priya.png',
+      image: '/Priya.png',
     },
     {
       name: 'Rahul Kumar',
@@ -25,7 +25,7 @@ const Reviews = () => {
       course: 'Machine Learning',
       rating: 5,
       text: 'The instructors at CynexAI are industry experts who bring real-world experience to the classroom. The curriculum is cutting-edge and perfectly aligned with industry requirements.',
-      image: '/images/Rahul.png',
+      image: '/Rahul.png',
     },
     {
       name: 'Sneha Patel',
@@ -33,7 +33,7 @@ const Reviews = () => {
       course: 'Web Development',
       rating: 5,
       text: 'From zero coding knowledge to landing my dream job in just 4 months! The support system and mentorship at CynexAI is unparalleled. Highly recommend to anyone looking to break into tech.',
-      image: '/images/Sneha.png',
+      image: '/Sneha.png',
     },
     {
       name: 'Arjun Reddy',
@@ -41,7 +41,7 @@ const Reviews = () => {
       course: 'DevOps/AWS',
       rating: 5,
       text: 'The practical labs and cloud projects were game-changers. I gained hands-on experience with AWS services that directly helped me in my interviews and current role. Worth every penny!',
-      image: '/images/Arjunreddy.png',
+      image: '/Arjunreddy.png',
     },
   ];
 
