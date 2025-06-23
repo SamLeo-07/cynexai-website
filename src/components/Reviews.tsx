@@ -17,7 +17,7 @@ const Reviews = () => {
       course: 'Data Science with AI',
       rating: 5,
       text: 'CynexAI transformed my career completely. The hands-on approach and real-world projects gave me the confidence to transition from a non-tech background to becoming a data scientist at a top company.',
-      image: 'https://images.pexels.com/photos/3785077/pexels-photo-3785077.jpeg?auto=compress&cs=tinysrgb&w=150',
+      image: '/images/Priya.png',
     },
     {
       name: 'Rahul Kumar',
@@ -25,7 +25,7 @@ const Reviews = () => {
       course: 'Machine Learning',
       rating: 5,
       text: 'The instructors at CynexAI are industry experts who bring real-world experience to the classroom. The curriculum is cutting-edge and perfectly aligned with industry requirements.',
-      image: 'https://images.pexels.com/photos/3778876/pexels-photo-3778876.jpeg?auto=compress&cs=tinysrgb&w=150',
+      image: '/images/Rahul.png',
     },
     {
       name: 'Sneha Patel',
@@ -33,7 +33,7 @@ const Reviews = () => {
       course: 'Web Development',
       rating: 5,
       text: 'From zero coding knowledge to landing my dream job in just 4 months! The support system and mentorship at CynexAI is unparalleled. Highly recommend to anyone looking to break into tech.',
-      image: 'https://images.pexels.com/photos/3785079/pexels-photo-3785079.jpeg?auto=compress&cs=tinysrgb&w=150',
+      image: '/images/Sneha.png',
     },
     {
       name: 'Arjun Reddy',
@@ -41,7 +41,7 @@ const Reviews = () => {
       course: 'DevOps/AWS',
       rating: 5,
       text: 'The practical labs and cloud projects were game-changers. I gained hands-on experience with AWS services that directly helped me in my interviews and current role. Worth every penny!',
-      image: 'https://images.pexels.com/photos/3778874/pexels-photo-3778874.jpeg?auto=compress&cs=tinysrgb&w=150',
+      image: '/images/Arjunreddy.png',
     },
   ];
 
@@ -85,11 +85,11 @@ const Reviews = () => {
   };
 
   return (
-    <section id="reviews" className="py-20 relative overflow-hidden bg-white"> {/* Changed background to white */}
+    <section id="reviews" className="py-20 relative overflow-hidden bg-white">
       {/* Background Elements */}
       <div className="absolute inset-0">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-[#26abff]/10 rounded-full blur-3xl animate-pulse-slow"></div> {/* Gold tint */}
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#26abff]/10 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '2s' }}></div> {/* Gold tint */}
+        <div className="absolute top-20 left-10 w-72 h-72 bg-[#26abff]/10 rounded-full blur-3xl animate-pulse-slow"></div>
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#26abff]/10 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '2s' }}></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -102,15 +102,15 @@ const Reviews = () => {
         >
           <motion.h2
             variants={itemVariants}
-            className="text-4xl md:text-5xl font-display font-bold mb-6 text-black" // Changed text to black
+            className="text-4xl md:text-5xl font-display font-bold mb-6 text-black"
           >
-            <span className="text-[#26abff]"> {/* Changed to gold text */}
+            <span className="text-[#26abff]">
               Student Success Stories
             </span>
           </motion.h2>
           <motion.p
             variants={itemVariants}
-            className="text-xl text-black/80 max-w-3xl mx-auto" // Changed text to black/80
+            className="text-xl text-black/80 max-w-3xl mx-auto"
           >
             Hear from our graduates who have transformed their careers and achieved their dreams
           </motion.p>
@@ -127,23 +127,24 @@ const Reviews = () => {
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentReview}
-                initial={{ opacity: 0, x: 100 }}
+                // --- CORRECTED ANIMATION: Always slides in from right, exits to left ---
+                initial={{ opacity: 0, x: '100%' }} // Always slide in from the right
                 animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -100 }}
+                exit={{ opacity: 0, x: '-100%' }} // Always slide out to the left
                 transition={{ duration: 0.5 }}
-                className="bg-white rounded-3xl p-8 md:p-12 border border-[#26abff]/30 shadow-xl transition-all duration-300" // Changed background to white, border to gold
+                className="bg-white rounded-3xl p-8 md:p-12 border border-[#26abff]/30 shadow-xl transition-all duration-300"
               >
                 <div className="flex flex-col md:flex-row items-center gap-8">
                   {/* Profile Image */}
                   <div className="relative flex-shrink-0">
-                    <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden border-4 border-[#26abff] p-1"> {/* Solid gold border */}
+                    <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden border-4 border-[#26abff] p-1">
                       <img
                         src={reviews[currentReview].image}
                         alt={reviews[currentReview].name}
                         className="w-full h-full object-cover rounded-full"
                       />
                     </div>
-                    <div className="absolute -top-2 -right-2 bg-[#26abff] rounded-full p-2"> {/* Gold quote bubble */}
+                    <div className="absolute -top-2 -right-2 bg-[#26abff] rounded-full p-2">
                       <Quote className="w-4 h-4 text-white" />
                     </div>
                   </div>
@@ -158,19 +159,19 @@ const Reviews = () => {
                     </div>
 
                     {/* Review Text */}
-                    <p className="text-lg md:text-xl text-gray-800 mb-6 leading-relaxed italic"> {/* Changed text to darker gray */}
+                    <p className="text-lg md:text-xl text-gray-800 mb-6 leading-relaxed italic">
                       "{reviews[currentReview].text}"
                     </p>
 
                     {/* Reviewer Info */}
                     <div>
-                      <h4 className="text-xl font-semibold text-black mb-1"> {/* Changed text to black */}
+                      <h4 className="text-xl font-semibold text-black mb-1">
                         {reviews[currentReview].name}
                       </h4>
-                      <p className="text-[#26abff] font-medium mb-1"> {/* Changed text to gold */}
+                      <p className="text-[#26abff] font-medium mb-1">
                         {reviews[currentReview].role}
                       </p>
-                      <p className="text-sm text-gray-600"> {/* Changed text to darker gray */}
+                      <p className="text-sm text-gray-600">
                         Graduate of {reviews[currentReview].course}
                       </p>
                     </div>
@@ -182,16 +183,16 @@ const Reviews = () => {
             {/* Navigation Buttons */}
             <button
               onClick={prevReview}
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-[#26abff]/10 hover:bg-[#26abff]/20 backdrop-blur-sm rounded-full p-3 border border-[#26abff]/20 hover:border-[#26abff]/50 transition-all duration-300 group" // Gold tint/border
+              className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-[#26abff]/10 hover:bg-[#26abff]/20 backdrop-blur-sm rounded-full p-3 border border-[#26abff]/20 hover:border-[#26abff]/50 transition-all duration-300 group"
             >
-              <ChevronLeft className="w-6 h-6 text-[#26abff] group-hover:text-white" /> {/* Gold icon, white on hover */}
+              <ChevronLeft className="w-6 h-6 text-[#26abff] group-hover:text-white" />
             </button>
-            
+
             <button
               onClick={nextReview}
-              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-[#26abff]/10 hover:bg-[#26abff]/20 backdrop-blur-sm rounded-full p-3 border border-[#26abff]/20 hover:border-[#26abff]/50 transition-all duration-300 group" // Gold tint/border
+              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-[#26abff]/10 hover:bg-[#26abff]/20 backdrop-blur-sm rounded-full p-3 border border-[#26abff]/20 hover:border-[#26abff]/50 transition-all duration-300 group"
             >
-              <ChevronRight className="w-6 h-6 text-[#26abff] group-hover:text-white" /> {/* Gold icon, white on hover */}
+              <ChevronRight className="w-6 h-6 text-[#26abff] group-hover:text-white" />
             </button>
           </div>
 
@@ -203,8 +204,8 @@ const Reviews = () => {
                 onClick={() => setCurrentReview(index)}
                 className={`w-3 h-3 rounded-full transition-all duration-300 ${
                   index === currentReview
-                    ? 'bg-[#26abff] scale-125' // Solid gold when active
-                    : 'bg-gray-300 hover:bg-gray-400' // Darker gray when inactive
+                    ? 'bg-[#26abff] scale-125'
+                    : 'bg-gray-300 hover:bg-gray-400'
                 }`}
               />
             ))}
@@ -217,10 +218,10 @@ const Reviews = () => {
                 key={index}
                 whileHover={{ y: -5 }}
                 onClick={() => setCurrentReview(index)}
-                className={`cursor-pointer bg-white rounded-xl p-4 border transition-all duration-300 shadow-sm ${ // White background
+                className={`cursor-pointer bg-white rounded-xl p-4 border transition-all duration-300 shadow-sm ${
                   index === currentReview
-                    ? 'border-[#26abff] bg-[#26abff]/10' // Gold border/tint when active
-                    : 'border-gray-200 hover:border-gray-300' // Lighter gray border when inactive
+                    ? 'border-[#26abff] bg-[#26abff]/10'
+                    : 'border-gray-200 hover:border-gray-300'
                 }`}
               >
                 <div className="flex items-center space-x-3 mb-3">
@@ -230,8 +231,8 @@ const Reviews = () => {
                     className="w-10 h-10 rounded-full object-cover"
                   />
                   <div>
-                    <h5 className="text-sm font-medium text-black">{review.name}</h5> {/* Black text */}
-                    <p className="text-xs text-[#26abff]">{review.role}</p> {/* Gold text */}
+                    <h5 className="text-sm font-medium text-black">{review.name}</h5>
+                    <p className="text-xs text-[#26abff]">{review.role}</p>
                   </div>
                 </div>
                 <div className="flex mb-2">
@@ -239,7 +240,7 @@ const Reviews = () => {
                     <Star key={i} className="w-3 h-3 text-yellow-400 fill-current" />
                   ))}
                 </div>
-                <p className="text-xs text-gray-700 line-clamp-3">{review.text}</p> {/* Darker gray text */}
+                <p className="text-xs text-gray-700 line-clamp-3">{review.text}</p>
               </motion.div>
             ))}
           </div>
