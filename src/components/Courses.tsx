@@ -8,15 +8,83 @@ const Courses = () => {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
 
   const courses = [
-    { id: 'data-science-ai', title: 'Data Science & Machine Learning', description: 'Master data analysis, machine learning algorithms, and AI implementation for real-world applications.', image: 'https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=800', duration: '6 months', students: '150+', rating: 4.9, level: 'Intermediate', skills: ['Python', 'TensorFlow', 'Pandas', 'Scikit-learn'] },
-    { id: 'machine-learning', title: 'Artificial Intelligence & Generative AI', description: 'Deep dive into ML algorithms, neural networks, and predictive modeling techniques.', image: 'https://images.pexels.com/photos/8386434/pexels-photo-8386434.jpeg?auto=compress&cs=tinysrgb&w=800', duration: '4 months', students: '200+', rating: 4.8, level: 'Advanced', skills: ['Python', 'PyTorch', 'Keras', 'OpenCV'] },
-    { id: 'llm-engineering', title: 'DevOps & Cloud Technologies', description: 'Build and deploy Large Language Models, understand transformers and modern NLP techniques.', image: 'https://images.pexels.com/photos/8386422/pexels-photo-8386422.jpeg?auto=compress&cs=tinysrgb&w=800', duration: '5 months', students: '80+', rating: 4.9, level: 'Expert', skills: ['Transformers', 'Hugging Face', 'BERT', 'GPT'] },
-    { id: 'generative-ai', title: 'Python Programming', description: 'Create AI systems that generate content, from text to images using cutting-edge techniques.', image: 'https://images.pexels.com/photos/8386427/pexels-photo-8386427.jpeg?auto=compress&cs=tinysrgb&w=800', duration: '4 months', students: '120+', rating: 4.7, level: 'Advanced', skills: ['GANs', 'VAEs', 'Diffusion Models', 'DALL-E'] },
-    { id: 'java-python', title: 'Software Testing (Manual + Automation)', description: 'Master programming fundamentals with Java and Python for enterprise and AI development.', image: 'https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800', duration: '3 months', students: '300+', rating: 4.6, level: 'Beginner', skills: ['Java', 'Python', 'OOP', 'Data Structures'] },
-    { id: 'devops-aws', title: 'SAP (Systems, Applications, and Products in Data Processing)', description: 'Learn cloud infrastructure, CI/CD pipelines, and deployment strategies on AWS.', image: 'https://images.pexels.com/photos/1181298/pexels-photo-1181298.jpeg?auto=compress&cs=tinysrgb&w=800', duration: '5 months', students: '180+', rating: 4.8, level: 'Intermediate', skills: ['AWS', 'Docker', 'Kubernetes', 'Jenkins'] },
-    { id: 'web-development', title: 'Web Development', description: 'Build modern, responsive web applications using the latest frameworks and technologies.', image: 'https://images.pexels.com/photos/1181244/pexels-photo-1181244.jpeg?auto=compress&cs=tinysrgb&w=800', duration: '4 months', students: '250+', rating: 4.7, level: 'Beginner', skills: ['React', 'Node.js', 'MongoDB', 'TypeScript'] },
-    { id: 'testing', title: 'Testing', description: 'Master software testing methodologies, automation frameworks, and quality assurance.', image: 'https://images.pexels.com/photos/1181263/pexels-photo-1181263.jpeg?auto=compress&cs=tinysrgb&w=800', duration: '3 months', students: '140+', rating: 4.5, level: 'Intermediate', skills: ['Selenium', 'Jest', 'Cypress', 'API Testing'] },
-    { id: 'sap', title: 'SAP', description: 'Enterprise resource planning with SAP modules and business process optimization.', image: 'https://images.pexels.com/photos/1181316/pexels-photo-1181316.jpeg?auto=compress&cs=tinysrgb&w=800', duration: '6 months', students: '90+', rating: 4.6, level: 'Professional', skills: ['SAP HANA', 'ABAP', 'Fiori', 'S/4HANA'] },
+    {
+      id: 'data-science-machine-learning',
+      title: 'Data Science & Machine Learning',
+      description: 'Master data analysis, machine learning algorithms, and AI implementation for real-world applications.',
+      image: 'https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=800',
+      duration: '6 months',
+      students: '150+',
+      rating: 4.9,
+      level: 'Intermediate',
+      skills: ['Python', 'TensorFlow', 'Pandas', 'Scikit-learn']
+    },
+    {
+      id: 'artificial-intelligence-generative-ai',
+      title: 'Artificial Intelligence & Generative AI',
+      description: 'Deep dive into ML algorithms, neural networks, and advanced generative modeling techniques.',
+      image: 'https://images.pexels.com/photos/8386434/pexels-photo-8386434.jpeg?auto=compress&cs=tinysrgb&w=800',
+      duration: '4 months',
+      students: '200+',
+      rating: 4.8,
+      level: 'Advanced',
+      skills: ['Python', 'PyTorch', 'Keras', 'Transformers']
+    },
+    {
+      id: 'full-stack-java-development',
+      title: 'Full Stack Java Development',
+      description: 'Build robust web applications from frontend to backend using Java frameworks like Spring Boot.',
+      image: 'https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800', // Image adjusted to suit programming
+      duration: '5 months',
+      students: '120+',
+      rating: 4.7,
+      level: 'Intermediate',
+      skills: ['Java', 'Spring Boot', 'React/Angular', 'SQL']
+    },
+    {
+      id: 'devops-cloud-technologies',
+      title: 'DevOps & Cloud Technologies',
+      description: 'Learn cloud infrastructure, CI/CD pipelines, and deployment strategies on AWS, Azure, or GCP.',
+      image: 'https://images.pexels.com/photos/8386422/pexels-photo-8386422.jpeg?auto=compress&cs=tinysrgb&w=800',
+      duration: '5 months',
+      students: '180+',
+      rating: 4.8,
+      level: 'Intermediate',
+      skills: ['AWS', 'Docker', 'Kubernetes', 'Jenkins']
+    },
+    {
+      id: 'python-programming',
+      title: 'Python Programming',
+      description: 'Master Python fundamentals for data analysis, web development, and automation.',
+      image: 'https://images.pexels.com/photos/1181244/pexels-photo-1181244.jpeg?auto=compress&cs=tinysrgb&w=800',
+      duration: '3 months',
+      students: '250+',
+      rating: 4.7,
+      level: 'Beginner',
+      skills: ['Python', 'OOP', 'Data Structures', 'Flask/Django']
+    },
+    {
+      id: 'software-testing-manual-automation',
+      title: 'Software Testing (Manual + Automation)',
+      description: 'Master software testing methodologies, automation frameworks, and quality assurance for robust applications.',
+      image: 'https://images.pexels.com/photos/1181263/pexels-photo-1181263.jpeg?auto=compress&cs=tinysrgb&w=800', // Image adjusted to suit testing
+      duration: '3 months',
+      students: '140+',
+      rating: 4.5,
+      level: 'Intermediate',
+      skills: ['Selenium', 'Jest', 'Cypress', 'API Testing']
+    },
+    {
+      id: 'sap-data-processing',
+      title: 'SAP (Systems, Applications, and Products in Data Processing)',
+      description: 'Enterprise resource planning with SAP modules, business process optimization, and implementation strategies.',
+      image: 'https://images.pexels.com/photos/1181316/pexels-photo-1181316.jpeg?auto=compress&cs=tinysrgb&w=800',
+      duration: '6 months',
+      students: '90+',
+      rating: 4.6,
+      level: 'Professional',
+      skills: ['SAP HANA', 'ABAP', 'Fiori', 'S/4HANA']
+    },
   ];
 
   const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.1 } } };
@@ -35,7 +103,7 @@ const Courses = () => {
         </motion.div>
 
         <motion.div variants={containerVariants} initial="hidden" animate={inView ? 'visible' : 'hidden'} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {courses.map((course, index) => (
+          {courses.map((course) => (
             <motion.div key={course.id} variants={itemVariants} whileHover={{ y: -10, scale: 1.02 }} className="group bg-gray-50 rounded-2xl overflow-hidden border border-gray-200 hover:border-[#41c8df] transition-all duration-300 shadow-sm">
               <div className="relative overflow-hidden">
                 <img src={course.image} alt={course.title} className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500" />

@@ -15,408 +15,308 @@ import {
   Target
 } from 'lucide-react';
 
-const CourseDetail = () => {
-  const { courseId } = useParams();
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
-
-  // Course data (in a real app, this would come from an API)
-  const courseData = {
-    'data-science-ai': {
-      title: 'Data Science with AI',
-      subtitle: 'Master the Art of Data-Driven Decision Making',
-      description: 'Comprehensive program covering statistical analysis, machine learning algorithms, and AI implementation for real-world business applications.',
-      image: 'https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=1200',
-      duration: '6 months',
-      placement: '100%',
-      rating: 4.9,
-      level: 'Intermediate',
-      modules: [
-        'Python Programming Fundamentals',
-        'Statistics and Probability',
-        'Data Manipulation with Pandas',
-        'Data Visualization with Matplotlib & Seaborn',
-        'Machine Learning Algorithms',
-        'Deep Learning with TensorFlow',
-        'Natural Language Processing',
-        'Computer Vision',
-        'MLOps and Model Deployment',
-        'Capstone Project'
-      ],
-      skills: ['Python', 'TensorFlow', 'Pandas', 'Scikit-learn', 'NumPy', 'Matplotlib', 'Jupyter', 'SQL'],
-      outcomes: [
-        'Build end-to-end machine learning pipelines',
-        'Implement deep learning models for various applications',
-        'Create interactive data visualizations',
-        'Deploy ML models to production environments',
-        'Work with big data technologies',
-        'Apply AI solutions to business problems'
-      ],
-      prerequisites: [
-        'Basic programming knowledge (any language)',
-        'High school mathematics',
-        'Curiosity about data and technology'
-      ],
-      career: [
-        'Data Scientist',
-        'Machine Learning Engineer',
-        'AI Research Scientist',
-        'Business Intelligence Analyst',
-        'Data Analytics Manager'
-      ]
-    },
-    'machine-learning': {
-      title: 'Machine Learning',
-      subtitle: 'Deep Dive into Intelligent Systems',
-      description: 'Advanced machine learning course covering supervised, unsupervised learning, neural networks, and cutting-edge ML techniques.',
-      image: 'https://images.pexels.com/photos/8386434/pexels-photo-8386434.jpeg?auto=compress&cs=tinysrgb&w=1200',
-      duration: '4 months',
-      placement: '100%',
-      rating: 4.8,
-      level: 'Advanced',
-      modules: [
-        'ML Fundamentals and Mathematics',
-        'Supervised Learning Algorithms',
-        'Unsupervised Learning Techniques',
-        'Neural Networks and Deep Learning',
-        'Reinforcement Learning',
-        'Ensemble Methods',
-        'Feature Engineering',
-        'Model Evaluation and Selection',
-        'Advanced Optimization Techniques',
-        'Industry Projects'
-      ],
-      skills: ['Python', 'PyTorch', 'Keras', 'OpenCV', 'Scikit-learn', 'XGBoost', 'CUDA', 'Docker'],
-      outcomes: [
-        'Design and implement complex ML algorithms',
-        'Build neural networks from scratch',
-        'Optimize model performance and efficiency',
-        'Handle large-scale datasets',
-        'Implement reinforcement learning systems',
-        'Deploy models in production environments'
-      ],
-      prerequisites: [
-        'Strong programming background in Python',
-        'Linear algebra and calculus knowledge',
-        'Statistics and probability understanding'
-      ],
-      career: [
-        'Machine Learning Engineer',
-        'Deep Learning Specialist',
-        'AI Research Engineer',
-        'Computer Vision Engineer',
-        'NLP Engineer'
-      ]
-    },
-    'llm-engineering': {
-      title: 'LLM Engineering',
-      subtitle: 'Building the Future with Large Language Models',
-      description: 'Explore the cutting edge of AI with our LLM Engineering course. Learn to design, develop, and deploy powerful applications leveraging large language models like GPT and BERT.',
-      image: 'https://images.pexels.com/photos/1181677/pexels-photo-1181677.jpeg?auto=compress&cs=tinysrgb&w=1200', // Placeholder image
-      duration: '5 months',
-      placement: '100%',
-      rating: 4.7,
-      level: 'Advanced',
-      modules: [
-        'Introduction to Large Language Models',
-        'Transformer Architecture Deep Dive',
-        'Fine-tuning and Prompt Engineering',
-        'Retrieval-Augmented Generation (RAG)',
-        'Deployment of LLMs',
-        'Ethical Considerations in LLMs',
-        'LLM Security and Privacy',
-        'Building LLM-powered Applications',
-        'Evaluation Metrics for LLMs',
-        'Capstone Project: LLM Application Development'
-      ],
-      skills: ['Python', 'PyTorch', 'TensorFlow', 'Hugging Face Transformers', 'LangChain', 'Faiss', 'Docker', 'AWS'],
-      outcomes: [
-        'Design and implement applications using state-of-the-art LLMs',
-        'Master prompt engineering for optimal LLM performance',
-        'Develop and deploy custom fine-tuned LLMs',
-        'Integrate LLMs with various data sources',
-        'Understand and mitigate ethical biases in AI models',
-        'Build scalable and robust LLM solutions'
-      ],
-      prerequisites: [
-        'Solid Python programming skills',
-        'Basic understanding of machine learning concepts',
-        'Familiarity with neural networks is a plus'
-      ],
-      career: [
-        'LLM Engineer',
-        'AI/ML Engineer',
-        'Prompt Engineer',
-        'Applied AI Scientist',
-        'Natural Language Processing Engineer'
-      ]
-    },
-    'generative-ai': {
-      title: 'Generative AI',
-      subtitle: 'Unleash Creativity with AI-Powered Content Creation',
-      description: 'Dive into the world of Generative AI, covering GANs, VAEs, and Diffusion Models. Learn to create realistic images, text, and other media using advanced AI techniques.',
-      image: 'https://images.pexels.com/photos/8410226/pexels-photo-8410226.jpeg?auto=compress&cs=tinysrgb&w=1200', // Placeholder image
-      duration: '4 months',
-      placement: '100%',
-      rating: 4.8,
-      level: 'Intermediate',
-      modules: [
-        'Introduction to Generative Models',
-        'Generative Adversarial Networks (GANs)',
-        'Variational Autoencoders (VAEs)',
-        'Diffusion Models for Image Generation',
-        'Text Generation with Transformers',
-        'Music and Art Generation',
-        'Ethical Implications of Generative AI',
-        'Evaluating Generative Models',
-        'Deployment Strategies for Generative AI',
-        'Final Project: Generative AI Application'
-      ],
-      skills: ['Python', 'TensorFlow', 'PyTorch', 'Keras', 'OpenAI API', 'Midjourney', 'Stable Diffusion'],
-      outcomes: [
-        'Understand the core principles of various generative models',
-        'Generate high-quality images, text, and other creative content',
-        'Implement and fine-tune generative models',
-        'Apply generative AI to real-world creative and design problems',
-        'Evaluate the quality and diversity of generated outputs',
-        'Explore the ethical landscape of AI creativity'
-      ],
-      prerequisites: [
-        'Intermediate Python programming',
-        'Basic understanding of neural networks and deep learning',
-        'Familiarity with linear algebra'
-      ],
-      career: [
-        'Generative AI Engineer',
-        'Creative AI Developer',
-        'AI Artist',
-        'Machine Learning Researcher (Generative Focus)',
-        'Content Automation Specialist'
-      ]
-    },
-    'java-python': {
-      title: 'Full Stack Development with Java & Python',
-      subtitle: 'Build Robust Web Applications from Frontend to Backend',
-      description: 'A comprehensive program to master both Java and Python for full-stack web development, covering popular frameworks, databases, and deployment strategies.',
-      image: 'https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=1200', // Placeholder image
-      duration: '7 months',
-      placement: '100%',
-      rating: 4.9,
-      level: 'Intermediate',
-      modules: [
-        'Core Java Programming',
-        'Spring Boot Framework',
-        'RESTful APIs with Java',
-        'Python Fundamentals',
-        'Django/Flask Web Frameworks',
-        'Database Management (SQL & NoSQL)',
-        'Frontend Development (React/Angular)',
-        'Cloud Deployment (AWS/Azure)',
-        'Microservices Architecture',
-        'Version Control with Git',
-        'Project: E-commerce Application'
-      ],
-      skills: ['Java', 'Python', 'Spring Boot', 'Django', 'Flask', 'React', 'Angular', 'SQL', 'MongoDB', 'REST APIs', 'Git', 'Docker'],
-      outcomes: [
-        'Develop robust and scalable backend systems with Java and Python',
-        'Create dynamic and interactive frontends',
-        'Design and manage relational and non-relational databases',
-        'Deploy applications to cloud platforms',
-        'Understand and implement microservices architecture',
-        'Collaborate effectively using version control systems'
-      ],
-      prerequisites: [
-        'Basic programming logic',
-        'Understanding of web concepts (HTML, CSS)',
-        'No prior Java or Python experience required'
-      ],
-      career: [
-        'Full Stack Developer (Java/Python)',
-        'Backend Developer',
-        'Frontend Developer',
-        'Software Engineer',
-        'DevOps Engineer (related)'
-      ]
-    },
-    'devops-aws': {
-      title: 'DevOps & AWS Cloud Engineering',
-      subtitle: 'Automate, Deploy, and Scale Applications on the Cloud',
-      description: 'Master the essential tools and practices for DevOps and cloud computing with a focus on Amazon Web Services (AWS). Learn CI/CD, infrastructure as code, and cloud security.',
-      image: 'https://images.pexels.com/photos/1181298/pexels-photo-1181298.jpeg?auto=compress&cs=tinysrgb&w=1200', // Placeholder image
-      duration: '5 months',
-      placement: '100%',
-      rating: 4.7,
-      level: 'Intermediate',
-      modules: [
-        'Introduction to DevOps Principles',
-        'Linux Fundamentals',
-        'Version Control with Git',
-        'AWS Cloud Fundamentals',
-        'Infrastructure as Code (Terraform/CloudFormation)',
-        'CI/CD with Jenkins/GitLab CI',
-        'Docker and Containerization',
-        'Kubernetes for Orchestration',
-        'Monitoring and Logging (Prometheus, Grafana)',
-        'Cloud Security Best Practices',
-        'Project: Automated CI/CD Pipeline on AWS'
-      ],
-      skills: ['AWS', 'Docker', 'Kubernetes', 'Terraform', 'Jenkins', 'GitLab CI', 'Ansible', 'Python', 'Bash', 'Linux', 'Monitoring'],
-      outcomes: [
-        'Design and implement robust CI/CD pipelines',
-        'Automate infrastructure provisioning and management',
-        'Deploy and scale applications efficiently on AWS',
-        'Understand containerization and orchestration',
-        'Implement monitoring and logging solutions',
-        'Ensure cloud security best practices'
-      ],
-      prerequisites: [
-        'Basic understanding of operating systems',
-        'Familiarity with command-line interface',
-        'No prior cloud experience necessary'
-      ],
-      career: [
-        'DevOps Engineer',
-        'Cloud Engineer (AWS)',
-        'Site Reliability Engineer (SRE)',
-        'Automation Engineer',
-        'Cloud Architect (Associate)'
-      ]
-    },
-    'web-development': {
-      title: 'Full Stack Web Development',
-      subtitle: 'Become a Modern Web Developer from Scratch',
-      description: 'Learn to build dynamic and responsive web applications using HTML, CSS, JavaScript, React, Node.js, and databases. Covers both frontend and backend technologies.',
-      image: 'https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=1200', // Placeholder image
-      duration: '6 months',
-      placement: '100%',
-      rating: 4.8,
-      level: 'Beginner',
-      modules: [
-        'HTML5 & CSS3 Essentials',
-        'Modern JavaScript (ES6+)',
-        'Responsive Web Design',
-        'Frontend Frameworks (React.js)',
-        'Node.js & Express.js',
-        'Database Integration (MongoDB/SQL)',
-        'Authentication and Authorization',
-        'API Development',
-        'Deployment to Cloud Platforms',
-        'Version Control with Git',
-        'Portfolio Project'
-      ],
-      skills: ['HTML', 'CSS', 'JavaScript', 'React.js', 'Node.js', 'Express.js', 'MongoDB', 'SQL', 'Git', 'REST APIs', 'Responsive Design'],
-      outcomes: [
-        'Build interactive and user-friendly web interfaces',
-        'Develop powerful backend APIs',
-        'Manage and interact with databases effectively',
-        'Deploy web applications to live servers',
-        'Create a professional development portfolio',
-        'Understand and apply modern web development best practices'
-      ],
-      prerequisites: [
-        'Basic computer literacy',
-        'No prior coding experience required',
-        'A passion for building web applications'
-      ],
-      career: [
-        'Full Stack Web Developer',
-        'Frontend Developer',
-        'Backend Developer',
-        'JavaScript Developer',
-        'UI/UX Developer'
-      ]
-    },
-    'testing': {
-      title: 'Software Testing & QA Automation',
-      subtitle: 'Ensure Quality with Advanced Testing Techniques',
-      description: 'Master the principles of software testing, quality assurance, and automation using industry-leading tools and methodologies. Prepare for a career in QA.',
-      image: 'https://images.pexels.com/photos/3184325/pexels-photo-3184325.jpeg?auto=compress&cs=tinysrgb&w=1200', // Placeholder image
-      duration: '4 months',
-      placement: '100%',
-      rating: 4.6,
-      level: 'Beginner',
-      modules: [
-        'Fundamentals of Software Testing',
-        'Manual Testing Techniques',
-        'Test Case Design and Execution',
-        'Introduction to Automation Testing',
-        'Selenium WebDriver with Java/Python',
-        'API Testing (Postman/Rest Assured)',
-        'Performance Testing (JMeter)',
-        'Mobile App Testing',
-        'Database Testing',
-        'Agile Testing Methodologies',
-        'Project: Automated Test Suite Development'
-      ],
-      skills: ['Manual Testing', 'Automation Testing', 'Selenium', 'Java', 'Python', 'JMeter', 'Postman', 'SQL', 'Jira', 'Agile'],
-      outcomes: [
-        'Conduct various types of software testing efficiently',
-        'Design and execute comprehensive test plans',
-        'Automate web and API tests using popular frameworks',
-        'Identify and report defects effectively',
-        'Work collaboratively in Agile development environments',
-        'Ensure high-quality software delivery'
-      ],
-      prerequisites: [
-        'Basic computer knowledge',
-        'Attention to detail',
-        'No prior testing experience necessary'
-      ],
-      career: [
-        'QA Engineer',
-        'Automation Test Engineer',
-        'Software Tester',
-        'Test Analyst',
-        'Performance Test Engineer'
-      ]
-    },
-    'sap': {
-      title: 'SAP Consulting & Implementation',
-      subtitle: 'Become an Expert in Enterprise Resource Planning',
-      description: 'Learn to implement, configure, and manage SAP modules, gaining essential skills for a career in SAP consulting. Covers key areas like ECC, S/4HANA, and specific modules.',
-      image: 'https://images.pexels.com/photos/669617/pexels-photo-669617.jpeg?auto=compress&cs=tinysrgb&w=1200', // Placeholder image
-      duration: '6 months',
-      placement: '100%',
-      rating: 4.5,
-      level: 'Intermediate',
-      modules: [
-        'Introduction to SAP ERP',
-        'SAP NetWeaver Fundamentals',
-        'SAP ECC Overview',
-        'Introduction to SAP S/4HANA',
-        'SAP Financial Accounting (FI)',
-        'SAP Controlling (CO)',
-        'SAP Sales and Distribution (SD)',
-        'SAP Materials Management (MM)',
-        'SAP Human Capital Management (HCM)',
-        'SAP ABAP Programming (Basics)',
-        'SAP Project Implementation Methodologies'
-      ],
-      skills: ['SAP ERP', 'SAP S/4HANA', 'FI/CO', 'SD', 'MM', 'HCM', 'ABAP', 'SAP Activate', 'Business Process Management', 'Consulting'],
-      outcomes: [
-        'Understand the core architecture and modules of SAP',
-        'Configure and customize SAP systems to business needs',
-        'Perform data migration and integration in SAP',
-        'Troubleshoot common SAP issues',
-        'Work as an effective SAP consultant or end-user',
-        'Prepare for SAP certification exams'
-      ],
-      prerequisites: [
-        'Basic understanding of business processes',
-        'Familiarity with enterprise software concepts',
-        'No prior SAP experience is strictly required'
-      ],
-      career: [
-        'SAP Consultant (Functional/Technical)',
-        'SAP Analyst',
-        'SAP FICO Consultant',
-        'SAP MM Consultant',
-        'SAP ABAP Developer'
-      ]
-    },
-  };
+const courseData = {
+  'data-science-machine-learning': {
+    title: 'Data Science & Machine Learning',
+    subtitle: 'Unlock Insights from Data & Build Predictive Models',
+    description: 'Master data analysis, machine learning algorithms, and AI implementation for real-world applications.',
+    image: 'https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=1200',
+    duration: '6 months',
+    placement: '95%',
+    rating: 4.9,
+    level: 'Intermediate',
+    modules: [
+      'Python Programming Fundamentals',
+      'Statistics and Probability for Data Science',
+      'Data Manipulation with Pandas & NumPy',
+      'Data Visualization with Matplotlib, Seaborn & Plotly',
+      'Supervised Machine Learning Algorithms',
+      'Unsupervised Learning and Clustering',
+      'Deep Learning with TensorFlow & Keras',
+      'Natural Language Processing (NLP) Basics',
+      'Model Evaluation, Optimization & Deployment',
+      'Capstone Project: Real-world Data Science Application'
+    ],
+    skills: ['Python', 'TensorFlow', 'Pandas', 'Scikit-learn', 'NumPy', 'Matplotlib', 'Jupyter', 'SQL', 'Git'],
+    outcomes: [
+      'Build end-to-end machine learning pipelines',
+      'Implement deep learning models for various applications',
+      'Create interactive data visualizations and dashboards',
+      'Deploy ML models to production environments',
+      'Apply AI solutions to complex business problems',
+      'Interpret and communicate data-driven insights effectively'
+    ],
+    prerequisites: [
+      'Basic programming knowledge (Python preferred)',
+      'High school level mathematics (algebra, basic calculus)',
+      'Familiarity with basic statistics concepts'
+    ],
+    career: [
+      'Data Scientist',
+      'Machine Learning Engineer',
+      'AI/ML Engineer',
+      'Data Analyst',
+      'Business Intelligence Developer'
+    ]
+  },
+  'artificial-intelligence-generative-ai': {
+    title: 'Artificial Intelligence & Generative AI',
+    subtitle: 'Innovate with AI-Powered Content and Intelligent Systems',
+    description: 'Deep dive into advanced AI concepts, neural networks, and cutting-edge generative modeling techniques to create new content.',
+    image: 'https://images.pexels.com/photos/8386434/pexels-photo-8386434.jpeg?auto=compress&cs=tinysrgb&w=1200',
+    duration: '4 months',
+    placement: '98%',
+    rating: 4.8,
+    level: 'Advanced',
+    modules: [
+      'Introduction to AI & Deep Learning',
+      'Advanced Neural Network Architectures',
+      'Generative Adversarial Networks (GANs)',
+      'Variational Autoencoders (VAEs)',
+      'Diffusion Models for Image & Video Generation',
+      'Large Language Models (LLMs) & Transformers',
+      'Prompt Engineering & Fine-tuning LLMs',
+      'Ethical AI & Bias in Generative Models',
+      'Deployment of Generative AI Solutions',
+      'Final Project: Building a Generative AI Application'
+    ],
+    skills: ['Python', 'PyTorch', 'TensorFlow', 'Keras', 'Hugging Face', 'GANs', 'VAEs', 'Diffusion Models', 'NLP'],
+    outcomes: [
+      'Design and implement state-of-the-art AI systems',
+      'Generate high-quality images, text, and other creative content',
+      'Master prompt engineering for optimal AI performance',
+      'Understand and mitigate ethical biases in AI models',
+      'Deploy advanced AI models to production environments',
+      'Contribute to innovative AI research and development'
+    ],
+    prerequisites: [
+      'Strong Python programming skills',
+      'Familiarity with basic machine learning concepts',
+      'Understanding of linear algebra and calculus'
+    ],
+    career: [
+      'AI Engineer',
+      'Generative AI Specialist',
+      'Machine Learning Researcher',
+      'Prompt Engineer',
+      'Computer Vision Engineer (Generative)'
+    ]
+  },
+  'full-stack-java-development': {
+    title: 'Full Stack Java Development',
+    subtitle: 'Become a Versatile Java Developer for Web & Enterprise',
+    description: 'Build robust web applications from frontend to backend using Java frameworks like Spring Boot, alongside modern frontend technologies.',
+    image: 'https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=1200',
+    duration: '5 months',
+    placement: '92%',
+    rating: 4.7,
+    level: 'Intermediate',
+    modules: [
+      'Java Core & OOP',
+      'Data Structures & Algorithms in Java',
+      'SQL & Database Management (MySQL/PostgreSQL)',
+      'Spring Framework (Core, MVC, Security)',
+      'Spring Boot & Microservices',
+      'RESTful API Development',
+      'Frontend Development (HTML, CSS, JavaScript, React/Angular)',
+      'Version Control with Git',
+      'Deployment to Cloud (e.g., AWS EC2/Elastic Beanstalk)',
+      'Full Stack Capstone Project'
+    ],
+    skills: ['Java', 'Spring Boot', 'Spring MVC', 'Hibernate', 'SQL', 'React/Angular', 'JavaScript', 'REST APIs', 'Git', 'Maven/Gradle'],
+    outcomes: [
+      'Develop scalable backend services with Spring Boot',
+      'Build dynamic and responsive frontend user interfaces',
+      'Design and manage relational databases',
+      'Implement secure and robust authentication/authorization',
+      'Deploy full-stack applications to cloud platforms',
+      'Work effectively in Agile development environments'
+    ],
+    prerequisites: [
+      'Basic programming knowledge (any language)',
+      'Understanding of web concepts (HTTP, client-server)',
+      'Eagerness to learn both frontend and backend'
+    ],
+    career: [
+      'Full Stack Java Developer',
+      'Backend Java Developer',
+      'Software Engineer (Java)',
+      'Spring Boot Developer',
+      'Enterprise Application Developer'
+    ]
+  },
+  'devops-cloud-technologies': {
+    title: 'DevOps & Cloud Technologies',
+    subtitle: 'Streamline Software Delivery with Cloud & Automation',
+    description: 'Learn cloud infrastructure, CI/CD pipelines, and deployment strategies on leading cloud platforms like AWS, Azure, or GCP.',
+    image: 'https://images.pexels.com/photos/8386422/pexels-photo-8386422.jpeg?auto=compress&cs=tinysrgb&w=1200',
+    duration: '5 months',
+    placement: '96%',
+    rating: 4.8,
+    level: 'Intermediate',
+    modules: [
+      'Linux Fundamentals & Shell Scripting',
+      'Introduction to Cloud Computing (AWS Focus)',
+      'Infrastructure as Code (IaC) with Terraform',
+      'Containerization with Docker',
+      'Container Orchestration with Kubernetes',
+      'CI/CD Pipelines with Jenkins/GitLab CI/GitHub Actions',
+      'Monitoring and Logging (Prometheus, Grafana, ELK Stack)',
+      'Networking in Cloud',
+      'Security in DevOps',
+      'Project: Deploying a Scalable Application'
+    ],
+    skills: ['AWS', 'Azure/GCP', 'Docker', 'Kubernetes', 'Jenkins', 'Terraform', 'Ansible', 'Git', 'Linux', 'Shell Scripting'],
+    outcomes: [
+      'Automate software build, test, and deployment processes',
+      'Manage and scale cloud infrastructure efficiently',
+      'Implement robust CI/CD pipelines',
+      'Containerize and orchestrate applications',
+      'Monitor and troubleshoot cloud-native applications',
+      'Apply security best practices in a DevOps workflow'
+    ],
+    prerequisites: [
+      'Basic understanding of IT operations',
+      'Familiarity with command line interfaces',
+      'Some programming experience is beneficial'
+    ],
+    career: [
+      'DevOps Engineer',
+      'Cloud Engineer',
+      'Site Reliability Engineer (SRE)',
+      'Cloud Architect',
+      'Automation Engineer'
+    ]
+  },
+  'python-programming': {
+    title: 'Python Programming',
+    subtitle: 'Master the Versatile Language for Data, Web & Automation',
+    description: 'Master Python fundamentals for data analysis, web development, automation, and general-purpose programming.',
+    image: 'https://images.pexels.com/photos/1181244/pexels-photo-1181244.jpeg?auto=compress&cs=tinysrgb&w=1200',
+    duration: '3 months',
+    placement: '90%',
+    rating: 4.7,
+    level: 'Beginner',
+    modules: [
+      'Python Basics & Syntax',
+      'Data Types & Data Structures',
+      'Control Flow & Functions',
+      'Object-Oriented Programming (OOP) in Python',
+      'File Handling & Error Handling',
+      'Modules, Packages & Pip',
+      'Introduction to Web Development with Flask/Django',
+      'Data Manipulation with Pandas (Intro)',
+      'Automation & Scripting',
+      'Final Mini-Projects'
+    ],
+    skills: ['Python', 'OOP', 'Data Structures', 'Flask/Django (basics)', 'Pandas (basics)', 'API usage', 'Git'],
+    outcomes: [
+      'Write clean, efficient, and well-structured Python code',
+      'Automate repetitive tasks with Python scripts',
+      'Develop basic web applications',
+      'Perform data manipulation and analysis',
+      'Solve algorithmic problems using Python',
+      'Build a strong foundation for advanced Python careers'
+    ],
+    prerequisites: [
+      'No prior programming experience required',
+      'Basic computer literacy'
+    ],
+    career: [
+      'Python Developer',
+      'Automation Engineer',
+      'Junior Data Analyst',
+      'Web Developer (Python)',
+      'Software Engineer (Entry-Level)'
+    ]
+  },
+  'software-testing-manual-automation': {
+    title: 'Software Testing (Manual + Automation)',
+    subtitle: 'Ensure Quality & Reliability in Software Products',
+    description: 'Master software testing methodologies, automation frameworks, and quality assurance techniques for robust application development.',
+    image: 'https://images.pexels.com/photos/1181263/pexels-photo-1181263.jpeg?auto=compress&cs=tinysrgb&w=1200',
+    duration: '3 months',
+    placement: '91%',
+    rating: 4.5,
+    level: 'Intermediate',
+    modules: [
+      'Software Development Life Cycle (SDLC) & STLC',
+      'Manual Testing Fundamentals (Types, Techniques)',
+      'Test Case Design & Execution',
+      'Defect Reporting & Management (Jira)',
+      'Agile Testing Principles',
+      'Introduction to Automation Testing',
+      'Selenium WebDriver with Java/Python',
+      'TestNG/Pytest Frameworks',
+      'API Testing with Postman/Rest Assured',
+      'Performance Testing Basics (JMeter)'
+    ],
+    skills: ['Manual Testing', 'Test Case Design', 'Selenium', 'Jira', 'Agile', 'API Testing', 'Java/Python (for automation)', 'SQL'],
+    outcomes: [
+      'Design comprehensive test plans and strategies',
+      'Execute manual tests and report defects effectively',
+      'Automate web and API test cases using industry tools',
+      'Participate in Agile development cycles as a QA',
+      'Ensure high-quality software releases',
+      'Understand different types of software testing'
+    ],
+    prerequisites: [
+      'Basic computer knowledge and analytical skills',
+      'Familiarity with web applications is a plus',
+      'No prior coding experience required for manual section'
+    ],
+    career: [
+      'QA Engineer',
+      'Manual Tester',
+      'Automation Test Engineer',
+      'Software Test Lead',
+      'Performance Tester'
+    ]
+  },
+  'sap-data-processing': {
+    title: 'SAP (Systems, Applications, and Products in Data Processing)',
+    subtitle: 'Master Enterprise Resource Planning with SAP Solutions',
+    description: 'Enterprise resource planning with SAP modules, business process optimization, and implementation strategies for various industries.',
+    image: 'https://images.pexels.com/photos/1181316/pexels-photo-1181316.jpeg?auto=compress&cs=tinysrgb&w=1200',
+    duration: '6 months',
+    placement: '94%',
+    rating: 4.6,
+    level: 'Professional',
+    modules: [
+      'Introduction to SAP & ERP Concepts',
+      'SAP ABAP Programming (Fundamentals)',
+      'SAP Financial Accounting (FI)',
+      'SAP Controlling (CO)',
+      'SAP Materials Management (MM)',
+      'SAP Sales and Distribution (SD)',
+      'SAP HANA Overview',
+      'SAP Fiori & UI5 Basics',
+      'SAP Implementation Methodologies (ASAP/Activate)',
+      'Case Study & Project'
+    ],
+    skills: ['SAP HANA', 'ABAP', 'Fiori', 'S/4HANA', 'ERP Concepts', 'SAP Modules (FI, CO, MM, SD)', 'Business Process Optimization'],
+    outcomes: [
+      'Navigate and operate within the SAP system',
+      'Understand key SAP modules and their integration',
+      'Develop custom reports and programs using ABAP',
+      'Participate in SAP implementation and support projects',
+      'Optimize business processes using SAP functionalities',
+      'Gain expertise in a high-demand enterprise technology'
+    ],
+    prerequisites: [
+      'Basic understanding of business processes',
+      'Familiarity with IT systems is beneficial',
+      'No prior SAP experience required'
+    ],
+    career: [
+      'SAP Consultant (Functional/Technical)',
+      'SAP Analyst',
+      'ERP Specialist',
+      'SAP Business Process Analyst',
+      'SAP Basis Administrator (Entry-Level)'
+    ]
+  },
+};
 
   const course = courseData[courseId as keyof typeof courseData];
 
