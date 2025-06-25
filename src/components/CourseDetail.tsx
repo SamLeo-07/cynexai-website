@@ -679,6 +679,6 @@ const courseData = {
       </section>
     </div>
   );
-};
+
 
 export default CourseDetail;
