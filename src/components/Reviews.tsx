@@ -88,8 +88,8 @@ const Reviews = () => {
     <section id="reviews" className="py-20 relative overflow-hidden bg-white">
       {/* Background Elements */}
       <div className="absolute inset-0">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-[#26abff]/10 rounded-full blur-3xl animate-pulse-slow"></div>
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#26abff]/10 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-20 left-10 w-72 h-72 bg-[#41c8df]/10 rounded-full blur-3xl animate-pulse-slow"></div>
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#41c8df]/10 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '2s' }}></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -104,7 +104,7 @@ const Reviews = () => {
             variants={itemVariants}
             className="text-4xl md:text-5xl font-display font-bold mb-6 text-black"
           >
-            <span className="text-[#26abff]">
+            <span className="text-[#41c8df]">
               Student Success Stories
             </span>
           </motion.h2>
@@ -134,19 +134,19 @@ const Reviews = () => {
                 transition={{ duration: 0.7, ease: [0.6, 0.05, 0.01, 0.9] }} // Using a custom cubic-bezier for a smoother feel
                 // If you prefer a named ease, you could use:
                 // transition={{ duration: 0.7, ease: easeInOut }}
-                className="bg-white rounded-3xl p-8 md:p-12 border border-[#26abff]/30 shadow-xl transition-all duration-300"
+                className="bg-white rounded-3xl p-8 md:p-12 border border-[#41c8df]/30 shadow-xl transition-all duration-300"
               >
                 <div className="flex flex-col md:flex-row items-center gap-8">
                   {/* Profile Image */}
                   <div className="relative flex-shrink-0">
-                    <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden border-4 border-[#26abff] p-1">
+                    <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden border-4 border-[#41c8df] p-1">
                       <img
                         src={reviews[currentReview].image}
                         alt={reviews[currentReview].name}
                         className="w-full h-full object-cover rounded-full"
                       />
                     </div>
-                    <div className="absolute -top-2 -right-2 bg-[#26abff] rounded-full p-2">
+                    <div className="absolute -top-2 -right-2 bg-[#41c8df] rounded-full p-2">
                       <Quote className="w-4 h-4 text-white" />
                     </div>
                   </div>
@@ -170,7 +170,7 @@ const Reviews = () => {
                       <h4 className="text-xl font-semibold text-black mb-1">
                         {reviews[currentReview].name}
                       </h4>
-                      <p className="text-[#26abff] font-medium mb-1">
+                      <p className="text-[#41c8df] font-medium mb-1">
                         {reviews[currentReview].role}
                       </p>
                       <p className="text-sm text-gray-600">
@@ -185,16 +185,16 @@ const Reviews = () => {
             {/* Navigation Buttons */}
             <button
               onClick={prevReview}
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-[#26abff]/10 hover:bg-[#26abff]/20 backdrop-blur-sm rounded-full p-3 border border-[#26abff]/20 hover:border-[#26abff]/50 transition-all duration-300 group"
+              className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-[#41c8df]/10 hover:bg-[#41c8df]/20 backdrop-blur-sm rounded-full p-3 border border-[#41c8df]/20 hover:border-[#41c8df]/50 transition-all duration-300 group"
             >
-              <ChevronLeft className="w-6 h-6 text-[#26abff] group-hover:text-white" />
+              <ChevronLeft className="w-6 h-6 text-[#41c8df] group-hover:text-white" />
             </button>
 
             <button
               onClick={nextReview}
-              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-[#26abff]/10 hover:bg-[#26abff]/20 backdrop-blur-sm rounded-full p-3 border border-[#26abff]/20 hover:border-[#26abff]/50 transition-all duration-300 group"
+              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-[#41c8df]/10 hover:bg-[#41c8df]/20 backdrop-blur-sm rounded-full p-3 border border-[#41c8df]/20 hover:border-[#41c8df]/50 transition-all duration-300 group"
             >
-              <ChevronRight className="w-6 h-6 text-[#26abff] group-hover:text-white" />
+              <ChevronRight className="w-6 h-6 text-[#41c8df] group-hover:text-white" />
             </button>
           </div>
 
@@ -206,7 +206,7 @@ const Reviews = () => {
                 onClick={() => setCurrentReview(index)}
                 className={`w-3 h-3 rounded-full transition-all duration-300 ${
                   index === currentReview
-                    ? 'bg-[#26abff] scale-125'
+                    ? 'bg-[#41c8df] scale-125'
                     : 'bg-gray-300 hover:bg-gray-400'
                 }`}
               />
@@ -222,7 +222,7 @@ const Reviews = () => {
                 onClick={() => setCurrentReview(index)}
                 className={`cursor-pointer bg-white rounded-xl p-4 border transition-all duration-300 shadow-sm ${
                   index === currentReview
-                    ? 'border-[#26abff] bg-[#26abff]/10'
+                    ? 'border-[#41c8df] bg-[#41c8df]/10'
                     : 'border-gray-200 hover:border-gray-300'
                 }`}
               >
@@ -234,7 +234,7 @@ const Reviews = () => {
                   />
                   <div>
                     <h5 className="text-sm font-medium text-black">{review.name}</h5>
-                    <p className="text-xs text-[#26abff]">{review.role}</p>
+                    <p className="text-xs text-[#41c8df]">{review.role}</p>
                   </div>
                 </div>
                 <div className="flex mb-2">

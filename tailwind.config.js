@@ -5,13 +5,13 @@ export default {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#26abff',  // gold accent
+          DEFAULT: '#41c8df',  // gold accent
           50:  '#FEF9E7',
           100: '#FCF3CF',
           200: '#F9E7A0',
           300: '#F7DB70',
           400: '#F4CF41',
-          500: '#26abff', // same
+          500: '#41c8df', // same
           600: '#A68328',
           700: '#7B5A1D',
           800: '#523112',

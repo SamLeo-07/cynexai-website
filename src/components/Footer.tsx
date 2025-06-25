@@ -42,11 +42,11 @@ const Footer = () => {
   };
 
   const socialLinks = [
-    { icon: Facebook, href: '#', hoverColor: 'hover:text-[#26abff]' },
-    { icon: Twitter, href: '#', hoverColor: 'hover:text-[#26abff]' },
-    { icon: Instagram, href: '#', hoverColor: 'hover:text-[#26abff]' },
-    { icon: Linkedin, href: '#', hoverColor: 'hover:text-[#26abff]' },
-    { icon: Youtube, href: '#', hoverColor: 'hover:text-[#26abff]' },
+    { icon: Facebook, href: '#', hoverColor: 'hover:text-[#41c8df]' },
+    { icon: Twitter, href: '#', hoverColor: 'hover:text-[#41c8df]' },
+    { icon: Instagram, href: '#', hoverColor: 'hover:text-[#41c8df]' },
+    { icon: Linkedin, href: '#', hoverColor: 'hover:text-[#41c8df]' },
+    { icon: Youtube, href: '#', hoverColor: 'hover:text-[#41c8df]' },
   ];
 
   return (
@@ -54,8 +54,8 @@ const Footer = () => {
     <footer className="relative bg-white border-t border-gray-200 text-gray-700 overflow-hidden"> {/* Added overflow-hidden here for the extra black space issue */}
       {/* Background Elements - Changed to subtle gold tints on a light background */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-0 left-1/4 w-64 h-64 bg-[#26abff]/5 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-[#26abff]/5 rounded-full blur-3xl"></div>
+        <div className="absolute top-0 left-1/4 w-64 h-64 bg-[#41c8df]/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-[#41c8df]/5 rounded-full blur-3xl"></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -82,15 +82,15 @@ const Footer = () => {
 
               <div className="space-y-3">
                 <div className="flex items-center text-gray-600">
-                  <Phone className="w-4 h-4 mr-3 text-[#26abff]" />
+                  <Phone className="w-4 h-4 mr-3 text-[#41c8df]" />
                   <span>+91 9966639869</span>
                 </div>
                 <div className="flex items-center text-gray-600">
-                  <Mail className="w-4 h-4 mr-3 text-[#26abff]" />
+                  <Mail className="w-4 h-4 mr-3 text-[#41c8df]" />
                   <span>contact@Cynexai.in</span>
                 </div>
                 <div className="flex items-start text-gray-600">
-                  <MapPin className="w-4 h-4 mr-3 mt-1 text-[#26abff] flex-shrink-0" />
+                  <MapPin className="w-4 h-4 mr-3 mt-1 text-[#41c8df] flex-shrink-0" />
                   <span className="text-sm">
                     MIG-215, Rd Number 1, KPHB Phase I,
                     Kukatpally, Hyderabad, Telangana 500072
@@ -107,7 +107,7 @@ const Footer = () => {
                   <li key={index}>
                     <Link
                       to={link.href}
-                      className="text-gray-600 hover:text-[#26abff] transition-colors duration-200 text-sm"
+                      className="text-gray-600 hover:text-[#41c8df] transition-colors duration-200 text-sm"
                     >
                       {link.name}
                     </Link>
@@ -124,7 +124,7 @@ const Footer = () => {
                   <li key={index}>
                     <a
                       href={link.href}
-                      className="text-gray-600 hover:text-[#26abff] transition-colors duration-200 text-sm"
+                      className="text-gray-600 hover:text-[#41c8df] transition-colors duration-200 text-sm"
                     >
                       {link.name}
                     </a>
@@ -141,7 +141,7 @@ const Footer = () => {
                   <li key={index}>
                     <Link
                       to={link.href}
-                      className="text-gray-600 hover:text-[#26abff] transition-colors duration-200 text-sm"
+                      className="text-gray-600 hover:text-[#41c8df] transition-colors duration-200 text-sm"
                     >
                       {link.name}
                     </Link>
@@ -168,12 +168,12 @@ const Footer = () => {
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 min-w-0 px-4 py-3 bg-gray-100 border border-gray-300 rounded-l-lg text-black placeholder-gray-500 focus:outline-none focus:border-[#26abff] focus:ring-2 focus:ring-[#26abff]/20" // Input takes available space, allows shrinking
+                className="flex-1 min-w-0 px-4 py-3 bg-gray-100 border border-gray-300 rounded-l-lg text-black placeholder-gray-500 focus:outline-none focus:border-[#41c8df] focus:ring-2 focus:ring-[#41c8df]/20" // Input takes available space, allows shrinking
               />
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-6 py-3 bg-[#26abff] text-black hover:bg-yellow-600 rounded-r-lg font-medium transition-all duration-300 flex-shrink-0" // Add flex-shrink-0 to button
+                className="px-6 py-3 bg-[#41c8df] text-black hover:bg-yellow-600 rounded-r-lg font-medium transition-all duration-300 flex-shrink-0" // Add flex-shrink-0 to button
               >
                 Subscribe
               </motion.button>
@@ -212,7 +212,7 @@ const Footer = () => {
         onClick={scrollToTop}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
-        className="fixed bottom-4 right-4 z-50 bg-[#26abff] text-black p-3 rounded-full shadow-lg hover:bg-yellow-600 transition-colors duration-300"
+        className="fixed bottom-4 right-4 z-50 bg-[#41c8df] text-black p-3 rounded-full shadow-lg hover:bg-yellow-600 transition-colors duration-300"
       >
         <ArrowUp className="w-5 h-5" />
       </motion.button>

@@ -46,17 +46,17 @@ const Hero = () => {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 bg-[#FFFFFF]">
       {/* Background Bubbles */}
       <div className="absolute inset-0">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-[#26abff]/10 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#26abff]/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-[#26abff]/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '4s' }}></div>
+        <div className="absolute top-20 left-10 w-72 h-72 bg-[#41c8df]/10 rounded-full blur-3xl animate-float"></div>
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#41c8df]/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-[#41c8df]/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '4s' }}></div>
       </div>
 
       {/* Floating Icons */}
       <div className="absolute inset-0 pointer-events-none">
-        <Code className="absolute top-1/4 left-1/4 text-[#26abff]/20 w-8 h-8 animate-float" style={{ animationDelay: '1s' }} />
-        <Brain className="absolute top-1/3 right-1/4 text-[#26abff]/20 w-10 h-10 animate-float" style={{ animationDelay: '3s' }} />
-        <Rocket className="absolute bottom-1/3 left-1/3 text-[#26abff]/20 w-6 h-6 animate-float" style={{ animationDelay: '5s' }} />
-        <Sparkles className="absolute bottom-1/4 right-1/3 text-[#26abff]/20 w-7 h-7 animate-float" style={{ animationDelay: '2s' }} />
+        <Code className="absolute top-1/4 left-1/4 text-[#41c8df]/20 w-8 h-8 animate-float" style={{ animationDelay: '1s' }} />
+        <Brain className="absolute top-1/3 right-1/4 text-[#41c8df]/20 w-10 h-10 animate-float" style={{ animationDelay: '3s' }} />
+        <Rocket className="absolute bottom-1/3 left-1/3 text-[#41c8df]/20 w-6 h-6 animate-float" style={{ animationDelay: '5s' }} />
+        <Sparkles className="absolute bottom-1/4 right-1/3 text-[#41c8df]/20 w-7 h-7 animate-float" style={{ animationDelay: '2s' }} />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -68,7 +68,7 @@ const Hero = () => {
           className="text-center"
         >
           <motion.div variants={itemVariants} className="mb-8">
-            <span className="inline-flex items-center px-4 py-2 rounded-full bg-[#26abff]/10 border border-[#26abff]/30 text-[#26abff] text-sm font-medium mb-6">
+            <span className="inline-flex items-center px-4 py-2 rounded-full bg-[#41c8df]/10 border border-[#41c8df]/30 text-[#41c8df] text-sm font-medium mb-6">
               <Sparkles className="w-4 h-4 mr-2" />
               Transform Your Tech Career
             </span>
@@ -80,7 +80,7 @@ const Hero = () => {
           >
             Master the Future of
             <br />
-            <span className="text-[#26abff]">Technology</span>
+            <span className="text-[#41c8df]">Technology</span>
           </motion.h1>
 
           <motion.p
@@ -101,7 +101,7 @@ const Hero = () => {
             >
               <Link
                 to="/#courses"
-                className="group bg-[#26abff] text-black hover:bg-[#c09a2f] px-8 py-4 rounded-full font-semibold text-lg shadow-2xl transition-all duration-300 flex items-center"
+                className="group bg-[#41c8df] text-black hover:bg-[#c09a2f] px-8 py-4 rounded-full font-semibold text-lg shadow-2xl transition-all duration-300 flex items-center"
               >
                 Explore Courses
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -111,7 +111,7 @@ const Hero = () => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="group border-2 border-[#26abff]/50 text-[#26abff] px-8 py-4 rounded-full font-semibold text-lg hover:bg-[#26abff]/10 transition-all duration-300"
+              className="group border-2 border-[#41c8df]/50 text-[#41c8df] px-8 py-4 rounded-full font-semibold text-lg hover:bg-[#41c8df]/10 transition-all duration-300"
             >
               Watch Demo
             </motion.button>
@@ -129,12 +129,12 @@ const Hero = () => {
               <motion.div
                 key={index}
                 whileHover={{ y: -5 }}
-                className="bg-[#FFFFFF] rounded-2xl p-6 border border-[#26abff]/30 transition-all duration-300"
+                className="bg-[#FFFFFF] rounded-2xl p-6 border border-[#41c8df]/30 transition-all duration-300"
               >
                 <div className="text-3xl mb-2 flex justify-center items-center">
                   <img src={stat.icon} alt={stat.alt} className="w-8 h-8 filter brightness-150" />
                 </div>
-                <div className="text-3xl font-bold text-[#26abff] mb-1">
+                <div className="text-3xl font-bold text-[#41c8df] mb-1">
                   {stat.number}
                 </div>
                 <div className="text-black/70 text-sm">{stat.label}</div>

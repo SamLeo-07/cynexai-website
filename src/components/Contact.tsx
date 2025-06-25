@@ -26,8 +26,8 @@ const Contact = () => {
     <section id="contact" className="py-20 relative bg-white text-gray-900">
       {/* Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 -left-20 w-40 h-40 bg-[#26abff]/10 rounded-full blur-3xl animate-pulse-slow" />
-        <div className="absolute bottom-1/4 -right-20 w-60 h-60 bg-[#26abff]/10 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '2s' }} />
+        <div className="absolute top-1/4 -left-20 w-40 h-40 bg-[#41c8df]/10 rounded-full blur-3xl animate-pulse-slow" />
+        <div className="absolute bottom-1/4 -right-20 w-60 h-60 bg-[#41c8df]/10 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '2s' }} />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -63,9 +63,9 @@ const Contact = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                       whileHover={{ x: 10 }}
-                      className="flex items-center space-x-4 p-4 bg-gray-50 rounded-xl border border-gray-200 hover:border-[#26abff] transition-colors duration-300"
+                      className="flex items-center space-x-4 p-4 bg-gray-50 rounded-xl border border-gray-200 hover:border-[#41c8df] transition-colors duration-300"
                     >
-                      <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-[#26abff] text-white">
+                      <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-[#41c8df] text-white">
                         <Icon className="w-6 h-6" />
                       </div>
                       <div>
@@ -89,9 +89,9 @@ const Contact = () => {
                     <motion.div
                       key={i}
                       variants={itemVariants}
-                      className="p-6 bg-gray-50 rounded-lg border border-gray-200 text-center hover:border-[#26abff] transition-colors duration-300"
+                      className="p-6 bg-gray-50 rounded-lg border border-gray-200 text-center hover:border-[#41c8df] transition-colors duration-300"
                     >
-                      <Icon className="w-8 h-8 text-[#26abff] mx-auto mb-3" />
+                      <Icon className="w-8 h-8 text-[#41c8df] mx-auto mb-3" />
                       <div className="text-2xl font-bold text-gray-900 mb-1">{stat.value}</div>
                       <div className="text-sm text-gray-600">{stat.label}</div>
                     </motion.div>
@@ -108,24 +108,24 @@ const Contact = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm text-gray-700 mb-2">First Name</label>
-                  <input type="text" className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#26abff]" placeholder="John" />
+                  <input type="text" className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#41c8df]" placeholder="John" />
                 </div>
                 <div>
                   <label className="block text-sm text-gray-700 mb-2">Last Name</label>
-                  <input type="text" className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#26abff]" placeholder="Doe" />
+                  <input type="text" className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#41c8df]" placeholder="Doe" />
                 </div>
               </div>
               <div>
                 <label className="block text-sm text-gray-700 mb-2">Email</label>
-                <input type="email" className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#26abff]" placeholder="john@example.com" />
+                <input type="email" className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#41c8df]" placeholder="john@example.com" />
               </div>
               <div>
                 <label className="block text-sm text-gray-700 mb-2">Phone</label>
-                <input type="tel" className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#26abff]" placeholder="+91 9876543210" />
+                <input type="tel" className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#41c8df]" placeholder="+91 9876543210" />
               </div>
               <div>
                 <label className="block text-sm text-gray-700 mb-2">Course Interest</label>
-                <select className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#26abff]">
+                <select className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#41c8df]">
                   <option>Select a course</option>
                   <option>Data Science with AI</option>
                   <option>Machine Learning</option>
@@ -140,9 +140,9 @@ const Contact = () => {
               </div>
               <div>
                 <label className="block text-sm text-gray-700 mb-2">Message</label>
-                <textarea rows={4} className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#26abff]" placeholder="Your message..." />
+                <textarea rows={4} className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#41c8df]" placeholder="Your message..." />
               </div>
-              <button type="submit" className="w-full py-3 bg-[#26abff] text-white rounded-lg hover:bg-[#c09a2f] transition-colors duration-300">
+              <button type="submit" className="w-full py-3 bg-[#41c8df] text-white rounded-lg hover:bg-[#c09a2f] transition-colors duration-300">
                 Send Message
               </button>
             </form>
