@@ -5,7 +5,7 @@ export default {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#41c8ds',  // gold accent
+          DEFAULT: '#41c8df',  // gold accent
           50:  '#FEF9E7',
           100: '#FCF3CF',
           200: '#F9E7A0',
