@@ -65,7 +65,7 @@ export default function Header() {
       animate={{ y: 0 }}
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-[#376db0]/95 backdrop-blur-md border-b border-[#376db0]/20'
+          ? 'bg-[#41c8df]/95 backdrop-blur-md border-b border-[#41c8df]/20'
           : 'bg-transparent'
       }`}
     >
@@ -108,7 +108,7 @@ export default function Header() {
                 >
                   {name}
                   <span
-                    className={`absolute -bottom-1 left-0 h-0.5 bg-[#376db0] transition-all duration-300 ${
+                    className={`absolute -bottom-1 left-0 h-0.5 bg-[#41c8df] transition-all duration-300 ${
                       isActive ? 'w-full' : 'w-0 group-hover:w-full'
                     }`}
                   />
@@ -120,7 +120,7 @@ export default function Header() {
           {/* Mobile toggle */}
           <button
             onClick={() => setIsOpen((o) => !o)}
-            className={`lg:hidden p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#376db0] ${
+            className={`lg:hidden p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#41c8df] ${
               scrolled ? 'text-white hover:text-gray-100' : 'text-black hover:text-gray-700'
             }`}
             aria-label="Toggle navigation"
@@ -145,7 +145,7 @@ export default function Header() {
                     key={name}
                     href={href}
                     onClick={(e) => handleNavClick(href, e)} // This onClick is critical for mobile
-                    className="block text-black hover:text-[#376db0] transition-colors duration-200 py-2 text-lg font-medium"
+                    className="block text-black hover:text-[#41c8df] transition-colors duration-200 py-2 text-lg font-medium"
                   >
                     {name}
                   </a>
