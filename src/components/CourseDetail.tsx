@@ -1,20 +1,27 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, useViewportScroll, useTransform, easeOut } from 'framer-motion'; // Ensure easeOut is imported
 import { useInView } from 'react-intersection-observer';
 import {
   ArrowLeft,
   Clock,
-  Briefcase,
+  Users, // Used for students count
+  Briefcase, // Used for Placement
   Star,
-  CheckCircle,
-  Play,
-  Download,
-  Award,
-  BookOpen,
-  Target
+  CheckCircle, // Used for Outcomes/Prerequisites list items
+  Play, // Used for Watch Preview button
+  Download, // Used for Download Brochure button
+  Award, // Used for Skills You'll Gain heading
+  BookOpen, // Used for Course Modules list items
+  Target, // Used for Learning Outcomes heading
+  GraduationCap, // Used for Level
+  Code // Used for Skills
 } from 'lucide-react';
 
+// ====================================================================
+// This `courseData` object must be OUTSIDE the functional component.
+// Its IDs (keys) must match the `id`s used in Courses.tsx.
+// ====================================================================
 const courseData = {
   'data-science-machine-learning': {
     title: 'Data Science & Machine Learning',
@@ -317,22 +324,34 @@ const courseData = {
     ]
   },
 };
+// ====================================================================
+
+const CourseDetail = () => {
+  const { courseId } = useParams(); // Correctly get the ID from the URL parameter
+  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 }); // Initialize useInView
 
   const course = courseData[courseId as keyof typeof courseData];
 
   if (!course) {
     return (
-      <div className="min-h-screen flex items-center justify-center pt-20 bg-white"> {/* Changed background */}
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-black mb-4">Course Not Found</h1> {/* Changed text color */}
-          <Link to="/" className="text-[#41c8df] hover:text-yellow-600"> {/* Changed text color */}
-            Return to Home
+      <div className="min-h-screen bg-background flex flex-col items-center justify-center py-20 px-4 sm:px-6 lg:px-8 text-black">
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-center"
+        >
+          <h2 className="text-4xl font-display font-bold text-primary mb-4">Course Not Found</h2>
+          <p className="text-lg text-gray-700">The course you are looking for does not exist or has been removed.</p>
+          <Link to="/" className="mt-8 inline-block bg-primary text-white py-3 px-6 rounded-lg font-medium hover:bg-primary-600 transition-colors duration-300">
+            Go Back Home
           </Link>
-        </div>
+        </motion.div>
       </div>
     );
   }
 
+  // Define variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -350,7 +369,7 @@ const courseData = {
       opacity: 1,
       transition: {
         duration: 0.6,
-        ease: "easeOut",
+        ease: easeOut, // Use the imported easeOut variable
       },
     },
   };
@@ -370,7 +389,7 @@ const courseData = {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
-            ref={ref}
+            ref={ref} // Assign ref here to enable inView animation for the whole content
             variants={containerVariants}
             initial="hidden"
             animate={inView ? "visible" : "hidden"}
@@ -439,10 +458,10 @@ const courseData = {
 
                 <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4">
                   <Link
-                    to={`/apply/${courseId}`}
+                    to="/apply" // Changed link from /apply/${courseId} to /apply (generic)
                     className="bg-[#41c8df] text-black hover:bg-yellow-600 px-8 py-4 rounded-lg font-semibold text-center transition-all duration-300" // Gold background, black text
                   >
-                    Join the Course
+                    Enroll Now
                   </Link>
                   <button className="border-2 border-[#41c8df] text-[#41c8df] px-8 py-4 rounded-lg font-semibold hover:bg-[#41c8df]/10 transition-all duration-300 flex items-center justify-center"> {/* Gold border, gold text */}
                     <Play className="w-5 h-5 mr-2" />
@@ -485,7 +504,7 @@ const courseData = {
                 </div>
 
                 <Link
-                  to={`/apply/${courseId}`}
+                  to="/apply" // Changed link from /apply/${courseId} to /apply (generic)
                   className="w-full bg-[#41c8df] text-black hover:bg-yellow-600 py-4 px-6 rounded-lg font-semibold text-center block transition-all duration-300" // Gold background, black text
                 >
                   Enroll Now
@@ -571,7 +590,7 @@ const courseData = {
 
             <motion.div variants={itemVariants} className="max-w-4xl mx-auto">
               <div className="space-y-4">
-                {course.modules.map((module, index) => (
+                {course.modules.map((moduleItem, index) => ( // Renamed 'module' to 'moduleItem' to avoid conflict with JS keyword
                   <div
                     key={index}
                     className="bg-white rounded-lg p-6 border border-gray-200 hover:border-[#41c8df]/50 transition-all duration-300" // White background, light gray border, gold hover
@@ -581,7 +600,7 @@ const courseData = {
                         {index + 1}
                       </div>
                       <div className="flex-1">
-                        <h4 className="text-lg font-semibold text-black mb-1">{module}</h4> {/* Black text */}
+                        <h4 className="text-lg font-semibold text-black mb-1">{moduleItem}</h4> {/* Black text */}
                         <p className="text-gray-600 text-sm">Module {index + 1}</p> {/* Darker gray text */}
                       </div>
                       <BookOpen className="w-5 h-5 text-[#41c8df]" /> {/* Gold icon */}
@@ -623,7 +642,7 @@ const courseData = {
               animate={inView ? "visible" : "hidden"}
               className="bg-gray-50 rounded-2xl p-8 border border-gray-200" // Light gray background, light gray border
             >
-              <h3 className="text-2xl font-semibold text-black mb-6">Career Opportunities</h3> {/* Black text */}
+              <h3 className="text-2xl font-semibold text-black mb-6">Potential Career Paths:</h3> {/* Black text */}
               <div className="space-y-3">
                 {course.career.map((role, index) => (
                   <div
@@ -664,7 +683,7 @@ const courseData = {
               className="flex flex-col sm:flex-row gap-4 justify-center"
             >
               <Link
-                to={`/apply/${courseId}`}
+                to="/apply" // Changed link from /apply/${courseId} to /apply (generic)
                 className="bg-[#41c8df] text-black hover:bg-yellow-600 px-8 py-4 rounded-lg font-semibold transition-all duration-300" // Gold background, black text
               >
                 Enroll Now
@@ -679,6 +698,6 @@ const courseData = {
       </section>
     </div>
   );
-
+}; // Corrected closing brace for the component
 
 export default CourseDetail;

@@ -1,5 +1,6 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+// --- IMPORT `easeOut` HERE ---
+import { motion, easeOut } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Clock, Users, Star } from 'lucide-react';
@@ -7,6 +8,7 @@ import { ArrowRight, Clock, Users, Star } from 'lucide-react';
 const Courses = () => {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
 
+  // IMPORTANT: The `id`s here MUST match the keys in the `courseData` object in CourseDetail.tsx
   const courses = [
     {
       id: 'data-science-machine-learning',
@@ -34,7 +36,7 @@ const Courses = () => {
       id: 'full-stack-java-development',
       title: 'Full Stack Java Development',
       description: 'Build robust web applications from frontend to backend using Java frameworks like Spring Boot.',
-      image: 'https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800', // Image adjusted to suit programming
+      image: 'https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800',
       duration: '5 months',
       students: '120+',
       rating: 4.7,
@@ -67,7 +69,7 @@ const Courses = () => {
       id: 'software-testing-manual-automation',
       title: 'Software Testing (Manual + Automation)',
       description: 'Master software testing methodologies, automation frameworks, and quality assurance for robust applications.',
-      image: 'https://images.pexels.com/photos/1181263/pexels-photo-1181263.jpeg?auto=compress&cs=tinysrgb&w=800', // Image adjusted to suit testing
+      image: 'https://images.pexels.com/photos/1181263/pexels-photo-1181263.jpeg?auto=compress&cs=tinysrgb&w=800',
       duration: '3 months',
       students: '140+',
       rating: 4.5,
@@ -88,7 +90,7 @@ const Courses = () => {
   ];
 
   const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.1 } } };
-  const itemVariants = { hidden: { y: 50, opacity: 0 }, visible: { y: 0, opacity: 1, transition: { duration: 0.6, ease: 'easeOut' } } };
+  const itemVariants = { hidden: { y: 50, opacity: 0 }, visible: { y: 0, opacity: 1, transition: { duration: 0.6, ease: easeOut } } }; // Use imported easeOut
 
   return (
     <section id="courses" className="py-20 bg-white text-gray-900">
@@ -142,6 +144,7 @@ const Courses = () => {
                   )}
                 </div>
 
+                {/* Link to CourseDetail.tsx with the correct ID */}
                 <Link to={`/course/${course.id}`} className="w-full block bg-[#41c8df] text-white py-3 px-4 rounded-lg font-medium text-center hover:bg-[#c09a2f] transition-colors duration-300 flex items-center justify-center">
                   Learn More
                   <ArrowRight className="ml-2 w-4 h-4 transition-transform" />
