@@ -113,7 +113,7 @@ const courseData = {
     title: 'Full Stack Java Development',
     subtitle: 'Become a Versatile Java Developer for Web & Enterprise',
     description: 'Build robust web applications from frontend to backend using Java frameworks like Spring Boot, alongside modern frontend technologies.',
-    image: '/public/java.png',
+    image: '/java.png',
     duration: '5 months',
     placement: '92%',
     rating: 4.7,
