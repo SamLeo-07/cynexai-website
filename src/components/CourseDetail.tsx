@@ -682,12 +682,7 @@ const CourseDetail = () => {
               variants={itemVariants}
               className="flex flex-col sm:flex-row gap-4 justify-center"
             >
-              <Link
-                to="/apply" // Changed link from /apply/${courseId} to /apply (generic)
-                className="bg-[#41c8df] text-black hover:bg-yellow-600 px-8 py-4 rounded-lg font-semibold transition-all duration-300" // Gold background, black text
-              >
-                Enroll Now
-              </Link>
+
               <button className="border-2 border-[#41c8df] text-[#41c8df] px-8 py-4 rounded-lg font-semibold hover:bg-[#41c8df]/10 transition-all duration-300 flex items-center justify-center"> {/* Gold border, gold text */}
                 <Download className="w-5 h-5 mr-2" />
                 Download Brochure
