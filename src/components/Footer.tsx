@@ -46,9 +46,9 @@ const Footer = () => {
   const socialLinks = [
     { icon: Facebook, href: '#', hoverColor: 'hover:text-[#41c8df]' },
     { icon: Twitter, href: '#', hoverColor: 'hover:text-[#41c8df]' },
-    { icon: Instagram, href: '#', hoverColor: 'hover:text-[#41c8df]' },
+    { icon: Instagram, href: 'https://www.instagram.com/cynexai.in?igsh=MWk5YWhlOHN5a2lqdw==', hoverColor: 'hover:text-[#41c8df]' },
     { icon: Linkedin, href: '#', hoverColor: 'hover:text-[#41c8df]' },
-    { icon: Youtube, href: '#', hoverColor: 'hover:text-[#41c8df]' },
+    { icon: Youtube, href: 'https://www.youtube.com/@CynexAI', hoverColor: 'hover:text-[#41c8df]' },
   ];
 
   return (
