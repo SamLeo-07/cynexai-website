@@ -13,6 +13,7 @@ import CourseDetail from './components/CourseDetail';
 import ApplicationForm from './components/ApplicationForm';
 import WebinarPortal from './components/WebinarPortal';
 import AdminPanel from './components/AdminPanel';
+import BrochurePage from './components/BrochurePage';
 
 function HomePage() {
   return (
@@ -42,6 +43,7 @@ function App() {
           <Route path="/apply/:courseId" element={<ApplicationForm />} />
           <Route path="/webinar" element={<WebinarPortal />} />
           <Route path="/admin" element={<AdminPanel />} />
+          <Route path="/brochure" element={<BrochurePage />} />
         </Routes>
         <Footer />
       </div>

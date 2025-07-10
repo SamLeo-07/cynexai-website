@@ -679,15 +679,24 @@ const CourseDetail = () => {
               Join thousands of successful graduates and take the first step towards your dream tech career.
             </motion.p>
             <motion.div
-              variants={itemVariants}
-              className="flex flex-col sm:flex-row gap-4 justify-center"
-            >
-
-              <button className="border-2 border-[#41c8df] text-[#41c8df] px-8 py-4 rounded-lg font-semibold hover:bg-[#41c8df]/10 transition-all duration-300 flex items-center justify-center"> {/* Gold border, gold text */}
-                <Download className="w-5 h-5 mr-2" />
-                Download Brochure
-              </button>
-            </motion.div>
+                variants={itemVariants}
+                className="flex flex-col sm:flex-row gap-4 justify-center"
+              >
+                <Link
+                  to={`/apply/${courseId}`} // Existing Enroll Now link
+                  className="bg-[#41c8df] text-black hover:bg-yellow-600 px-8 py-4 rounded-lg font-semibold transition-all duration-300"
+                >
+                  Enroll Now
+                </Link>
+                {/* UPDATED BROCHURE LINK */}
+                <Link
+                  to="/brochure" // <<<--- THIS IS THE NEW INTERNAL ROUTE
+                  className="border-2 border-[#41c8df] text-[#41c8df] px-8 py-4 rounded-lg font-semibold hover:bg-[#41c8df]/10 transition-all duration-300 flex items-center justify-center"
+                >
+                  <Download className="w-5 h-5 mr-2" />
+                  View Brochure
+                </Link>
+              </motion.div>
           </motion.div>
         </div>
       </section>

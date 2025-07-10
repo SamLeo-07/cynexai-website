@@ -28,10 +28,10 @@ const BrochurePage = () => {
   // Define your brochure page image paths
   // Make sure these paths correctly point to images in your public/brochure_images folder
   const brochurePages = [
-    '/brochure_images/page1.jpg', // Replace with your actual image file names
-    '/brochure_images/page2.jpg',
-    '/brochure_images/page3.jpg',
-    '/brochure_images/page4.jpg',
+    '/brochure_images/page1.png', // Replace with your actual image file names
+    '/brochure_images/page2.png',
+    '/brochure_images/page3.png',
+    '/brochure_images/page4.png',
   ];
 
   return (
