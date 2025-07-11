@@ -1,80 +1,73 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { ArrowLeft, ChevronLeft, ChevronRight, Download } from 'lucide-react'; // Added ChevronLeft, ChevronRight, Download
+import { ArrowLeft, ChevronLeft, ChevronRight, Download } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import HTMLFlipBook from 'react-pageflip';
 
 const BrochurePage = () => {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
-  const bookContainerRef = useRef<HTMLDivElement>(null); // Ref to measure the container holding the book
-  const flipBookRef = useRef<any>(null); // Ref for the HTMLFlipBook instance itself
-  const [bookWidth, setBookWidth] = useState(500); // Default single page width
-  const [bookHeight, setBookHeight] = useState(700); // Default single page height
-  const [currentPage, setCurrentPage] = useState(0); // State to track current page for navigation arrows
+  const bookContainerRef = useRef<HTMLDivElement>(null);
+  const flipBookRef = useRef<any>(null);
+  const [bookWidth, setBookWidth] = useState(500);
+  const [bookHeight, setBookHeight] = useState(700);
+  const [currentPage, setCurrentPage] = useState(0);
 
-  // Define your brochure page image paths
-  // IMPORTANT: Ensure these paths correctly point to images in your public/brochure_images folder
   const brochurePages = [
-    '/brochure_images/page1.png', // Cover page
+    '/brochure_images/page1.png',
     '/brochure_images/page2.png',
     '/brochure_images/page3.png',
-    '/brochure_images/page4.png', // Back cover
+    '/brochure_images/page4.png',
   ];
 
-  // Function to calculate book dimensions dynamically
   const calculateBookDimensions = useCallback(() => {
     if (bookContainerRef.current) {
       const containerWidth = bookContainerRef.current.offsetWidth;
-      const containerHeight = window.innerHeight - (bookContainerRef.current.offsetTop || 0) - 80; // Account for header (pt-20) and some bottom margin
+      // Account for header (pt-20) and some bottom margin (pb-10)
+      const availableHeight = window.innerHeight - (bookContainerRef.current.offsetTop || 0) - 120; // Adjusted for more vertical space
 
-      // Define an ideal aspect ratio for a single page of your PDF (width / height)
-      // For A4 portrait, it's roughly 210 / 297 = 0.707
-      const singlePageAspectRatio = 0.707; // Adjust this based on your actual PDF page aspect ratio
+      const singlePageAspectRatio = 0.707; // Adjust this based on your actual PDF page aspect ratio (width / height)
 
       let newSinglePageWidth;
       let newSinglePageHeight;
 
-      if (window.innerWidth < 768) { // Mobile devices (adjust breakpoint as needed)
+      if (window.innerWidth < 768) { // Mobile devices
         // On mobile, aim for a single page to fill most of the screen width
         newSinglePageWidth = containerWidth * 0.9; // 90% of container width
         newSinglePageHeight = newSinglePageWidth / singlePageAspectRatio;
 
-        // Ensure it doesn't exceed available height
-        if (newSinglePageHeight > containerHeight * 0.9) {
-          newSinglePageHeight = containerHeight * 0.9;
+        // Ensure it doesn't exceed available height on mobile
+        if (newSinglePageHeight > availableHeight * 0.9) {
+          newSinglePageHeight = availableHeight * 0.9;
           newSinglePageWidth = newSinglePageHeight * singlePageAspectRatio;
         }
 
-      } else { // PC/Tablet (show two pages side-by-side)
+      } else { // PC/Tablet
         // For PC, the HTMLFlipBook 'width' prop is for a single page.
         // The total book width (2 pages + gutter) should fit the container.
-        // Let's assume a small gutter, so total book width is roughly 2 * singlePageWidth
         newSinglePageWidth = (containerWidth * 0.8) / 2; // 80% of container width, divided by 2 for single page
         newSinglePageHeight = newSinglePageWidth / singlePageAspectRatio;
 
         // Ensure the height fits the available screen height
-        if (newSinglePageHeight > containerHeight * 0.9) {
-          newSinglePageHeight = containerHeight * 0.9;
+        if (newSinglePageHeight > availableHeight * 0.9) {
+          newSinglePageHeight = availableHeight * 0.9;
           newSinglePageWidth = newSinglePageHeight * singlePageAspectRatio;
         }
       }
 
-      // Set minimum and maximum bounds for single page dimensions
       setBookWidth(Math.max(250, Math.min(newSinglePageWidth, 600))); // Min 250px, Max 600px for a single page
       setBookHeight(Math.max(350, Math.min(newSinglePageHeight, 850))); // Min 350px, Max 850px for a single page
     }
   }, []);
 
   useEffect(() => {
-    calculateBookDimensions(); // Calculate on initial render
-    window.addEventListener('resize', calculateBookDimensions); // Recalculate on resize
+    calculateBookDimensions();
+    window.addEventListener('resize', calculateBookDimensions);
     return () => {
-      window.removeEventListener('resize', calculateBookDimensions); // Clean up event listener
+      window.removeEventListener('resize', calculateBookDimensions);
     };
-  }, [calculateBookDimensions]); // Recalculate if calculateBookDimensions callback changes
+  }, [calculateBookDimensions]);
 
-  // Navigation functions for arrows
   const goToNextPage = () => {
     if (flipBookRef.current) {
       flipBookRef.current.pageFlip().flipNext();
@@ -87,9 +80,8 @@ const BrochurePage = () => {
     }
   };
 
-  // Handler for page changes
   const onPage = (e: any) => {
-    setCurrentPage(e.data); // e.data contains the current page index
+    setCurrentPage(e.data);
   };
 
   const containerVariants = {
@@ -110,7 +102,7 @@ const BrochurePage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white pt-20 pb-10"> {/* pt-20 to account for fixed header */}
+    <div className="min-h-screen bg-gray-900 text-white pt-20 pb-10">
       <section className="relative py-12 md:py-16 bg-gradient-to-br from-gray-800 to-gray-950">
         <div className="container mx-auto px-4 relative z-10">
           <Link to="/" className="text-[#41c8df] hover:text-white flex items-center mb-6">
@@ -139,11 +131,11 @@ const BrochurePage = () => {
             {/* FLIPBOOK CONTAINER WITH NAVIGATION */}
             <motion.div
               variants={itemVariants}
-              ref={bookContainerRef} // Attach ref here for measuring
-              className="w-full flex flex-col items-center justify-center relative my-8" // Added relative for absolute positioning of arrows
-              style={{ minHeight: `${bookHeight + 80}px` }} // Ensure container is tall enough for book + controls
+              ref={bookContainerRef}
+              className="w-full flex flex-col items-center justify-center relative my-8"
+              style={{ minHeight: `${bookHeight + 80}px` }}
             >
-              {bookWidth > 0 && bookHeight > 0 && ( // Render only when dimensions are calculated
+              {bookWidth > 0 && bookHeight > 0 && (
                 <>
                   <HTMLFlipBook
                     width={bookWidth}
@@ -153,14 +145,14 @@ const BrochurePage = () => {
                     disableFlipByClick={false}
                     maxShadowOpacity={0.5}
                     mobileScrollSupport={true}
-                    className="demo-book shadow-2xl" // Added shadow
+                    className="demo-book shadow-2xl"
                     size="stretch"
                     minWidth={250}
                     maxWidth={600}
                     minHeight={350}
                     maxHeight={850}
-                    onFlip={onPage} // Attach page change handler
-                    ref={flipBookRef} // Attach ref to the flipbook instance
+                    onFlip={onPage}
+                    ref={flipBookRef}
                   >
                     {brochurePages.map((pageSrc, index) => (
                       <div key={index} className="page bg-white flex items-center justify-center">
@@ -169,26 +161,30 @@ const BrochurePage = () => {
                     ))}
                   </HTMLFlipBook>
 
-                  {/* Navigation Arrows */}
-                  <div className="absolute top-1/2 -translate-y-1/2 w-full flex justify-between px-4 sm:px-0 max-w-[calc(2*var(--book-width, 600px)+100px)]"> {/* Adjust max-width to span beyond the book */}
+                  {/* Navigation Arrows - Adjusted for responsiveness and style */}
+                  <div className="absolute top-1/2 -translate-y-1/2 w-full flex justify-between px-2 sm:px-4 md:px-8"> {/* Reduced px for mobile, increased for desktop */}
                     <motion.button
                       onClick={goToPrevPage}
-                      disabled={currentPage === 0} // Disable on first page
+                      disabled={currentPage === 0}
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
-                      className={`p-3 rounded-full bg-[#41c8df] text-black shadow-lg transition-colors duration-300 ${currentPage === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-yellow-600'}`}
+                      // Adjusted styling for transparency and size
+                      className={`p-2 sm:p-3 rounded-full bg-[#41c8df]/75 text-black shadow-lg transition-colors duration-300
+                                  ${currentPage === 0 ? 'opacity-30 cursor-not-allowed' : 'hover:bg-yellow-600'}`}
                     >
-                      <ChevronLeft className="w-6 h-6" />
+                      <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" /> {/* Smaller on mobile */}
                     </motion.button>
 
                     <motion.button
                       onClick={goToNextPage}
-                      disabled={currentPage === brochurePages.length - 1} // Disable on last page
+                      disabled={currentPage === brochurePages.length - 1}
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
-                      className={`p-3 rounded-full bg-[#41c8df] text-black shadow-lg transition-colors duration-300 ${currentPage === brochurePages.length - 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-yellow-600'}`}
+                      // Adjusted styling for transparency and size
+                      className={`p-2 sm:p-3 rounded-full bg-[#41c8df]/75 text-black shadow-lg transition-colors duration-300
+                                  ${currentPage === brochurePages.length - 1 ? 'opacity-30 cursor-not-allowed' : 'hover:bg-yellow-600'}`}
                     >
-                      <ChevronRight className="w-6 h-6" />
+                      <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" /> {/* Smaller on mobile */}
                     </motion.button>
                   </div>
 
