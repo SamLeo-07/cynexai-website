@@ -7,26 +7,31 @@ import HTMLFlipBook from 'react-pageflip';
 
 const BrochurePage = () => {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
-  const bookContainerRef = useRef<HTMLDivElement>(null);
-  const flipBookRef = useRef<any>(null);
-  const [bookWidth, setBookWidth] = useState(500);
-  const [bookHeight, setBookHeight] = useState(700);
-  const [currentPage, setCurrentPage] = useState(0);
+  const bookContainerRef = useRef<HTMLDivElement>(null); // Ref to measure the container holding the book
+  const flipBookRef = useRef<any>(null); // Ref for the HTMLFlipBook instance itself
+  const [bookWidth, setBookWidth] = useState(500); // Default single page width
+  const [bookHeight, setBookHeight] = useState(700); // Default single page height
+  const [currentPage, setCurrentPage] = useState(0); // State to track current page for navigation arrows
 
+  // Define your brochure page image paths
+  // IMPORTANT: Ensure these paths correctly point to images in your public/brochure_images folder
   const brochurePages = [
-    '/brochure_images/page1.png',
+    '/brochure_images/page1.png', // Cover page
     '/brochure_images/page2.png',
     '/brochure_images/page3.png',
-    '/brochure_images/page4.png',
+    '/brochure_images/page4.png', // Back cover
   ];
 
+  // Function to calculate book dimensions dynamically
   const calculateBookDimensions = useCallback(() => {
     if (bookContainerRef.current) {
       const containerWidth = bookContainerRef.current.offsetWidth;
       // Account for header (pt-20) and some bottom margin (pb-10)
       const availableHeight = window.innerHeight - (bookContainerRef.current.offsetTop || 0) - 120; // Adjusted for more vertical space
 
-      const singlePageAspectRatio = 0.707; // Adjust this based on your actual PDF page aspect ratio (width / height)
+      // Define an ideal aspect ratio for a single page of your PDF (width / height)
+      // For A4 portrait, it's roughly 210 / 297 = 0.707
+      const singlePageAspectRatio = 0.707; // Adjust this based on your actual PDF page aspect ratio
 
       let newSinglePageWidth;
       let newSinglePageHeight;
@@ -61,13 +66,14 @@ const BrochurePage = () => {
   }, []);
 
   useEffect(() => {
-    calculateBookDimensions();
-    window.addEventListener('resize', calculateBookDimensions);
+    calculateBookDimensions(); // Calculate on initial render
+    window.addEventListener('resize', calculateBookDimensions); // Recalculate on resize
     return () => {
-      window.removeEventListener('resize', calculateBookDimensions);
+      window.removeEventListener('resize', calculateBookDimensions); // Clean up event listener
     };
-  }, [calculateBookDimensions]);
+  }, [calculateBookDimensions]); // Recalculate if calculateBookDimensions callback changes
 
+  // Navigation functions for arrows
   const goToNextPage = () => {
     if (flipBookRef.current) {
       flipBookRef.current.pageFlip().flipNext();
@@ -80,8 +86,9 @@ const BrochurePage = () => {
     }
   };
 
+  // Handler for page changes
   const onPage = (e: any) => {
-    setCurrentPage(e.data);
+    setCurrentPage(e.data); // e.data contains the current page index
   };
 
   const containerVariants = {
@@ -102,7 +109,7 @@ const BrochurePage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white pt-20 pb-10">
+    <div className="min-h-screen bg-gray-900 text-white pt-20 pb-10"> {/* pt-20 to account for fixed header */}
       <section className="relative py-12 md:py-16 bg-gradient-to-br from-gray-800 to-gray-950">
         <div className="container mx-auto px-4 relative z-10">
           <Link to="/" className="text-[#41c8df] hover:text-white flex items-center mb-6">
@@ -133,9 +140,9 @@ const BrochurePage = () => {
               variants={itemVariants}
               ref={bookContainerRef}
               className="w-full flex flex-col items-center justify-center relative my-8"
-              style={{ minHeight: `${bookHeight + 80}px` }}
+              style={{ minHeight: `${bookHeight + 80}px` }} // Ensure container is tall enough for book + controls
             >
-              {bookWidth > 0 && bookHeight > 0 && (
+              {bookWidth > 0 && bookHeight > 0 && ( // Render only when dimensions are calculated
                 <>
                   <HTMLFlipBook
                     width={bookWidth}
@@ -145,14 +152,14 @@ const BrochurePage = () => {
                     disableFlipByClick={false}
                     maxShadowOpacity={0.5}
                     mobileScrollSupport={true}
-                    className="demo-book shadow-2xl"
+                    className="demo-book shadow-2xl" // Added shadow
                     size="stretch"
                     minWidth={250}
                     maxWidth={600}
                     minHeight={350}
                     maxHeight={850}
-                    onFlip={onPage}
-                    ref={flipBookRef}
+                    onFlip={onPage} // Attach page change handler
+                    ref={flipBookRef} // Attach ref to the flipbook instance
                   >
                     {brochurePages.map((pageSrc, index) => (
                       <div key={index} className="page bg-white flex items-center justify-center">
@@ -162,17 +169,16 @@ const BrochurePage = () => {
                   </HTMLFlipBook>
 
                   {/* Navigation Arrows - Adjusted for responsiveness and style */}
-                  <div className="absolute top-1/2 -translate-y-1/2 w-full flex justify-between px-2 sm:px-4 md:px-8"> {/* Reduced px for mobile, increased for desktop */}
+                  <div className="absolute top-1/2 -translate-y-1/2 w-full flex justify-between px-2 sm:px-4 md:px-8">
                     <motion.button
                       onClick={goToPrevPage}
                       disabled={currentPage === 0}
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
-                      // Adjusted styling for transparency and size
                       className={`p-2 sm:p-3 rounded-full bg-[#41c8df]/75 text-black shadow-lg transition-colors duration-300
                                   ${currentPage === 0 ? 'opacity-30 cursor-not-allowed' : 'hover:bg-yellow-600'}`}
                     >
-                      <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" /> {/* Smaller on mobile */}
+                      <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
                     </motion.button>
 
                     <motion.button
@@ -180,11 +186,10 @@ const BrochurePage = () => {
                       disabled={currentPage === brochurePages.length - 1}
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
-                      // Adjusted styling for transparency and size
                       className={`p-2 sm:p-3 rounded-full bg-[#41c8df]/75 text-black shadow-lg transition-colors duration-300
                                   ${currentPage === brochurePages.length - 1 ? 'opacity-30 cursor-not-allowed' : 'hover:bg-yellow-600'}`}
                     >
-                      <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" /> {/* Smaller on mobile */}
+                      <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
                     </motion.button>
                   </div>
 
@@ -216,8 +221,8 @@ const BrochurePage = () => {
         >
           <h3 className="text-xl font-semibold text-white mb-4">Prefer a PDF?</h3>
           <a
-            href="/brochure.pdf" // IMPORTANT: Place your PDF file in the 'public' folder
-            download="CynexAI_Brochure.pdf"
+            href="/cynaxai%20brouchure.pdf" // Corrected href to match your deployed filename
+            download="CynexAI_Brochure.pdf" // This is the suggested filename for the user's download
             className="inline-flex items-center bg-[#41c8df] text-black hover:bg-yellow-600 px-6 py-3 rounded-lg font-semibold transition-all duration-300"
           >
             <Download className="w-5 h-5 mr-2" />
