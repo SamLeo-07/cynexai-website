@@ -16,10 +16,10 @@ const BrochurePage = () => {
   // Define your brochure page image paths
   // IMPORTANT: Ensure these paths correctly point to images in your public/brochure_images folder
   const brochurePages = [
-    '/brochure_images/page1.jpg', // Cover page
-    '/brochure_images/page2.jpg',
-    '/brochure_images/page3.jpg',
-    '/brochure_images/page4.jpg', // Back cover
+    '/brochure_images/page1.png', // Cover page
+    '/brochure_images/page2.png',
+    '/brochure_images/page3.png',
+    '/brochure_images/page4.png', // Back cover
   ];
 
   // Function to calculate book dimensions dynamically
