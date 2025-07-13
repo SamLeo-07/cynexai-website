@@ -48,10 +48,10 @@ export default function Header() {
     : 'bg-transparent text-white'; // Transparent background, white text when not scrolled (on other pages)
 
   // --- IMPORTANT: Using only one logo file ---
-  // This logo (CynexAI.in.svg) is assumed to be dark-colored.
+  // This logo (CynexAI Logo new (1).png) is assumed to be dark-colored.
   // It will be visible on white backgrounds (brochure page, or scrolled on other pages).
   // It will be difficult or impossible to see on transparent backgrounds (home page, not scrolled).
-  const logoSrc = "/CynexAI.in.svg"; // Path to your single logo file
+  const logoSrc = "/CynexAI Logo new (1).png"; // Path to your single logo file
 
   // Determine nav link text color based on header background
   const navLinkTextColorClass = isBrochurePage || scrolled
