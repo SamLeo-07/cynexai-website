@@ -12,6 +12,7 @@ import Footer from './components/Footer';
 import CourseDetail from './components/CourseDetail';
 import ApplicationForm from './components/ApplicationForm';
 import WebinarPortal from './components/WebinarPortal';
+import GalleryPage from './components/GalleryPage';
 import AdminPanel from './components/AdminPanel';
 import BrochurePage from './components/BrochurePage';
 
@@ -42,6 +43,7 @@ function App() {
           <Route path="/course/:courseId" element={<CourseDetail />} />
           <Route path="/apply/:courseId" element={<ApplicationForm />} />
           <Route path="/webinar" element={<WebinarPortal />} />
+          <Route path="/gallery" element={<GalleryPage />} />
           <Route path="/admin" element={<AdminPanel />} />
           <Route path="/brochure" element={<BrochurePage />} />
         </Routes>

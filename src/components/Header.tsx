@@ -18,7 +18,8 @@ const navItems = [
 
   { name: 'Reviews', href: '#reviews' },
 
-  { name: 'Contact', href: '#contact' }
+  { name: 'Contact', href: '#contact' },
+  { name: 'Gallery', href: '/gallery' }
 
 ];
 
