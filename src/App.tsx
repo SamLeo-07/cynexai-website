@@ -14,6 +14,7 @@ import ApplicationForm from './components/ApplicationForm';
 import WebinarPortal from './components/WebinarPortal';
 import GalleryPage from './components/GalleryPage';
 import AdminPanel from './components/AdminPanel';
+import PaymentPage from './components/PaymentPage';
 import BrochurePage from './components/BrochurePage';
 
 function HomePage() {
@@ -45,6 +46,7 @@ function App() {
           <Route path="/webinar" element={<WebinarPortal />} />
           <Route path="/gallery" element={<GalleryPage />} />
           <Route path="/admin" element={<AdminPanel />} />
+          <Route path="/pay" element={<PaymentPage />} />
           <Route path="/brochure" element={<BrochurePage />} />
         </Routes>
         <Footer />
