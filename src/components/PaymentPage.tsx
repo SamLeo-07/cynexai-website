@@ -7,13 +7,16 @@ import { Link, useNavigate } from 'react-router-dom';
 // Declare Razorpay global object
 declare const Razorpay: any;
 
-// Define courses and their prices (Frontend for display, Backend for definitive price)
+// Define courses (Frontend for display, Backend for definitive price/description)
 const coursesData = [
-  { id: 'DSB001', name: 'Data Science Basics (₹10,000)', price: 10000.00, description: 'Foundational Data Science Course' },
-  { id: 'AIML002', name: 'Advanced AI/ML (₹25,000)', price: 25000.00, description: 'Deep Dive into AI and Machine Learning' },
-  { id: 'FSD003', name: 'Full Stack Development (₹18,000)', price: 18000.00, description: 'Comprehensive Web Development Program' },
-  { id: 'CYB004', name: 'Cybersecurity Fundamentals (₹12,000)', price: 12000.00, description: 'Introduction to Cybersecurity' },
-  { id: 'OTHER', name: 'Other / Custom Amount', price: 0.00, description: 'Custom amount payment' }
+  { id: 'DSB001', name: 'Data Science & Machine Learning' },
+  { id: 'AIML002', name: 'Artificial Intelligence & Generative AI' },
+  { id: 'FSD003', name: 'Full Stack Java Development' },
+  { id: 'DEV004', name: 'DevOps & Cloud Technologies' },
+  { id: 'PYT005', name: 'Python Programming' },
+  { id: 'SWT006', name: 'Software Testing (Manual + Automation)' },
+  { id: 'SAP007', name: 'SAP (Data Processing)' },
+  { id: 'OTHER', name: 'Other / Custom Payment' }
 ];
 
 const PaymentPage = () => {
@@ -29,13 +32,13 @@ const PaymentPage = () => {
     phoneNumber: '',
     email: '',
     selectedCourseId: '', // Stores the ID of the selected course
-    customAmount: '' as string, // For 'OTHER' course type
-    selectedPaymentMethod: 'credit_card_upi' // Default to Credit Card / UPI
+    amount: '' as string, // User-entered amount, always visible
+    upiId: '', // New state for UPI ID
+    selectedPaymentMethod: 'credit_card' // Default to Credit Card
   });
 
-  // Derived state for selected course details
-  const selectedCourse = coursesData.find(course => course.id === checkoutDetails.selectedCourseId);
-  const displayAmount = selectedCourse?.id === 'OTHER' ? parseFloat(checkoutDetails.customAmount || '0') : (selectedCourse?.price || 0);
+  // Derived state for selected course name (for display in Order Summary)
+  const selectedCourseName = coursesData.find(course => course.id === checkoutDetails.selectedCourseId)?.name || 'N/A';
 
   // IMPORTANT: Replace with the Web App URL of your Google Apps Script backend for Razorpay
   const RAZORPAY_BACKEND_URL = 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE';
@@ -62,7 +65,7 @@ const PaymentPage = () => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    if (name === 'customAmount') {
+    if (name === 'amount') { // Handle the main amount input
       if (value === '' || /^\d*\.?\d{0,2}$/.test(value)) {
         setCheckoutDetails(prev => ({ ...prev, [name]: value }));
       }
@@ -73,6 +76,10 @@ const PaymentPage = () => {
 
   const handlePaymentMethodChange = (method: string) => {
     setCheckoutDetails(prev => ({ ...prev, selectedPaymentMethod: method }));
+    // Clear UPI ID if switching away from UPI
+    if (method !== 'upi') {
+      setCheckoutDetails(prev => ({ ...prev, upiId: '' }));
+    }
   };
 
   const initiatePaymentProcess = async (e: React.FormEvent) => {
@@ -90,14 +97,12 @@ const PaymentPage = () => {
       return;
     }
 
-    // Frontend validation for custom amount if 'OTHER' course is selected
-    if (checkoutDetails.selectedCourseId === 'OTHER') {
-      const parsedCustomAmount = parseFloat(checkoutDetails.customAmount);
-      if (isNaN(parsedCustomAmount) || parsedCustomAmount <= 0) {
-        setMessage('Please enter a valid custom amount greater than zero.');
-        setPaymentStatus('error');
-        return;
-      }
+    // Frontend validation for amount
+    const parsedAmount = parseFloat(checkoutDetails.amount);
+    if (isNaN(parsedAmount) || parsedAmount <= 0) {
+      setMessage('Please enter a valid amount greater than zero.');
+      setPaymentStatus('error');
+      return;
     }
 
     // Basic validation for customer details
@@ -107,6 +112,13 @@ const PaymentPage = () => {
         return;
     }
 
+    // UPI ID validation if UPI is selected
+    if (checkoutDetails.selectedPaymentMethod === 'upi' && !checkoutDetails.upiId) {
+      setMessage('Please enter your UPI ID.');
+      setPaymentStatus('error');
+      return;
+    }
+
     setPaymentStatus('processing');
     setMessage('Initiating payment...');
 
@@ -114,12 +126,13 @@ const PaymentPage = () => {
       // Step 1: Call your backend to create an order
       const backendPayload = {
         courseId: checkoutDetails.selectedCourseId,
-        customAmount: checkoutDetails.selectedCourseId === 'OTHER' ? parseFloat(checkoutDetails.customAmount) : undefined,
+        amount: parsedAmount, // Send user-entered amount to backend
         firstName: checkoutDetails.firstName,
         lastName: checkoutDetails.lastName,
         phoneNumber: checkoutDetails.phoneNumber,
         email: checkoutDetails.email,
-        selectedPaymentMethod: checkoutDetails.selectedPaymentMethod,
+        upiId: checkoutDetails.upiId, // Pass UPI ID to backend
+        selectedPaymentMethod: checkoutDetails.selectedPaymentMethod, // Log selected method
       };
 
       const orderResponse = await fetch(RAZORPAY_BACKEND_URL, {
@@ -154,13 +167,14 @@ const PaymentPage = () => {
           // Optionally clear form after success
           setCheckoutDetails({
             firstName: '', lastName: '', phoneNumber: '', email: '',
-            selectedCourseId: '', customAmount: '', selectedPaymentMethod: 'credit_card_upi'
+            selectedCourseId: '', amount: '', upiId: '', selectedPaymentMethod: 'credit_card'
           });
         },
         prefill: {
           name: orderData.prefill.name, // Prefill from backend response
           email: orderData.prefill.email,
           contact: orderData.prefill.contact,
+          vpa: checkoutDetails.selectedPaymentMethod === 'upi' ? checkoutDetails.upiId : undefined // Prefill UPI ID if selected
         },
         notes: orderData.notes, // Notes passed from backend order
         theme: {
@@ -212,53 +226,73 @@ const PaymentPage = () => {
           </motion.h2>
 
           <motion.div variants={containerVariants} className="space-y-4">
-            {/* Credit Card / UPI / Netbanking / Wallets (All via Razorpay) */}
+            {/* Credit Card / Debit Card Option */}
             <label
               className={`flex items-center p-4 border rounded-lg cursor-pointer transition-all duration-200
-                ${checkoutDetails.selectedPaymentMethod === 'credit_card_upi' ? 'border-[#41c8df] bg-[#41c8df]/10' : 'border-gray-300 hover:bg-gray-50'}`}
+                ${checkoutDetails.selectedPaymentMethod === 'credit_card' ? 'border-[#41c8df] bg-[#41c8df]/10' : 'border-gray-300 hover:bg-gray-50'}`}
             >
               <input
                 type="radio"
                 name="paymentMethod"
-                value="credit_card_upi"
-                checked={checkoutDetails.selectedPaymentMethod === 'credit_card_upi'}
-                onChange={() => handlePaymentMethodChange('credit_card_upi')}
+                value="credit_card"
+                checked={checkoutDetails.selectedPaymentMethod === 'credit_card'}
+                onChange={() => handlePaymentMethodChange('credit_card')}
                 className="form-radio h-5 w-5 text-[#41c8df] border-gray-300 focus:ring-[#41c8df]"
               />
-              <span className="ml-3 text-lg font-semibold text-gray-800 flex-grow">
-                <span className="flex items-center">
-                  Credit Card / Debit Card / UPI
-                  <span className="ml-2 text-xs text-gray-500">(All Indian Banks)</span>
-                </span>
-              </span>
+              <span className="ml-3 text-lg font-semibold text-gray-800 flex-grow">Credit Card / Debit Card</span>
               <div className="flex items-center space-x-2">
                 <img src="https://placehold.co/30x20/ffffff/000000?text=VISA" alt="Visa" className="h-4" />
                 <img src="https://placehold.co/30x20/ffffff/000000?text=MC" alt="MasterCard" className="h-4" />
                 <img src="https://placehold.co/30x20/ffffff/000000?text=RuPay" alt="RuPay" className="h-4" />
-                <img src="https://placehold.co/30x20/ffffff/000000?text=UPI" alt="UPI" className="h-4" />
               </div>
             </label>
 
-            {/* Placeholder for other direct methods if Razorpay offers specific integrations later */}
+            {/* UPI Option */}
             <label
-              className={`flex items-center p-4 border rounded-lg cursor-not-allowed opacity-60
-                ${checkoutDetails.selectedPaymentMethod === 'netbanking_wallets' ? 'border-[#41c8df] bg-[#41c8df]/10' : 'border-gray-300'}`}
+              className={`flex items-center p-4 border rounded-lg cursor-pointer transition-all duration-200
+                ${checkoutDetails.selectedPaymentMethod === 'upi' ? 'border-[#41c8df] bg-[#41c8df]/10' : 'border-gray-300 hover:bg-gray-50'}`}
             >
               <input
                 type="radio"
                 name="paymentMethod"
-                value="netbanking_wallets"
-                checked={checkoutDetails.selectedPaymentMethod === 'netbanking_wallets'}
-                onChange={() => handlePaymentMethodChange('netbanking_wallets')}
-                disabled // Disable this as it's covered by Razorpay's main modal
+                value="upi"
+                checked={checkoutDetails.selectedPaymentMethod === 'upi'}
+                onChange={() => handlePaymentMethodChange('upi')}
                 className="form-radio h-5 w-5 text-[#41c8df] border-gray-300 focus:ring-[#41c8df]"
               />
-              <span className="ml-3 text-lg font-semibold text-gray-800 flex-grow">Netbanking / Wallets</span>
+              <span className="ml-3 text-lg font-semibold text-gray-800 flex-grow">UPI</span>
               <div className="flex items-center space-x-2">
-                <Banknote className="w-5 h-5 text-gray-600" />
-                <Smartphone className="w-5 h-5 text-gray-600" />
+                <img src="https://placehold.co/30x20/ffffff/000000?text=UPI" alt="UPI" className="h-4" />
+                <img src="https://placehold.co/30x20/ffffff/000000?text=GPay" alt="Google Pay" className="h-4" />
+                <img src="https://placehold.co/30x20/ffffff/000000?text=PhonePe" alt="PhonePe" className="h-4" />
               </div>
             </label>
+
+            {/* UPI ID Input Field (Conditionally rendered) */}
+            {checkoutDetails.selectedPaymentMethod === 'upi' && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3 }}
+                className="mt-4"
+              >
+                <label htmlFor="upiId" className="block text-sm font-medium text-gray-700 mb-2 text-left">Your UPI ID (VPA)</label>
+                <input
+                  type="text"
+                  id="upiId"
+                  name="upiId"
+                  value={checkoutDetails.upiId}
+                  onChange={handleInputChange}
+                  placeholder="e.g., yourname@bankname"
+                  required={checkoutDetails.selectedPaymentMethod === 'upi'}
+                  className="w-full px-4 py-2 rounded-lg bg-white border border-gray-300 focus:border-[#41c8df] focus:ring-1 focus:ring-[#41c8df] text-gray-900 placeholder-gray-500 outline-none"
+                />
+                <p className="text-xs text-gray-500 mt-1 text-left">
+                  (This will pre-fill in Razorpay. Actual validation happens there.)
+                </p>
+              </motion.div>
+            )}
 
           </motion.div>
 
@@ -275,7 +309,7 @@ const PaymentPage = () => {
         </div>
 
         {/* Right Column: Order Summary & Customer Information */}
-        <div className="lg:w-3/5 lg:pl-8 lg:border-l lg:border-gray-200">
+        <div className="lg:w-3/5 lg:pl-8">
           <motion.h2 variants={itemVariants} className="text-xl sm:text-2xl font-bold mb-6 border-b pb-3 border-gray-200">
             Order Details
           </motion.h2>
@@ -295,34 +329,36 @@ const PaymentPage = () => {
                 <option value="">-- Select a Course --</option>
                 {coursesData.map(course => (
                   <option key={course.id} value={course.id}>
-                    {course.name}
+                    {course.name} {/* Display name without price here */}
                   </option>
                 ))}
               </select>
             </motion.div>
 
-            {/* Custom Amount Input (only if "Other / Custom Amount" is selected) */}
-            {checkoutDetails.selectedCourseId === 'OTHER' && (
-              <motion.div variants={itemVariants}>
-                <label htmlFor="customAmount" className="block text-sm font-medium text-gray-700 mb-2">Enter Custom Amount (INR)</label>
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-xl font-bold">₹</span>
-                  <input
-                    type="text"
-                    id="customAmount"
-                    name="customAmount"
-                    value={checkoutDetails.customAmount}
-                    onChange={handleInputChange}
-                    placeholder="e.g., 750.00"
-                    required
-                    className="w-full pl-8 pr-4 py-3 rounded-lg bg-white border border-gray-300 focus:border-[#41c8df] focus:ring-1 focus:ring-[#41c8df] text-gray-900 placeholder-gray-500 outline-none text-xl font-bold"
-                  />
-                </div>
-              </motion.div>
-            )}
+            {/* Amount Input Field (Always visible) */}
+            <motion.div variants={itemVariants}>
+              <label htmlFor="amount" className="block text-sm font-medium text-gray-700 mb-2 text-left">Amount (INR)</label>
+              <div className="relative">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-xl font-bold">₹</span>
+                <input
+                  type="text"
+                  id="amount"
+                  name="amount"
+                  value={checkoutDetails.amount}
+                  onChange={handleInputChange}
+                  placeholder="e.g., 500.00"
+                  required
+                  className="w-full pl-8 pr-4 py-3 rounded-lg bg-white border border-gray-300 focus:border-[#41c8df] focus:ring-1 focus:ring-[#41c8df] text-gray-900 placeholder-gray-500 outline-none text-xl font-bold"
+                />
+              </div>
+            </motion.div>
 
             {/* Order Summary Display */}
             <motion.div variants={itemVariants} className="bg-gray-50 rounded-lg p-4 border border-gray-200 space-y-3 mb-6">
+                <div className="flex justify-between items-center text-lg">
+                  <span className="text-gray-600">Selected Course:</span>
+                  <span className="font-semibold text-gray-800">{selectedCourseName}</span>
+                </div>
                 <div className="flex justify-between items-center text-lg">
                   <span className="text-gray-600">Order #:</span>
                   <span className="font-semibold text-gray-800">78399281</span> {/* Static for now */}
@@ -331,17 +367,13 @@ const PaymentPage = () => {
                   <span className="text-gray-600">Coupon Code:</span>
                   <button type="button" className="text-[#41c8df] hover:underline text-sm">Apply</button>
                 </div>
-                <div className="flex justify-between items-center text-lg">
-                  <span className="text-gray-600">Order Amount:</span>
-                  <span className="font-semibold text-gray-800">₹{displayAmount.toFixed(2)}</span>
-                </div>
                 <div className="flex justify-between items-center text-2xl font-bold pt-4 border-t border-gray-200">
                   <span className="text-gray-800">Total Amount:</span>
-                  <span className="text-[#41c8df]">INR ₹{displayAmount.toFixed(2)}</span>
+                  <span className="text-[#41c8df]">INR ₹{parseFloat(checkoutDetails.amount || '0').toFixed(2)}</span>
                 </div>
             </motion.div>
 
-            {/* Customer Information */}
+            {/* Customer Information (Simplified) */}
             <motion.div variants={itemVariants} className="bg-gray-50 rounded-lg p-4 border border-gray-200 space-y-4">
               <h3 className="text-lg font-semibold mb-4 text-gray-800">Your Information</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -383,6 +415,8 @@ const PaymentPage = () => {
                   placeholder="e.g., 9876543210"
                   required
                   className="w-full px-4 py-2 rounded-lg bg-white border border-gray-300 focus:border-[#41c8df] focus:ring-1 focus:ring-[#41c8df] text-gray-900 placeholder-gray-500 outline-none"
+                  pattern="[0-9]{10}" // Basic pattern for 10 digits
+                  title="Phone number must be 10 digits"
                 />
               </div>
               <div>
@@ -408,12 +442,13 @@ const PaymentPage = () => {
               disabled={
                 loadingRazorpayScript ||
                 paymentStatus === 'processing' ||
-                !checkoutDetails.selectedCourseId || // Must select a course
-                (checkoutDetails.selectedCourseId === 'OTHER' && (isNaN(parseFloat(checkoutDetails.customAmount)) || parseFloat(checkoutDetails.customAmount) <= 0)) || // Validate custom amount
+                !checkoutDetails.selectedCourseId ||
+                isNaN(parseFloat(checkoutDetails.amount)) || parseFloat(checkoutDetails.amount) <= 0 || // Validate amount
                 !checkoutDetails.firstName ||
                 !checkoutDetails.lastName ||
                 !checkoutDetails.email ||
-                !checkoutDetails.phoneNumber
+                !checkoutDetails.phoneNumber ||
+                (checkoutDetails.selectedPaymentMethod === 'upi' && !checkoutDetails.upiId) // Disable if UPI selected but ID is empty
               }
               className="w-full bg-[#41c8df] text-black py-3 rounded-lg font-semibold hover:bg-yellow-600 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center mt-6"
             >
