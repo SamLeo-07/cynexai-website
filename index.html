@@ -12,5 +12,137 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <!-- LocalBusiness Schema for CynexAI -->
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "EducationalOrganization",
+  "name": "CynexAI",
+  "url": "https://cynexai.in/",
+  "logo": "https://cynexai.in/CynexAI_Dark_Logo.svg",
+  "description": "CynexAI offers top-tier training in Data Science & Machine Learning, Artificial Intelligence & Generative AI, Full Stack Java Development, DevOps & Cloud Technologies, Python Programming, Software Testing (Manual + Automation), and SAP (Data Processing) in Kukatpally, Hyderabad. Located conveniently near KPHB Metro, we provide practical, industry-focused courses for career advancement.",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Near KPHB Metro",
+    "addressLocality": "Kukatpally",
+    "addressRegion": "Telangana",
+    "postalCode": "500072",
+    "addressCountry": "IN"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 17.4770,
+    "longitude": 78.3892
+  },
+  "telephone": "+91-XXXXXXXXXX",
+  "sameAs": [
+    "https://www.linkedin.com/company/cynexai/",
+    "https://www.facebook.com/cynexai",
+    "https://www.instagram.com/cynexai/"
+    // Add your actual social media profiles here
+  ],
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday"
+      ],
+      "opens": "09:00",
+      "closes": "18:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Saturday"
+      ],
+      "opens": "10:00",
+      "closes": "14:00"
+    }
+  ]
+}
+</script>
+<!-- Course Schema Example (Repeat for each major course) -->
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Course",
+  "name": "Data Science & Machine Learning Course",
+  "description": "Comprehensive Data Science & Machine Learning training covering Python, statistics, machine learning algorithms, deep learning, and practical projects. Ideal for aspiring data scientists and analysts in Hyderabad.",
+  "provider": {
+    "@type": "EducationalOrganization",
+    "name": "CynexAI",
+    "url": "https://cynexai.in/"
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "10000",
+    "priceCurrency": "INR"
+  },
+  "educationalCredentialAwarded": "Certificate of Completion",
+  "hasCourseInstance": {
+    "@type": "CourseInstance",
+    "courseMode": "Online",
+    "startDate": "2025-08-01",
+    "endDate": "2025-10-31",
+    "location": {
+      "@type": "Place",
+      "name": "CynexAI Training Center",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Near KPHB Metro",
+        "addressLocality": "Kukatpally",
+        "addressRegion": "Telangana",
+        "postalCode": "500072",
+        "addressCountry": "IN"
+      }
+    }
+  }
+}
+</script>
+
+<!-- Add more <script type="application/ld+json"> blocks for other courses -->
+<!-- Example for Artificial Intelligence & Generative AI: -->
+<!-- <script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Course",
+  "name": "Artificial Intelligence & Generative AI Course",
+  "description": "Master AI and Generative AI with practical applications, including neural networks, natural language processing, and building AI models. Best AI training in Kukatpally, Hyderabad.",
+  "provider": {
+    "@type": "EducationalOrganization",
+    "name": "CynexAI",
+    "url": "https://cynexai.in/"
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "25000",
+    "priceCurrency": "INR"
+  },
+  "educationalCredentialAwarded": "Certificate of Completion",
+  "hasCourseInstance": {
+    "@type": "CourseInstance",
+    "courseMode": "Online",
+    "startDate": "2025-08-01",
+    "endDate": "2025-10-31",
+    "location": {
+      "@type": "Place",
+      "name": "CynexAI Training Center",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Near KPHB Metro",
+        "addressLocality": "Kukatpally",
+        "addressRegion": "Telangana",
+        "postalCode": "500072",
+        "addressCountry": "IN"
+      }
+    }
+  }
+}
+</script> -->
+
   </body>
 </html>
