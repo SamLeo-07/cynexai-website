@@ -45,7 +45,7 @@ const PaymentPage = () => {
   // IMPORTANT: This is the URL of your Node.js backend server
   // If running locally: http://localhost:5000
   // If deployed: https://your-nodejs-backend-url.com
-  const NODEJS_BACKEND_URL = 'http://localhost:5000'; 
+  const NODEJS_BACKEND_URL = 'https://cynexai-backend-server.vercel.app/'; 
 
   // IMPORTANT: Replace with your public Razorpay Key ID
   // Get this from Razorpay Dashboard -> Settings -> API Keys
