@@ -10,32 +10,13 @@ const crypto = require('crypto'); // Import crypto for webhook signature verific
 const app = express();
 const PORT = process.env.PORT || 5000; // Use port from .env or default to 5000
 
-// --- CORS Configuration ---
-// IMPORTANT: Replace 'https://cynexai.in' with your actual Netlify domain (e.g., 'https://your-site-name.netlify.app')
-// If you have a custom domain, add it here too: 'https://www.your-custom-domain.com'
-const allowedOrigins = ['https://cynexai.in']; // Add your Netlify domain here!
-
-app.use(cors({
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    // Or if the origin is in our allowed list
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      const msg = `The CORS policy for this site does not allow access from the specified Origin: ${origin}.`;
-      console.error(msg); // Log the blocked origin for debugging
-      callback(new Error(msg), false);
-    }
-  },
-  methods: ['GET', 'POST'], // Explicitly allow GET and POST methods
-  allowedHeaders: ['Content-Type', 'Authorization', 'x-razorpay-signature'], // Allow necessary headers
-  credentials: true // If you're sending cookies/auth headers (not strictly needed for this Razorpay flow)
-}));
-
+// --- Middleware ---
+// IMPORTANT: Apply CORS as the very first middleware to ensure it's handled for all requests, including preflights.
+app.use(cors()); 
 app.use(bodyParser.json()); // Parse JSON request bodies
 
 // Initialize Razorpay instance with your keys
-// IMPORTANT: Ensure RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET are set in your .env file
+// IMPORTANT: Ensure RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET are set in your Vercel Environment Variables
 const razorpay = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,
   key_secret: process.env.RAZORPAY_KEY_SECRET,
@@ -49,6 +30,7 @@ app.post('/create-order', async (req, res) => {
 
   // Basic validation
   if (!amount || isNaN(amount) || amount <= 0) {
+    console.error('Validation Error: Invalid amount provided:', amount);
     return res.status(400).json({ error: true, message: 'Valid amount is required.' });
   }
 
@@ -80,7 +62,8 @@ app.post('/create-order', async (req, res) => {
       }
     });
   } catch (error) {
-    console.error('Error creating Razorpay order:', error);
+    console.error('Error creating Razorpay order:', error.message || error);
+    // Send back the specific error message from Razorpay if available
     res.status(500).json({ error: true, message: error.message || 'Failed to create Razorpay order.' });
   }
 });
@@ -90,10 +73,15 @@ app.post('/create-order', async (req, res) => {
 app.post('/razorpay-webhook', (req, res) => {
   console.log('Received Razorpay Webhook!');
   console.log('Webhook Headers:', req.headers);
-  console.log('Webhook Body:', req.body);
+  // console.log('Webhook Body:', req.body); // Avoid logging sensitive data in production
 
-  const secret = process.env.RAZORPAY_WEBHOOK_SECRET; // Your webhook secret from .env
-  const shasum = crypto.createHmac('sha256', secret); // Use imported crypto
+  const secret = process.env.RAZORPAY_WEBHOOK_SECRET; // Your webhook secret from Vercel ENV
+  if (!secret) {
+    console.error('RAZORPAY_WEBHOOK_SECRET is not set in environment variables!');
+    return res.status(500).json({ status: 'error', message: 'Webhook secret not configured.' });
+  }
+
+  const shasum = crypto.createHmac('sha256', secret);
   shasum.update(JSON.stringify(req.body));
   const digest = shasum.digest('hex');
 
@@ -109,13 +97,16 @@ app.post('/razorpay-webhook', (req, res) => {
     console.log(`Event Type: ${event}`);
     console.log(`Payment ID: ${payment.id}, Status: ${payment.status}`);
 
-    // --- IMPORTANT: Log to Google Sheet (Replace with your Google Sheet logic) ---
+    // --- IMPORTANT: Log to Google Sheet ---
+    // This part would require setting up Google Sheets API with Node.js.
     // For now, we'll just log to console.
-    // If you want to log to your Google Sheet, you'd need to set up Google Cloud Project,
-    // enable Sheets API, create service account credentials, and use 'googleapis' library.
-    // This is more complex than a simple webhook secret.
+    // If you want to integrate Google Sheets, you'd need:
+    // 1. A Google Cloud Project.
+    // 2. Enable Google Sheets API.
+    // 3. Create a Service Account Key (JSON file).
+    // 4. Use 'googleapis' library in Node.js to append rows.
+    // This is a separate, more involved integration.
 
-    // For now, let's just acknowledge the webhook
     res.status(200).json({ status: 'success', message: 'Webhook received and processed.' });
 
   } else {
@@ -124,8 +115,13 @@ app.post('/razorpay-webhook', (req, res) => {
   }
 });
 
+// --- Basic GET route for health check (optional, but good for Vercel root) ---
+app.get('/', (req, res) => {
+  res.status(200).send('CynexAI Backend API is running.');
+});
+
 // Start the server
 app.listen(PORT, () => {
   console.log(`Node.js backend server running on http://localhost:${PORT}`);
-  console.log('Make sure your RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET, and RAZORPAY_WEBHOOK_SECRET are set in your .env file.');
+  console.log('Ensure RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET, and RAZORPAY_WEBHOOK_SECRET are set as Vercel Environment Variables.');
 });
