@@ -40,7 +40,8 @@ const PaymentPage = () => {
   const [currentOrderId, setCurrentOrderId] = useState('N/A'); // State for dynamic Order ID, initialized to N/A
 
   // Derived state for selected course name (for display in Order Summary)
-  const selectedCourseName = coursesData.find(course => c.id === checkoutDetails.selectedCourseId)?.name || 'N/A';
+  // Re-verified this line carefully. 'course' is the parameter, not 'c'.
+  const selectedCourseName = coursesData.find(course => course.id === checkoutDetails.selectedCourseId)?.name || 'N/A';
 
   // IMPORTANT: This is the base URL of your deployed Node.js backend server on Vercel.
   // It should NOT have a trailing slash.
@@ -132,7 +133,7 @@ const PaymentPage = () => {
         amount: parsedAmount, // Send user-entered amount to backend
         currency: 'INR', // Hardcode currency for simplicity
         receipt: `receipt_${Date.now()}`, // Unique receipt ID
-        description: coursesData.find(c => c.id === checkoutDetails.selectedCourseId)?.name || 'CynexAI Course Payment',
+        description: coursesData.find(course => course.id === checkoutDetails.selectedCourseId)?.name || 'CynexAI Course Payment', // Re-verified this line
         notes: { // Pass all relevant details as notes
           firstName: checkoutDetails.firstName,
           lastName: checkoutDetails.lastName,
@@ -144,7 +145,7 @@ const PaymentPage = () => {
         }
       };
 
-      // FIXED: Correct URL concatenation using template literals
+      // Correct URL concatenation using template literals
       const orderResponse = await fetch(`${NODEJS_BACKEND_BASE_URL}/create-order`, {
         method: 'POST',
         headers: {
