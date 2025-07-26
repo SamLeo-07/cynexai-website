@@ -23,3 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 .env
+
+# Node.js backend specific ignores
+backend/node_modules/
+backend/.env
