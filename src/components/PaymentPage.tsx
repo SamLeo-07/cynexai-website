@@ -48,7 +48,7 @@ const PaymentPage = () => {
   const NODEJS_BACKEND_BASE_URL = 'https://cynexai-backend-server.vercel.app'; 
 
   // IMPORTANT: Replace with your public Razorpay Key ID
-  const RAZORPAY_FRONTEND_KEY_ID = 'rzp_test_0Y5bq4WMY33zwb'; // e.g., 'rzp_test_xxxxxxxxxxxxxx'
+  const RAZORPAY_FRONTEND_KEY_ID = 'rzp_live_nvAwxzNUKg1gOs'; // e.g., 'rzp_test_xxxxxxxxxxxxxx'
 
   useEffect(() => {
     const script = document.createElement('script');
