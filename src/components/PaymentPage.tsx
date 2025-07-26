@@ -46,7 +46,7 @@ const PaymentPage = () => {
   const RAZORPAY_BACKEND_URL = 'https://script.google.com/macros/s/AKfycbyRKKMcfBQLO_gZxO3XnrzMLpj1BhEAh3LXXABZwVFEk_SWdUwQfHEvYw98xKa8ATyaIA/exec'; // Example: 'https://script.google.com/macros/s/AKfycbz123ABC_XYZ/exec'
 
   // IMPORTANT: Replace with your public Razorpay Key ID
-  const RAZORPAY_FRONTEND_KEY_ID = 'rzp_test_0Y5bq4WMY33zwb'; // Example: 'rzp_test_xxxxxxxxxxxxxx'
+  const RAZORPAY_FRONTEND_KEY_ID = 'rzp_test_0Y5bq4WMY33zwb'; // Example: 
 
   useEffect(() => {
     const script = document.createElement('script');
