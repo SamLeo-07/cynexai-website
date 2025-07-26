@@ -41,10 +41,10 @@ const PaymentPage = () => {
   const selectedCourseName = coursesData.find(course => course.id === checkoutDetails.selectedCourseId)?.name || 'N/A';
 
   // IMPORTANT: Replace with the Web App URL of your Google Apps Script backend for Razorpay
-  const RAZORPAY_BACKEND_URL = 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE';
+  const RAZORPAY_BACKEND_URL = 'https://script.google.com/macros/s/AKfycbyRKKMcfBQLO_gZxO3XnrzMLpj1BhEAh3LXXABZwVFEk_SWdUwQfHEvYw98xKa8ATyaIA/exec';
 
   // IMPORTANT: Replace with your public Razorpay Key ID
-  const RAZORPAY_FRONTEND_KEY_ID = 'rzp_test_YOUR_KEY_ID';
+  const RAZORPAY_FRONTEND_KEY_ID = 'rzp_test_0Y5bq4WMY33zwb';
 
   useEffect(() => {
     const script = document.createElement('script');
