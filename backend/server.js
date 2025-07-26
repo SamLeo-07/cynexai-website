@@ -3,14 +3,16 @@ require('dotenv').config();
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const cors = require('cors');
+const cors = require('cors'); // Import cors
 const Razorpay = require('razorpay'); // Razorpay SDK
 
 const app = express();
 const PORT = process.env.PORT || 5000; // Use port from .env or default to 5000
 
 // Middleware
-app.use(cors()); // Enable CORS for all routes (important for frontend communication)
+// IMPORTANT: Use the simple cors() for initial debugging to ensure it's not the issue.
+// Once working, you can make it more restrictive to your Netlify domain.
+app.use(cors()); 
 app.use(bodyParser.json()); // Parse JSON request bodies
 
 // Initialize Razorpay instance with your keys
@@ -88,11 +90,6 @@ app.post('/razorpay-webhook', (req, res) => {
     console.log(`Event Type: ${event}`);
     console.log(`Payment ID: ${payment.id}, Status: ${payment.status}`);
 
-    // --- IMPORTANT: Log to Google Sheet (Replace with your Google Sheet logic) ---
-    // Since this is a Node.js backend, you'd typically use Google Sheets API here.
-    // For simplicity and to reuse your existing Google Sheet, you could:
-    // 1. Keep your Google Apps Script for webhook logging ONLY.
-    // 2. Or, use a Node.js library like 'googleapis' to interact with Google Sheets.
     // For now, we'll just log to console.
     // If you want to log to your Google Sheet, you'd need to set up Google Cloud Project,
     // enable Sheets API, create service account credentials, and use 'googleapis' library.

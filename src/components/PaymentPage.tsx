@@ -40,15 +40,13 @@ const PaymentPage = () => {
   const [currentOrderId, setCurrentOrderId] = useState('N/A'); // State for dynamic Order ID, initialized to N/A
 
   // Derived state for selected course name (for display in Order Summary)
-  const selectedCourseName = coursesData.find(course => course.id === checkoutDetails.selectedCourseId)?.name || 'N/A';
+  const selectedCourseName = coursesData.find(course => c.id === checkoutDetails.selectedCourseId)?.name || 'N/A';
 
-  // IMPORTANT: This is the URL of your Node.js backend server
-  // If running locally: http://localhost:5000
-  // If deployed: https://your-nodejs-backend-url.com
-  const NODEJS_BACKEND_URL = 'https://cynexai-backend-server.vercel.app/'; 
+  // IMPORTANT: This is the base URL of your deployed Node.js backend server on Vercel.
+  // It should NOT have a trailing slash.
+  const NODEJS_BACKEND_BASE_URL = 'https://cynexai-backend-server.vercel.app'; 
 
   // IMPORTANT: Replace with your public Razorpay Key ID
-  // Get this from Razorpay Dashboard -> Settings -> API Keys
   const RAZORPAY_FRONTEND_KEY_ID = 'rzp_test_YOUR_KEY_ID'; // e.g., 'rzp_test_xxxxxxxxxxxxxx'
 
   useEffect(() => {
@@ -146,7 +144,8 @@ const PaymentPage = () => {
         }
       };
 
-      const orderResponse = await fetch(`${NODEJS_BACKEND_URL}/create-order`, {
+      // FIXED: Correct URL concatenation using template literals
+      const orderResponse = await fetch(`${NODEJS_BACKEND_BASE_URL}/create-order`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
