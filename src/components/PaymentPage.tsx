@@ -37,6 +37,8 @@ const PaymentPage = () => {
     selectedPaymentMethod: 'credit_card' // Default to Credit Card
   });
 
+  const [currentOrderId, setCurrentOrderId] = useState('Generating...'); // State for dynamic Order ID
+
   // Derived state for selected course name (for display in Order Summary)
   const selectedCourseName = coursesData.find(course => course.id === checkoutDetails.selectedCourseId)?.name || 'N/A';
 
@@ -121,6 +123,7 @@ const PaymentPage = () => {
 
     setPaymentStatus('processing');
     setMessage('Initiating payment...');
+    setCurrentOrderId('Generating...'); // Reset order ID display
 
     try {
       // Step 1: Call your backend to create an order
@@ -152,6 +155,9 @@ const PaymentPage = () => {
         return;
       }
 
+      // Update the displayed Order ID with the one from Razorpay
+      setCurrentOrderId(orderData.orderId);
+
       // Step 2: Open Razorpay Checkout modal
       const options = {
         key: RAZORPAY_FRONTEND_KEY_ID,
@@ -169,6 +175,7 @@ const PaymentPage = () => {
             firstName: '', lastName: '', phoneNumber: '', email: '',
             selectedCourseId: '', amount: '', upiId: '', selectedPaymentMethod: 'credit_card'
           });
+          setCurrentOrderId('Generating...'); // Reset for next potential payment
         },
         prefill: {
           name: orderData.prefill.name, // Prefill from backend response
@@ -184,6 +191,7 @@ const PaymentPage = () => {
           ondismiss: function() {
             setPaymentStatus('idle');
             setMessage('Payment cancelled by user.');
+            setCurrentOrderId('Generating...'); // Reset if modal dismissed
           }
         }
       };
@@ -195,6 +203,7 @@ const PaymentPage = () => {
       setPaymentStatus('error');
       setMessage('An unexpected error occurred during payment. Please try again.');
       console.error('Payment initiation error:', error);
+      setCurrentOrderId('Error'); // Indicate error in order ID display
     }
   };
 
@@ -360,8 +369,8 @@ const PaymentPage = () => {
                   <span className="font-semibold text-gray-800">{selectedCourseName}</span>
                 </div>
                 <div className="flex justify-between items-center text-lg">
-                  <span className="text-gray-600">Order #:</span>
-                  <span className="font-semibold text-gray-800">78399281</span> {/* Static for now */}
+                  <span className="text-gray-600">Order ID:</span>
+                  <span className="font-semibold text-gray-800">{currentOrderId}</span> {/* Dynamic Order ID */}
                 </div>
                 <div className="flex justify-between items-center text-lg">
                   <span className="text-gray-600">Coupon Code:</span>
@@ -462,4 +471,4 @@ const PaymentPage = () => {
   );
 };
 
-export default PaymentPage; 
+export default PaymentPage;
