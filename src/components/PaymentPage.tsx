@@ -37,16 +37,16 @@ const PaymentPage = () => {
     selectedPaymentMethod: 'credit_card' // Default to Credit Card
   });
 
-  const [currentOrderId, setCurrentOrderId] = useState('Generating...'); // State for dynamic Order ID
+  const [currentOrderId, setCurrentOrderId] = useState('N/A'); // State for dynamic Order ID, initialized to N/A
 
   // Derived state for selected course name (for display in Order Summary)
   const selectedCourseName = coursesData.find(course => course.id === checkoutDetails.selectedCourseId)?.name || 'N/A';
 
   // IMPORTANT: Replace with the Web App URL of your Google Apps Script backend for Razorpay
-  const RAZORPAY_BACKEND_URL = 'https://script.google.com/macros/s/AKfycbyRKKMcfBQLO_gZxO3XnrzMLpj1BhEAh3LXXABZwVFEk_SWdUwQfHEvYw98xKa8ATyaIA/exec';
+  const RAZORPAY_BACKEND_URL = 'https://script.google.com/macros/s/AKfycbyRKKMcfBQLO_gZxO3XnrzMLpj1BhEAh3LXXABZwVFEk_SWdUwQfHEvYw98xKa8ATyaIA/exec'; // Example: 'https://script.google.com/macros/s/AKfycbz123ABC_XYZ/exec'
 
   // IMPORTANT: Replace with your public Razorpay Key ID
-  const RAZORPAY_FRONTEND_KEY_ID = 'rzp_test_0Y5bq4WMY33zwb';
+  const RAZORPAY_FRONTEND_KEY_ID = 'rzp_test_0Y5bq4WMY33zwb'; // Example: 'rzp_test_xxxxxxxxxxxxxx'
 
   useEffect(() => {
     const script = document.createElement('script');
@@ -150,8 +150,10 @@ const PaymentPage = () => {
 
       if (orderData.error) {
         setPaymentStatus('error');
-        setMessage(`Failed to create order: ${orderData.message}`);
+        // Display the specific error message from the backend/Razorpay
+        setMessage(`Payment initiation failed: ${orderData.message}`);
         console.error('Backend order creation error:', orderData.message);
+        setCurrentOrderId('Error');
         return;
       }
 
@@ -175,7 +177,7 @@ const PaymentPage = () => {
             firstName: '', lastName: '', phoneNumber: '', email: '',
             selectedCourseId: '', amount: '', upiId: '', selectedPaymentMethod: 'credit_card'
           });
-          setCurrentOrderId('Generating...'); // Reset for next potential payment
+          setCurrentOrderId('N/A'); // Reset for next potential payment
         },
         prefill: {
           name: orderData.prefill.name, // Prefill from backend response
@@ -191,7 +193,7 @@ const PaymentPage = () => {
           ondismiss: function() {
             setPaymentStatus('idle');
             setMessage('Payment cancelled by user.');
-            setCurrentOrderId('Generating...'); // Reset if modal dismissed
+            setCurrentOrderId('N/A'); // Reset if modal dismissed
           }
         }
       };
