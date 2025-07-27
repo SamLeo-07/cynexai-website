@@ -45,7 +45,7 @@ const PaymentPage = () => {
 
   // IMPORTANT: This is the base URL of your deployed Node.js backend server on Vercel.
   // It should NOT have a trailing slash.
-  const NODEJS_BACKEND_BASE_URL = 'https://cynexai-backend-server.vercel.app/'; 
+  const NODEJS_BACKEND_BASE_URL = 'https://cynexai-backend-server.vercel.app'; 
 
   // IMPORTANT: Replace with your public Razorpay Key ID
   const RAZORPAY_FRONTEND_KEY_ID = 'rzp_live_TkYUrOSQ4XiV0F'; // e.g., 'rzp_test_xxxxxxxxxxxxxx'
