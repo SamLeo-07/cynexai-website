@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { X, CreditCard, Smartphone, Banknote } from 'lucide-react';
+import { X, Smartphone } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 
-// Declare Razorpay global object
-declare const Razorpay: any;
-
-// Define courses (Frontend for display, Backend for definitive description)
+// Define courses
 const coursesData = [
   { id: 'DSB001', name: 'Data Science & Machine Learning' },
   { id: 'AIML002', name: 'Artificial Intelligence & Generative AI' },
@@ -21,8 +18,7 @@ const coursesData = [
 
 const PaymentPage = () => {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
-  const [loadingRazorpayScript, setLoadingRazorpayScript] = useState(true);
-  const [paymentStatus, setPaymentStatus] = useState<'idle' | 'processing' | 'success' | 'error'>('idle');
+  const [paymentStatus, setPaymentStatus] = useState<'idle' | 'pending' | 'success' | 'error'>('idle');
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
 
@@ -31,45 +27,29 @@ const PaymentPage = () => {
     lastName: '',
     phoneNumber: '',
     email: '',
-    selectedCourseId: '', // Stores the ID of the selected course
-    amount: '' as string, // User-entered amount, always visible
-    upiId: '', // New state for UPI ID
-    selectedPaymentMethod: 'credit_card' // Default to Credit Card
+    selectedCourseId: '',
+    amount: '' as string,
   });
 
-  const [currentOrderId, setCurrentOrderId] = useState('N/A'); // State for dynamic Order ID, initialized to N/A
+  // IMPORTANT: Replace with YOUR ACTUAL UPI ID (VPA)
+  const YOUR_UPI_ID = '8074215214@ybl'; // e.g., cynexai@ybl or yourphonepeid@upi
+  const YOUR_BUSINESS_NAME = 'CynexAI'; // Your business name for UPI app display
 
-  // Derived state for selected course name (for display in Order Summary)
-  // Re-verified this line carefully. 'course' is the parameter, not 'c'.
-  const selectedCourseName = coursesData.find(course => course.id === checkoutDetails.selectedCourseId)?.name || 'N/A';
-
-  // IMPORTANT: This is the base URL of your deployed Node.js backend server on Vercel.
-  // It should NOT have a trailing slash.
-  const NODEJS_BACKEND_BASE_URL = 'https://cynexai-backend-server.vercel.app'; 
-
-  // IMPORTANT: Replace with your public Razorpay Key ID
-  const RAZORPAY_FRONTEND_KEY_ID = 'rzp_live_TkYUrOSQ4XiV0F'; // e.g., 'rzp_test_xxxxxxxxxxxxxx'
+  // Generate a unique order ID for each payment attempt
+  const [currentOrderId, setCurrentOrderId] = useState<string>('');
+  // State to store the generated UPI Deep Link
+  const [upiPaymentLink, setUpiPaymentLink] = useState<string>('');
 
   useEffect(() => {
-    const script = document.createElement('script');
-    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-    script.onload = () => setLoadingRazorpayScript(false);
-    script.onerror = () => {
-      setMessage('Failed to load Razorpay script. Please check your internet connection and try again.');
-      setLoadingRazorpayScript(false);
-    };
-    document.body.appendChild(script);
-
-    return () => {
-      if (document.body.contains(script)) {
-        document.body.removeChild(script);
-      }
-    };
+    // Generate a new order ID when the component mounts or resets
+    setCurrentOrderId(`CXAI_${Date.now()}_${Math.random().toString(36).substring(2, 8).toUpperCase()}`);
   }, []);
+
+  const selectedCourseName = coursesData.find(course => course.id === checkoutDetails.selectedCourseId)?.name || 'N/A';
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    if (name === 'amount') { // Handle the main amount input
+    if (name === 'amount') {
       if (value === '' || /^\d*\.?\d{0,2}$/.test(value)) {
         setCheckoutDetails(prev => ({ ...prev, [name]: value }));
       }
@@ -78,30 +58,16 @@ const PaymentPage = () => {
     }
   };
 
-  const handlePaymentMethodChange = (method: string) => {
-    setCheckoutDetails(prev => ({ ...prev, selectedPaymentMethod: method }));
-    // Clear UPI ID if switching away from UPI
-    if (method !== 'upi') {
-      setCheckoutDetails(prev => ({ ...prev, upiId: '' }));
-    }
-  };
-
-  const initiatePaymentProcess = async (e: React.FormEvent) => {
+  const handleSubmitPayment = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (loadingRazorpayScript) {
-      setMessage('Payment gateway is still loading. Please wait.');
-      return;
-    }
-
-    // Frontend validation for selected course
+    // Frontend validation
     if (!checkoutDetails.selectedCourseId) {
       setMessage('Please select a course.');
       setPaymentStatus('error');
       return;
     }
 
-    // Frontend validation for amount
     const parsedAmount = parseFloat(checkoutDetails.amount);
     if (isNaN(parsedAmount) || parsedAmount <= 0) {
       setMessage('Please enter a valid amount greater than zero.');
@@ -109,113 +75,38 @@ const PaymentPage = () => {
       return;
     }
 
-    // Basic validation for customer details
     if (!checkoutDetails.firstName || !checkoutDetails.lastName || !checkoutDetails.email || !checkoutDetails.phoneNumber) {
-        setMessage('Please fill in all required personal details (Name, Email, Phone).');
-        setPaymentStatus('error');
-        return;
-    }
-
-    // UPI ID validation if UPI is selected
-    if (checkoutDetails.selectedPaymentMethod === 'upi' && !checkoutDetails.upiId) {
-      setMessage('Please enter your UPI ID.');
+      setMessage('Please fill in all required personal details (Name, Email, Phone).');
       setPaymentStatus('error');
       return;
     }
 
-    setPaymentStatus('processing');
-    setMessage('Initiating payment...');
-    setCurrentOrderId('Generating...'); // Reset order ID display
+    setPaymentStatus('pending');
+    
+    // Construct UPI Deep Link
+    // pa=Payee Address (UPI ID)
+    // pn=Payee Name (Your Business Name)
+    // tr=Transaction Reference (Your Order ID) - CRITICAL for reconciliation
+    // am=Amount
+    // cu=Currency
+    const generatedUpiLink = `upi://pay?pa=${YOUR_UPI_ID}&pn=${encodeURIComponent(YOUR_BUSINESS_NAME)}&tr=${currentOrderId}&am=${parsedAmount.toFixed(2)}&cu=INR`;
+    setUpiPaymentLink(generatedUpiLink);
 
-    try {
-      // Step 1: Call your Node.js backend to create an order
-      const backendPayload = {
-        amount: parsedAmount, // Send user-entered amount to backend
-        currency: 'INR', // Hardcode currency for simplicity
-        receipt: `receipt_${Date.now()}`, // Unique receipt ID
-        description: coursesData.find(course => course.id === checkoutDetails.selectedCourseId)?.name || 'CynexAI Course Payment', // Re-verified this line
-        notes: { // Pass all relevant details as notes
-          firstName: checkoutDetails.firstName,
-          lastName: checkoutDetails.lastName,
-          phoneNumber: checkoutDetails.phoneNumber,
-          email: checkoutDetails.email,
-          selectedCourse: selectedCourseName,
-          selectedMethod: checkoutDetails.selectedPaymentMethod,
-          upiId: checkoutDetails.upiId,
-        }
-      };
+    // Here, you would typically log this "payment initiated" event.
+    console.log("Payment initiated details:", {
+      orderId: currentOrderId,
+      amount: parsedAmount,
+      upiId: YOUR_UPI_ID,
+      customer: checkoutDetails,
+      selectedCourse: selectedCourseName,
+      timestamp: new Date().toISOString()
+    });
 
-      // Correct URL concatenation using template literals
-      const orderResponse = await fetch(`${NODEJS_BACKEND_BASE_URL}/create-order`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(backendPayload),
-      });
-
-      const orderData = await orderResponse.json();
-
-      if (orderData.error) {
-        setPaymentStatus('error');
-        // Display the specific error message from the backend/Razorpay
-        setMessage(`Payment initiation failed: ${orderData.message}`);
-        console.error('Backend order creation error:', orderData.message);
-        setCurrentOrderId('Error');
-        return;
-      }
-
-      // Update the displayed Order ID with the one from Razorpay
-      setCurrentOrderId(orderData.orderId);
-
-      // Step 2: Open Razorpay Checkout modal
-      const options = {
-        key: RAZORPAY_FRONTEND_KEY_ID,
-        amount: orderData.amount, // Amount from the order created on backend (securely derived)
-        currency: orderData.currency,
-        name: 'CynexAI',
-        description: orderData.description,
-        order_id: orderData.orderId,
-        handler: async function (response: any) {
-          setPaymentStatus('success');
-          setMessage('Payment successful! Thank you for your payment.');
-          console.log('Payment success response from Razorpay:', response);
-          // In a real app, you'd verify this payment on your backend using response.razorpay_payment_id
-          // For now, we trust the handler callback.
-          setCheckoutDetails({
-            firstName: '', lastName: '', phoneNumber: '', email: '',
-            selectedCourseId: '', amount: '', upiId: '', selectedPaymentMethod: 'credit_card'
-          });
-          setCurrentOrderId('N/A'); // Reset for next potential payment
-        },
-        prefill: {
-          name: orderData.prefill.name, // Prefill from backend response
-          email: orderData.prefill.email,
-          contact: orderData.prefill.contact,
-          vpa: checkoutDetails.selectedPaymentMethod === 'upi' ? checkoutDetails.upiId : undefined // Prefill UPI ID if selected
-        },
-        notes: orderData.notes, // Notes passed from backend order
-        theme: {
-          color: '#41c8df',
-        },
-        modal: {
-          ondismiss: function() {
-            setPaymentStatus('idle');
-            setMessage('Payment cancelled by user.');
-            setCurrentOrderId('N/A'); // Reset if modal dismissed
-          }
-        }
-      };
-
-      const rzp1 = new Razorpay(options);
-      rzp1.open();
-
-    } catch (error) {
-      setPaymentStatus('error');
-      setMessage('An unexpected error occurred during payment. Please try again.');
-      console.error('Payment initiation error:', error);
-      setCurrentOrderId('Error'); // Indicate error in order ID display
-    }
+    setMessage(
+      `Please scan the QR code or click 'Open UPI App' to pay ₹${parsedAmount.toFixed(2)}. ` +
+      `\n\nIMPORTANT: Please include Order ID: ${currentOrderId} in the payment notes/remarks.` +
+      `\n\nWe will verify your payment manually. Thank you!`
+    );
   };
 
   const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.1 } } };
@@ -239,93 +130,80 @@ const PaymentPage = () => {
           <X className="w-6 h-6" />
         </button>
 
-        {/* Left Column: Payment Selection */}
-        <div className="lg:w-2/5 lg:pr-8 mb-8 lg:mb-0">
+        {/* Left Column: Payment Details & QR Code */}
+        <div className="lg:w-2/5 lg:pr-8 mb-8 lg:mb-0 text-center">
           <motion.h2 variants={itemVariants} className="text-xl sm:text-2xl font-bold mb-6 border-b pb-3 border-gray-200">
-            2. Select Payment
+            2. Complete Your Payment
           </motion.h2>
 
-          <motion.div variants={containerVariants} className="space-y-4">
-            {/* Credit Card / Debit Card Option */}
-            <label
-              className={`flex items-center p-4 border rounded-lg cursor-pointer transition-all duration-200
-                ${checkoutDetails.selectedPaymentMethod === 'credit_card' ? 'border-[#41c8df] bg-[#41c8df]/10' : 'border-gray-300 hover:bg-gray-50'}`}
-            >
-              <input
-                type="radio"
-                name="paymentMethod"
-                value="credit_card"
-                checked={checkoutDetails.selectedPaymentMethod === 'credit_card'}
-                onChange={() => handlePaymentMethodChange('credit_card')}
-                className="form-radio h-5 w-5 text-[#41c8df] border-gray-300 focus:ring-[#41c8df]"
-              />
-              <span className="ml-3 text-lg font-semibold text-gray-800 flex-grow">Credit Card / Debit Card</span>
-              <div className="flex items-center space-x-2">
-                <img src="https://placehold.co/30x20/ffffff/000000?text=VISA" alt="Visa" className="h-4" />
-                <img src="https://placehold.co/30x20/ffffff/000000?text=MC" alt="MasterCard" className="h-4" />
-                <img src="https://placehold.co/30x20/ffffff/000000?text=RuPay" alt="RuPay" className="h-4" />
-              </div>
-            </label>
-
-            {/* UPI Option */}
-            <label
-              className={`flex items-center p-4 border rounded-lg cursor-pointer transition-all duration-200
-                ${checkoutDetails.selectedPaymentMethod === 'upi' ? 'border-[#41c8df] bg-[#41c8df]/10' : 'border-gray-300 hover:bg-gray-50'}`}
-            >
-              <input
-                type="radio"
-                name="paymentMethod"
-                value="upi"
-                checked={checkoutDetails.selectedPaymentMethod === 'upi'}
-                onChange={() => handlePaymentMethodChange('upi')}
-                className="form-radio h-5 w-5 text-[#41c8df] border-gray-300 focus:ring-[#41c8df]"
-              />
-              <span className="ml-3 text-lg font-semibold text-gray-800 flex-grow">UPI</span>
-              <div className="flex items-center space-x-2">
-                <img src="https://placehold.co/30x20/ffffff/000000?text=UPI" alt="UPI" className="h-4" />
-                <img src="https://placehold.co/30x20/ffffff/000000?text=GPay" alt="Google Pay" className="h-4" />
-                <img src="https://placehold.co/30x20/ffffff/000000?text=PhonePe" alt="PhonePe" className="h-4" />
-              </div>
-            </label>
-
-            {/* UPI ID Input Field (Conditionally rendered) */}
-            {checkoutDetails.selectedPaymentMethod === 'upi' && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.3 }}
-                className="mt-4"
-              >
-                <label htmlFor="upiId" className="block text-sm font-medium text-gray-700 mb-2 text-left">Your UPI ID (VPA)</label>
-                <input
-                  type="text"
-                  id="upiId"
-                  name="upiId"
-                  value={checkoutDetails.upiId}
-                  onChange={handleInputChange}
-                  placeholder="e.g., yourname@bankname"
-                  required={checkoutDetails.selectedPaymentMethod === 'upi'}
-                  className="w-full px-4 py-2 rounded-lg bg-white border border-gray-300 focus:border-[#41c8df] focus:ring-1 focus:ring-[#41c8df] text-gray-900 placeholder-gray-500 outline-none"
+          {paymentStatus === 'pending' ? (
+            <motion.div variants={containerVariants} className="space-y-4">
+              <p className="text-lg font-semibold text-gray-800">
+                Scan to Pay:
+              </p>
+              {/* Make QR Code clickable with UPI Deep Link */}
+              <a href={upiPaymentLink} target="_blank" rel="noopener noreferrer" className="inline-block">
+                {/* IMPORTANT: Replace with your STATIC QR code image URL or a dynamic QR code generator API if you have one */}
+                <img
+                  src={`https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiPaymentLink)}`}
+                  alt="UPI QR Code"
+                  className="mx-auto border border-gray-300 rounded-lg p-2"
                 />
-                <p className="text-xs text-gray-500 mt-1 text-left">
-                  (This will pre-fill in Razorpay. Actual validation happens there.)
+              </a>
+              <p className="text-lg font-semibold text-gray-800 mt-4">
+                Or Pay to UPI ID:
+              </p>
+              <p className="text-2xl font-bold text-[#41c8df] break-all">
+                {YOUR_UPI_ID}
+              </p>
+              <p className="text-xl font-bold text-red-600 mt-4">
+                Order ID: {currentOrderId}
+              </p>
+              <p className="text-base text-gray-700 mt-2 font-medium">
+                IMPORTANT: Please include this **Order ID** in the payment notes/remarks of your UPI app.
+              </p>
+              
+              {/* Button to open UPI App directly */}
+              <a
+                href={upiPaymentLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full bg-[#41c8df] text-black py-3 rounded-lg font-semibold hover:bg-yellow-600 transition-colors duration-300 flex items-center justify-center mt-6"
+              >
+                Open UPI App <Smartphone className="w-5 h-5 ml-2" />
+              </a>
+
+              <button
+                onClick={() => {
+                  setPaymentStatus('success'); // Simulate success after manual verification
+                  setMessage('Payment received and verified! Thank you!');
+                  // In a real scenario, this would be triggered by your manual check
+                  // or a simple "I have paid" button that just logs the attempt.
+                }}
+                className="w-full bg-green-500 text-white py-3 rounded-lg font-semibold hover:bg-green-600 transition-colors duration-300 mt-2"
+              >
+                I have paid (Verify Manually)
+              </button>
+            </motion.div>
+          ) : (
+            <motion.div variants={containerVariants} className="space-y-4">
+              {/* Initial state: Show instructions or a summary before payment */}
+              <p className="text-lg text-gray-700">
+                You will make a direct UPI payment to CynexAI. Please ensure all details are correct.
+              </p>
+              <p className="text-md text-gray-600">
+                After submitting your details, you'll be shown a UPI QR code and our UPI ID to complete the payment. Remember to include the unique Order ID in your UPI app's payment notes.
+              </p>
+              {message && (
+                <p className={`mt-6 text-center font-medium ${
+                  paymentStatus === 'success' ? 'text-green-600' :
+                  paymentStatus === 'error' ? 'text-red-600' : 'text-gray-600'
+                }`}>
+                  {message}
                 </p>
-              </motion.div>
-            )}
-
-          </motion.div>
-
-          {/* Status Message */}
-          {message && (
-            <p className={`mt-6 text-center font-medium ${
-              paymentStatus === 'success' ? 'text-green-600' :
-              paymentStatus === 'error' ? 'text-red-600' : 'text-gray-600'
-            }`}>
-              {message}
-            </p>
+              )}
+            </motion.div>
           )}
-
         </div>
 
         {/* Right Column: Order Summary & Customer Information */}
@@ -334,7 +212,7 @@ const PaymentPage = () => {
             Order Details
           </motion.h2>
 
-          <form onSubmit={initiatePaymentProcess} className="space-y-4">
+          <form onSubmit={handleSubmitPayment} className="space-y-4">
             {/* Course Dropdown */}
             <motion.div variants={itemVariants}>
               <label htmlFor="selectedCourseId" className="block text-sm font-medium text-gray-700 mb-2">Select Course</label>
@@ -349,13 +227,13 @@ const PaymentPage = () => {
                 <option value="">-- Select a Course --</option>
                 {coursesData.map(course => (
                   <option key={course.id} value={course.id}>
-                    {course.name} {/* Display name without price here */}
+                    {course.name}
                   </option>
                 ))}
               </select>
             </motion.div>
 
-            {/* Amount Input Field (Always visible) */}
+            {/* Amount Input Field */}
             <motion.div variants={itemVariants}>
               <label htmlFor="amount" className="block text-sm font-medium text-gray-700 mb-2 text-left">Amount (INR)</label>
               <div className="relative">
@@ -393,7 +271,7 @@ const PaymentPage = () => {
                 </div>
             </motion.div>
 
-            {/* Customer Information (Simplified) */}
+            {/* Customer Information */}
             <motion.div variants={itemVariants} className="bg-gray-50 rounded-lg p-4 border border-gray-200 space-y-4">
               <h3 className="text-lg font-semibold mb-4 text-gray-800">Your Information</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -453,27 +331,23 @@ const PaymentPage = () => {
               </div>
             </motion.div>
 
-            {/* Submit Secure Payment Button */}
+            {/* Submit Payment Button */}
             <motion.button
               type="submit"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               disabled={
-                loadingRazorpayScript ||
-                paymentStatus === 'processing' ||
+                paymentStatus === 'pending' || // Disable if already showing payment instructions
                 !checkoutDetails.selectedCourseId ||
-                isNaN(parseFloat(checkoutDetails.amount)) || parseFloat(checkoutDetails.amount) <= 0 || // Validate amount
+                isNaN(parseFloat(checkoutDetails.amount)) || parseFloat(checkoutDetails.amount) <= 0 ||
                 !checkoutDetails.firstName ||
                 !checkoutDetails.lastName ||
-                !checkoutDetails.phoneNumber || // Phone number is mandatory
-                (checkoutDetails.selectedPaymentMethod === 'upi' && !checkoutDetails.upiId) // Disable if UPI selected but ID is empty
+                !checkoutDetails.phoneNumber
               }
               className="w-full bg-[#41c8df] text-black py-3 rounded-lg font-semibold hover:bg-yellow-600 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center mt-6"
             >
-              {loadingRazorpayScript ? 'Loading Gateway...' :
-               paymentStatus === 'processing' ? 'Processing...' :
-               'Submit Secure Payment'}
-              {!loadingRazorpayScript && paymentStatus === 'idle' && <CreditCard className="w-5 h-5 ml-2" />}
+              {paymentStatus === 'pending' ? 'Payment Instructions Displayed' : 'Proceed to UPI Payment'}
+              {paymentStatus !== 'pending' && <Smartphone className="w-5 h-5 ml-2" />}
             </motion.button>
           </form>
         </div>
