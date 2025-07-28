@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { X, Smartphone } from 'lucide-react';
@@ -23,24 +23,24 @@ const PaymentPage = () => {
   const navigate = useNavigate();
 
   const [checkoutDetails, setCheckoutDetails] = useState({
-    fullName: '', // Combined full name
+    fullName: '',
     phoneNumber: '',
-    email: '', // Now optional
+    email: '',
     selectedCourseId: '',
     amount: '' as string,
   });
 
-  // IMPORTANT: Replace with YOUR ACTUAL UPI ID (VPA)
-  const YOUR_UPI_ID = 'reddyl62@fifederal'; // e.g., cynexai@ybl or yourphonepeid@upi
-  const YOUR_BUSINESS_NAME = 'CynexAI'; // Your business name for UPI app display
+  // IMPORTANT: Replace with YOUR ACTUAL PERSONAL UPI ID (VPA)
+  const YOUR_UPI_ID = 'reddyl62@fifederal'; // e.g., yourname@ybl or yourphonepeid@upi
+  const YOUR_BUSINESS_NAME_DISPLAY = 'CynexAI'; // This name will be shown on YOUR website only
 
-  // Generate a unique order ID for each payment attempt (used internally for deep link 'tr' parameter)
+  // Internal Order ID is generated but NOT displayed on UI
   const [internalOrderId, setInternalOrderId] = useState<string>('');
-  // State to store the generated UPI Deep Link
   const [upiPaymentLink, setUpiPaymentLink] = useState<string>('');
 
+  const pageTopRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    // Generate a new internal order ID when the component mounts or resets
     setInternalOrderId(`CXAI_${Date.now()}_${Math.random().toString(36).substring(2, 8).toUpperCase()}`);
   }, []);
 
@@ -74,7 +74,7 @@ const PaymentPage = () => {
       return;
     }
 
-    if (!checkoutDetails.fullName || !checkoutDetails.phoneNumber) { // Email is optional now
+    if (!checkoutDetails.fullName || !checkoutDetails.phoneNumber) {
       setMessage('Please fill in your Full Name and Phone Number.');
       setPaymentStatus('error');
       return;
@@ -82,23 +82,26 @@ const PaymentPage = () => {
 
     setPaymentStatus('pending');
     
-    // Construct UPI Deep Link with dynamic amount and internal Order ID
-    // pa=Payee Address (UPI ID)
-    // pn=Payee Name (Your Business Name)
-    // tr=Transaction Reference (Internal Order ID) - CRITICAL for potential reconciliation
-    // am=Amount
-    // cu=Currency
-    const generatedUpiLink = `upi://pay?pa=${YOUR_UPI_ID}&pn=${encodeURIComponent(YOUR_BUSINESS_NAME)}&tr=${internalOrderId}&am=${parsedAmount.toFixed(2)}&cu=INR`;
+    // Construct UPI Deep Link (internal order ID still included in 'tr' for potential hidden trace)
+    // IMPORTANT: 'pn' parameter will display YOUR_BUSINESS_NAME_DISPLAY on the customer's UPI app IF the app supports it,
+    // otherwise it might fallback to the name linked with YOUR_UPI_ID.
+    const generatedUpiLink = `upi://pay?pa=${encodeURIComponent(YOUR_UPI_ID)}&pn=${encodeURIComponent(YOUR_BUSINESS_NAME_DISPLAY)}&tr=${encodeURIComponent(internalOrderId)}&am=${parsedAmount.toFixed(2)}&cu=INR`;
     setUpiPaymentLink(generatedUpiLink);
 
-    // Scroll to the top of the page to show the QR code and instructions
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Scroll to the top of the page with a slight delay
+    setTimeout(() => {
+      if (pageTopRef.current) {
+        pageTopRef.current.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' }); // Fallback
+      }
+    }, 100);
 
-    // Here, you would typically log this "payment initiated" event.
+    // Log payment initiation details for your records (including the internalOrderId)
     console.log("Payment initiated details:", {
-      internalOrderId: internalOrderId, // Log the internal order ID
+      internalOrderId: internalOrderId, // This is for your internal tracking
       amount: parsedAmount,
-      upiId: YOUR_UPI_ID,
+      upiId: YOUR_UPI_ID, // Your personal VPA
       customer: checkoutDetails,
       selectedCourse: selectedCourseName,
       timestamp: new Date().toISOString()
@@ -106,7 +109,8 @@ const PaymentPage = () => {
 
     setMessage(
       `Please scan the QR code or click 'Open UPI App' to pay ₹${parsedAmount.toFixed(2)}.` +
-      `\n\nWe will verify your payment manually based on the amount and your details. Thank you!`
+      `\n\nEnsure the amount displayed in your UPI app matches this value.` +
+      `\n\n**Note:** Your payment will be manually verified based on the exact amount and the details you provided. Thank you!`
     );
   };
 
@@ -114,9 +118,8 @@ const PaymentPage = () => {
   const itemVariants = { hidden: { y: 50, opacity: 0 }, visible: { y: 0, opacity: 1, transition: { duration: 0.6, ease: 'easeOut' } } };
 
   return (
-    <div className="min-h-screen bg-white text-gray-900 pt-20 pb-10 flex items-center justify-center font-inter">
+    <div ref={pageTopRef} className="min-h-screen bg-white text-gray-900 pt-20 pb-10 flex items-center justify-center font-inter">
       <motion.div
-        ref={ref}
         initial="hidden"
         animate={inView ? "visible" : "hidden"}
         variants={containerVariants}
@@ -140,7 +143,7 @@ const PaymentPage = () => {
           {paymentStatus === 'pending' ? (
             <motion.div variants={containerVariants} className="space-y-4">
               <p className="text-lg font-semibold text-gray-800">
-                Scan to Pay:
+                Scan this QR Code to pay ₹{parseFloat(checkoutDetails.amount || '0').toFixed(2)}:
               </p>
               {/* Make QR Code clickable with UPI Deep Link */}
               <a href={upiPaymentLink} target="_blank" rel="noopener noreferrer" className="inline-block">
@@ -152,11 +155,8 @@ const PaymentPage = () => {
                 />
               </a>
               
-              {/* Removed direct UPI ID display */}
-              {/* Removed Order ID display */}
-              
               <p className="text-base text-gray-700 mt-2 font-medium">
-                Your payment will be manually verified based on the amount and your provided details.
+                Ensure the amount pre-filled in your UPI app is **₹{parseFloat(checkoutDetails.amount || '0').toFixed(2)}**.
               </p>
               
               {/* Button to open UPI App directly */}
@@ -169,16 +169,15 @@ const PaymentPage = () => {
                 Open UPI App <Smartphone className="w-5 h-5 ml-2" />
               </a>
 
-              {/* Removed "I have paid (Verify Manually)" button */}
             </motion.div>
           ) : (
             <motion.div variants={containerVariants} className="space-y-4">
               {/* Initial state: Show instructions or a summary before payment */}
               <p className="text-lg text-gray-700">
-                You will make a direct UPI payment to CynexAI. Please ensure all details are correct.
+                You will make a direct UPI payment. Please ensure all details are correct.
               </p>
               <p className="text-md text-gray-600">
-                After submitting your details, you'll be shown a UPI QR code to complete the payment.
+                After submitting your details, you'll be shown a UPI QR code and a button to open your UPI app to complete the payment.
               </p>
               {message && (
                 <p className={`mt-6 text-center font-medium ${
@@ -237,13 +236,12 @@ const PaymentPage = () => {
               </div>
             </motion.div>
 
-            {/* Order Summary Display - Removed Order ID from UI */}
+            {/* Order Summary Display */}
             <motion.div variants={itemVariants} className="bg-gray-50 rounded-lg p-4 border border-gray-200 space-y-3 mb-6">
                 <div className="flex justify-between items-center text-lg">
                   <span className="text-gray-600">Selected Course:</span>
                   <span className="font-semibold text-gray-800">{selectedCourseName}</span>
                 </div>
-                {/* Removed Order ID from UI */}
                 <div className="flex justify-between items-center text-lg">
                   <span className="text-gray-600">Coupon Code:</span>
                   <button type="button" className="text-[#41c8df] hover:underline text-sm">Apply</button>
@@ -254,7 +252,7 @@ const PaymentPage = () => {
                 </div>
             </motion.div>
 
-            {/* Customer Information - Combined Name, Email Optional */}
+            {/* Customer Information */}
             <motion.div variants={itemVariants} className="bg-gray-50 rounded-lg p-4 border border-gray-200 space-y-4">
               <h3 className="text-lg font-semibold mb-4 text-gray-800">Your Information</h3>
               <div>
@@ -294,7 +292,6 @@ const PaymentPage = () => {
                   value={checkoutDetails.email}
                   onChange={handleInputChange}
                   placeholder="e.g., your.email@example.com"
-                  // Removed 'required' attribute
                   className="w-full px-4 py-2 rounded-lg bg-white border border-gray-300 focus:border-[#41c8df] focus:ring-1 focus:ring-[#41c8df] text-gray-900 placeholder-gray-500 outline-none"
                 />
               </div>
@@ -309,7 +306,7 @@ const PaymentPage = () => {
                 paymentStatus === 'pending' || // Disable if already showing payment instructions
                 !checkoutDetails.selectedCourseId ||
                 isNaN(parseFloat(checkoutDetails.amount)) || parseFloat(checkoutDetails.amount) <= 0 ||
-                !checkoutDetails.fullName || // Check fullName
+                !checkoutDetails.fullName ||
                 !checkoutDetails.phoneNumber
               }
               className="w-full bg-[#41c8df] text-black py-3 rounded-lg font-semibold hover:bg-yellow-600 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center mt-6"
