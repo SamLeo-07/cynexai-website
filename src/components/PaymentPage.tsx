@@ -32,7 +32,7 @@ const PaymentPage = () => {
   });
 
   // IMPORTANT: Replace with YOUR ACTUAL UPI ID (VPA)
-  const YOUR_UPI_ID = '8074215214@ybl'; // e.g., cynexai@ybl or yourphonepeid@upi
+  const YOUR_UPI_ID = 'reddyl62@fifederal'; // e.g., cynexai@ybl or yourphonepeid@upi
   const YOUR_BUSINESS_NAME = 'CynexAI'; // Your business name for UPI app display
 
   // Generate a unique order ID for each payment attempt
