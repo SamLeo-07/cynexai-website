@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { X, Smartphone, RefreshCcw } from 'lucide-react';
+import { X, Smartphone, RefreshCcw, Copy } from 'lucide-react'; // Added Copy icon
+
 import { Link, useNavigate } from 'react-router-dom';
 
 // Define courses - Ensure this data is always valid
@@ -17,7 +18,6 @@ const coursesData = [
 ];
 
 const PaymentPage = () => {
-  // FIXED: Renamed the ref to inViewRef for clarity and attached it below
   const [inViewRef, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
   
   const [paymentStatus, setPaymentStatus] = useState<'idle' | 'pending' | 'success' | 'error'>('idle');
@@ -111,9 +111,10 @@ const PaymentPage = () => {
     });
 
     setMessage(
-      `Please scan the QR code or click 'Open UPI App' to pay ₹${parsedAmount.toFixed(2)}.` +
-      `\n\nEnsure the amount displayed in your UPI app matches this value.` +
-      `\n\n**Note:** Your payment will be manually verified based on the exact amount and the details you provided. Thank you!`
+      `Please complete your payment of ₹${parsedAmount.toFixed(2)}.` +
+      `\n\n**IMPORTANT:** For amounts above ₹2,000, you may need to manually enter the UPI ID and amount in your UPI app.` +
+      `\n\n**Crucial:** Please include the Order ID: ${internalOrderId} in the payment notes/remarks.` +
+      `\n\nWe will verify your payment manually based on the exact amount, Order ID, and your provided details. Thank you!`
     );
   };
 
@@ -136,13 +137,37 @@ const PaymentPage = () => {
     }
   };
 
+  const copyToClipboard = (text: string, fieldName: string) => {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed'; // Avoid scrolling to bottom
+    document.body.appendChild(textarea);
+    textarea.focus();
+    textarea.select();
+    try {
+      document.execCommand('copy');
+      setMessage(`${fieldName} copied to clipboard!`);
+      // Briefly show success for copy action, then revert to pending message
+      const originalMessage = `Please complete your payment of ₹${parseFloat(checkoutDetails.amount || '0').toFixed(2)}.` +
+      `\n\n**IMPORTANT:** For amounts above ₹2,000, you may need to manually enter the UPI ID and amount in your UPI app.` +
+      `\n\n**Crucial:** Please include the Order ID: ${internalOrderId} in the payment notes/remarks.` +
+      `\n\nWe will verify your payment manually based on the exact amount, Order ID, and your provided details. Thank you!`;
+
+      setTimeout(() => setMessage(originalMessage), 2000); 
+    } catch (err) {
+      setMessage(`Failed to copy ${fieldName}. Please copy manually.`);
+      setPaymentStatus('error');
+    }
+    document.body.removeChild(textarea);
+  };
+
   const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.1 } } };
   const itemVariants = { hidden: { y: 50, opacity: 0 }, visible: { y: 0, opacity: 1, transition: { duration: 0.6, ease: 'easeOut' } } };
 
   return (
     <div ref={pageTopRef} className="min-h-screen bg-white text-gray-900 pt-20 pb-10 flex items-center justify-center font-inter">
       <motion.div
-        ref={inViewRef} // FIXED: This ref is now correctly attached
+        ref={inViewRef}
         initial="hidden"
         animate={inView ? "visible" : "hidden"}
         variants={containerVariants}
@@ -169,22 +194,52 @@ const PaymentPage = () => {
                 Scan this QR Code to pay ₹{parseFloat(checkoutDetails.amount || '0').toFixed(2)}:
               </p>
               <a href={upiPaymentLink} target="_blank" rel="noopener noreferrer" className="inline-block">
-                {upiPaymentLink && ( // Ensure upiPaymentLink is not empty before rendering QR
+                {upiPaymentLink && (
                   <img
                     src={`https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiPaymentLink)}`}
                     alt="UPI QR Code"
                     className="mx-auto border border-gray-300 rounded-lg p-2"
                   />
                 )}
-                {!upiPaymentLink && ( // Placeholder while QR is generating
+                {!upiPaymentLink && (
                   <div className="mx-auto w-[250px] h-[250px] bg-gray-200 flex items-center justify-center rounded-lg">
                     <p className="text-sm text-gray-500">Generating QR...</p>
                   </div>
                 )}
               </a>
               
+              <p className="text-lg font-semibold text-gray-800 mt-4">
+                Or Pay to UPI ID:
+              </p>
+              <div className="flex items-center justify-center space-x-2">
+                <p className="text-2xl font-bold text-[#41c8df] break-all">
+                  {YOUR_UPI_ID}
+                </p>
+                <button
+                  onClick={() => copyToClipboard(YOUR_UPI_ID, 'UPI ID')}
+                  className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
+                  aria-label="Copy UPI ID"
+                >
+                  <Copy className="w-5 h-5 text-gray-600" />
+                </button>
+              </div>
+
+              <p className="text-xl font-bold text-red-600 mt-4 flex items-center justify-center">
+                Order ID: {internalOrderId}
+                <button
+                  onClick={() => copyToClipboard(internalOrderId, 'Order ID')}
+                  className="ml-2 p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
+                  aria-label="Copy Order ID"
+                >
+                  <Copy className="w-5 h-5 text-gray-600" />
+                </button>
+              </p>
+
               <p className="text-base text-gray-700 mt-2 font-medium">
-                Ensure the amount pre-filled in your UPI app is **₹{parseFloat(checkoutDetails.amount || '0').toFixed(2)}**.
+                **IMPORTANT:** Please include this **Order ID** in the payment notes/remarks of your UPI app.
+              </p>
+              <p className="text-sm text-gray-600 mt-2">
+                For payments above ₹2,000, it is highly recommended to click 'Open UPI App' directly or manually enter the details.
               </p>
               
               <a
@@ -212,7 +267,7 @@ const PaymentPage = () => {
               <p className="text-md text-gray-600">
                 After submitting your details, you'll be shown a UPI QR code and a button to open your UPI app to complete the payment.
               </p>
-              {message && ( // Display message in initial state too
+              {message && (
                 <p className={`mt-6 text-center font-medium ${
                   paymentStatus === 'error' ? 'text-red-600' : 'text-gray-600'
                 }`}>
@@ -229,7 +284,6 @@ const PaymentPage = () => {
             Order Details
           </motion.h2>
 
-          {/* Form is only visible when paymentStatus is NOT pending */}
           {paymentStatus !== 'pending' ? (
             <form onSubmit={handleSubmitPayment} className="space-y-4">
               {/* Course Dropdown */}
@@ -337,7 +391,6 @@ const PaymentPage = () => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 disabled={
-                  // Disable if any required field is empty or amount is invalid
                   !checkoutDetails.selectedCourseId ||
                   isNaN(parseFloat(checkoutDetails.amount)) || parseFloat(checkoutDetails.amount) <= 0 ||
                   !checkoutDetails.fullName.trim() ||
@@ -349,7 +402,6 @@ const PaymentPage = () => {
               </motion.button>
             </form>
           ) : (
-            // If paymentStatus is 'pending', form is hidden. You could put a message here if needed.
             <div className="text-center text-gray-600 text-lg">
                 <p>Please complete your payment using the options on the left.</p>
                 <p className="mt-2">Or click "Start New Payment" if you need to change details.</p>
