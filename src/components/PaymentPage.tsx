@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { X, Smartphone, RefreshCcw } from 'lucide-react'; // Added RefreshCcw icon
+import { X, Smartphone, RefreshCcw } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 
 // Define courses - Ensure this data is always valid
@@ -17,7 +17,9 @@ const coursesData = [
 ];
 
 const PaymentPage = () => {
-  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
+  // FIXED: Renamed the ref to inViewRef for clarity and attached it below
+  const [inViewRef, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
+  
   const [paymentStatus, setPaymentStatus] = useState<'idle' | 'pending' | 'success' | 'error'>('idle');
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
@@ -31,40 +33,33 @@ const PaymentPage = () => {
   });
 
   // IMPORTANT: Replace with YOUR ACTUAL PERSONAL UPI ID (VPA)
-  // Ensure this value is a valid string, not empty or undefined.
   const YOUR_UPI_ID = 'reddyl62@fifederal'; // e.g., yourname@ybl or yourphonepeid@upi
   const YOUR_BUSINESS_NAME_DISPLAY = 'CynexAI'; // This name will be shown on YOUR website only
 
-  // Internal Order ID is generated but NOT displayed on UI
   const [internalOrderId, setInternalOrderId] = useState<string>('');
   const [upiPaymentLink, setUpiPaymentLink] = useState<string>('');
 
-  const pageTopRef = useRef<HTMLDivElement>(null);
+  const pageTopRef = useRef<HTMLDivElement>(null); // Ref for scrolling to top
 
-  // Function to generate a new unique order ID
   const generateNewOrderId = () => {
     return `CXAI_${Date.now()}_${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
   };
 
   useEffect(() => {
-    // Generate a new internal order ID when the component mounts or resets
     setInternalOrderId(generateNewOrderId());
-  }, []); // Empty dependency array ensures it runs only once on mount
+  }, []);
 
-  // Derive selected course name
   const selectedCourseName = coursesData.find(course => course.id === checkoutDetails.selectedCourseId)?.name || 'N/A';
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    // Input validation for amount
     if (name === 'amount') {
-      if (value === '' || /^\d*\.?\d{0,2}$/.test(value)) { // Allows empty string, or numbers with up to 2 decimal places
+      if (value === '' || /^\d*\.?\d{0,2}$/.test(value)) {
         setCheckoutDetails(prev => ({ ...prev, [name]: value }));
       }
     } else {
       setCheckoutDetails(prev => ({ ...prev, [name]: value }));
     }
-    // Clear any previous error messages when input changes
     if (paymentStatus === 'error') {
       setMessage('');
       setPaymentStatus('idle');
@@ -72,9 +67,8 @@ const PaymentPage = () => {
   };
 
   const handleSubmitPayment = async (e: React.FormEvent) => {
-    e.preventDefault(); // Prevent default form submission behavior
+    e.preventDefault();
 
-    // Frontend validation
     if (!checkoutDetails.selectedCourseId) {
       setMessage('Please select a course.');
       setPaymentStatus('error');
@@ -88,41 +82,34 @@ const PaymentPage = () => {
       return;
     }
 
-    // Basic validation for name and phone
     if (!checkoutDetails.fullName.trim() || !checkoutDetails.phoneNumber.trim()) {
       setMessage('Please fill in your Full Name and Phone Number.');
       setPaymentStatus('error');
       return;
     }
 
-    setPaymentStatus('pending'); // Set status to pending to show payment instructions
+    setPaymentStatus('pending');
     
-    // Construct UPI Deep Link
     const generatedUpiLink = `upi://pay?pa=${encodeURIComponent(YOUR_UPI_ID)}&pn=${encodeURIComponent(YOUR_BUSINESS_NAME_DISPLAY)}&tr=${encodeURIComponent(internalOrderId)}&am=${parsedAmount.toFixed(2)}&cu=INR`;
     setUpiPaymentLink(generatedUpiLink);
 
-    // Scroll to the top of the page with a slight delay
-    // This helps ensure the scroll happens after DOM updates from state changes
     setTimeout(() => {
       if (pageTopRef.current) {
         pageTopRef.current.scrollIntoView({ behavior: 'smooth' });
       } else {
-        // Fallback for older browsers or if ref is somehow not attached
-        window.scrollTo({ top: 0, behavior: 'smooth' }); 
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
-    }, 100); // 100ms delay
+    }, 100);
 
-    // Log payment initiation details for your records (in browser console)
     console.log("Payment initiated details:", {
-      internalOrderId: internalOrderId, // This is for your internal tracking
+      internalOrderId: internalOrderId,
       amount: parsedAmount,
-      upiId: YOUR_UPI_ID, // Your personal VPA
+      upiId: YOUR_UPI_ID,
       customer: checkoutDetails,
       selectedCourse: selectedCourseName,
       timestamp: new Date().toISOString()
     });
 
-    // Set user-friendly message
     setMessage(
       `Please scan the QR code or click 'Open UPI App' to pay ₹${parsedAmount.toFixed(2)}.` +
       `\n\nEnsure the amount displayed in your UPI app matches this value.` +
@@ -130,7 +117,6 @@ const PaymentPage = () => {
     );
   };
 
-  // Function to reset the form and payment state
   const resetPayment = () => {
     setCheckoutDetails({
       fullName: '',
@@ -139,11 +125,10 @@ const PaymentPage = () => {
       selectedCourseId: '',
       amount: '',
     });
-    setPaymentStatus('idle'); // Reset to idle to show the form again
-    setMessage(''); // Clear any messages
-    setInternalOrderId(generateNewOrderId()); // Generate a new order ID for the next attempt
-    setUpiPaymentLink(''); // Clear previous UPI link
-    // Scroll to top if already scrolled down (e.g., after successful payment or if customer wants to retry)
+    setPaymentStatus('idle');
+    setMessage('');
+    setInternalOrderId(generateNewOrderId());
+    setUpiPaymentLink('');
     if (pageTopRef.current) {
       pageTopRef.current.scrollIntoView({ behavior: 'smooth' });
     } else {
@@ -151,21 +136,21 @@ const PaymentPage = () => {
     }
   };
 
-  // Animation variants
   const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.1 } } };
   const itemVariants = { hidden: { y: 50, opacity: 0 }, visible: { y: 0, opacity: 1, transition: { duration: 0.6, ease: 'easeOut' } } };
 
   return (
     <div ref={pageTopRef} className="min-h-screen bg-white text-gray-900 pt-20 pb-10 flex items-center justify-center font-inter">
       <motion.div
+        ref={inViewRef} // FIXED: This ref is now correctly attached
         initial="hidden"
-        animate={inView ? "visible" : "hidden"} // Animate when in view
+        animate={inView ? "visible" : "hidden"}
         variants={containerVariants}
         className="relative bg-white rounded-lg shadow-2xl p-6 sm:p-8 w-full max-w-5xl mx-auto border border-gray-200 flex flex-col lg:flex-row"
       >
         {/* Close Button */}
         <button
-          onClick={() => navigate('/')} // Navigates back to the homepage
+          onClick={() => navigate('/')}
           className="absolute top-4 right-4 text-gray-500 hover:text-gray-900 transition-colors z-10"
           aria-label="Close payment modal"
         >
@@ -178,24 +163,20 @@ const PaymentPage = () => {
             2. Complete Your Payment
           </motion.h2>
 
-          {/* Conditional rendering based on paymentStatus */}
           {paymentStatus === 'pending' ? (
             <motion.div variants={containerVariants} className="space-y-4">
               <p className="text-lg font-semibold text-gray-800">
                 Scan this QR Code to pay ₹{parseFloat(checkoutDetails.amount || '0').toFixed(2)}:
               </p>
-              {/* Make QR Code clickable with UPI Deep Link */}
               <a href={upiPaymentLink} target="_blank" rel="noopener noreferrer" className="inline-block">
-                {/* Dynamically generate QR code from the UPI deep link */}
-                {/* Ensure upiPaymentLink is not empty before generating QR code */}
-                {upiPaymentLink && (
+                {upiPaymentLink && ( // Ensure upiPaymentLink is not empty before rendering QR
                   <img
                     src={`https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiPaymentLink)}`}
                     alt="UPI QR Code"
                     className="mx-auto border border-gray-300 rounded-lg p-2"
                   />
                 )}
-                {!upiPaymentLink && (
+                {!upiPaymentLink && ( // Placeholder while QR is generating
                   <div className="mx-auto w-[250px] h-[250px] bg-gray-200 flex items-center justify-center rounded-lg">
                     <p className="text-sm text-gray-500">Generating QR...</p>
                   </div>
@@ -206,7 +187,6 @@ const PaymentPage = () => {
                 Ensure the amount pre-filled in your UPI app is **₹{parseFloat(checkoutDetails.amount || '0').toFixed(2)}**.
               </p>
               
-              {/* Button to open UPI App directly */}
               <a
                 href={upiPaymentLink}
                 target="_blank"
@@ -216,7 +196,6 @@ const PaymentPage = () => {
                 Open UPI App <Smartphone className="w-5 h-5 ml-2" />
               </a>
 
-              {/* New: Start New Payment / Reset Button */}
               <button
                 onClick={resetPayment}
                 className="w-full bg-gray-200 text-gray-800 py-3 rounded-lg font-semibold hover:bg-gray-300 transition-colors duration-300 flex items-center justify-center mt-4"
@@ -226,7 +205,6 @@ const PaymentPage = () => {
 
             </motion.div>
           ) : (
-            // Initial state: Show form for entering details
             <motion.div variants={containerVariants} className="space-y-4">
               <p className="text-lg text-gray-700">
                 You will make a direct UPI payment. Please ensure all details are correct.
@@ -234,9 +212,9 @@ const PaymentPage = () => {
               <p className="text-md text-gray-600">
                 After submitting your details, you'll be shown a UPI QR code and a button to open your UPI app to complete the payment.
               </p>
-              {message && (
+              {message && ( // Display message in initial state too
                 <p className={`mt-6 text-center font-medium ${
-                  paymentStatus === 'error' ? 'text-red-600' : 'text-gray-600' // Only show red for errors
+                  paymentStatus === 'error' ? 'text-red-600' : 'text-gray-600'
                 }`}>
                   {message}
                 </p>
@@ -335,7 +313,7 @@ const PaymentPage = () => {
                     placeholder="e.g., 9876543210"
                     required
                     className="w-full px-4 py-2 rounded-lg bg-white border border-gray-300 focus:border-[#41c8df] focus:ring-1 focus:ring-[#41c8df] text-gray-900 placeholder-gray-500 outline-none"
-                    pattern="[0-9]{10}" // Basic pattern for 10 digits
+                    pattern="[0-9]{10}"
                     title="Phone number must be 10 digits"
                   />
                 </div>
