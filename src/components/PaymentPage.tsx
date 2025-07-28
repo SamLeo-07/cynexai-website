@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { X, Smartphone } from 'lucide-react';
+import { X, Smartphone, RefreshCcw } from 'lucide-react'; // Added RefreshCcw icon
 import { Link, useNavigate } from 'react-router-dom';
 
 // Define courses
@@ -40,8 +40,14 @@ const PaymentPage = () => {
 
   const pageTopRef = useRef<HTMLDivElement>(null);
 
+  // Function to generate a new unique order ID
+  const generateNewOrderId = () => {
+    return `CXAI_${Date.now()}_${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
+  };
+
   useEffect(() => {
-    setInternalOrderId(`CXAI_${Date.now()}_${Math.random().toString(36).substring(2, 8).toUpperCase()}`);
+    // Generate a new internal order ID when the component mounts or resets
+    setInternalOrderId(generateNewOrderId());
   }, []);
 
   const selectedCourseName = coursesData.find(course => course.id === checkoutDetails.selectedCourseId)?.name || 'N/A';
@@ -114,6 +120,27 @@ const PaymentPage = () => {
     );
   };
 
+  // Function to reset the form and payment state
+  const resetPayment = () => {
+    setCheckoutDetails({
+      fullName: '',
+      phoneNumber: '',
+      email: '',
+      selectedCourseId: '',
+      amount: '',
+    });
+    setPaymentStatus('idle');
+    setMessage('');
+    setInternalOrderId(generateNewOrderId()); // Generate a new order ID for the next attempt
+    setUpiPaymentLink('');
+    // Scroll to top if already scrolled down
+    if (pageTopRef.current) {
+      pageTopRef.current.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.1 } } };
   const itemVariants = { hidden: { y: 50, opacity: 0 }, visible: { y: 0, opacity: 1, transition: { duration: 0.6, ease: 'easeOut' } } };
 
@@ -168,6 +195,14 @@ const PaymentPage = () => {
               >
                 Open UPI App <Smartphone className="w-5 h-5 ml-2" />
               </a>
+
+              {/* New: Start New Payment / Reset Button */}
+              <button
+                onClick={resetPayment}
+                className="w-full bg-gray-200 text-gray-800 py-3 rounded-lg font-semibold hover:bg-gray-300 transition-colors duration-300 flex items-center justify-center mt-4"
+              >
+                Start New Payment <RefreshCcw className="w-5 h-5 ml-2" />
+              </button>
 
             </motion.div>
           ) : (
