@@ -40,16 +40,13 @@ const Contact = () => {
 
   // Define the courses for the dropdown
   const courses = [
-    'Select a course',
     'Data Science with AI',
-    'Machine Learning',
-    'LLM Engineering',
-    'Generative AI',
-    'JAVA/Python',
-    'DevOps/AWS',
-    'Web Development',
-    'Testing',
-    'SAP'
+    'Artificial Intelligence & Generative AI',
+    'Full Stack JAVA Development',
+    'DevOps & Cloud Services',
+    'Python Programming',
+    'Testing(Manual + Automation)',
+    'SAP(FICO, MM, SD, ABAP)'
   ];
 
   // Variants for framer-motion animations
