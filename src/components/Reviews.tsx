@@ -28,7 +28,7 @@ const Reviews = () => {
       course: 'Full Stack Python',
       rating: 5,
       text: 'From day one, the learning experience was smooth, practical, and job-focused. I highly recommend CynexAI to anyone serious about starting a tech career.',
-      image: 'public/gallery_images/WhatsApp Image 2025-07-28 at 16.48.15_34734bc2.jpg',
+      image: 'gallery_images/WhatsApp Image 2025-07-28 at 16.48.15_34734bc2.jpg',
     },
     {
       name: 'Y. Bhavana',
@@ -36,7 +36,7 @@ const Reviews = () => {
       course: 'Web development',
       rating: 5,
       text: 'The Web Development course at CynexAI helped me build real websites from scratch. HTML, CSS, JavaScript, and React were taught in a very easy-to-understand way.',
-      image: 'public/gallery_images/WhatsApp Image 2025-07-28 at 17.01.27_a8763108.jpg',
+      image: 'gallery_images/WhatsApp Image 2025-07-28 at 17.01.27_a8763108.jpg',
     },
     {
       name: 'K. Pullaiah',
@@ -44,7 +44,7 @@ const Reviews = () => {
       course: 'Testing (Manual + Automation)',
       rating: 5,
       text: 'CynexAI\'s software testing course gave me a strong foundation in both manual and automation testing. The real-time projects and Selenium sessions helped me get placed quickly.',
-      image: 'public/gallery_images/WhatsApp Image 2025-07-28 at 17.17.45_290e8232.jpg',
+      image: 'gallery_images/WhatsApp Image 2025-07-28 at 17.17.45_290e8232.jpg',
     },
     {
       name: 'Chandrashekar',
@@ -52,7 +52,7 @@ const Reviews = () => {
       course: 'Testing (Auto + Manual)',
       rating: 5,
       text: 'CynexAI\'s software testing course gave me a strong foundation in both manual and automation testing. The real-time projects and Selenium sessions helped me get placed quickly',
-      image: 'public/gallery_images/WhatsApp Image 2025-07-30 at 13.53.04_4aea19f7.jpg',
+      image: 'gallery_images/WhatsApp Image 2025-07-30 at 13.53.04_4aea19f7.jpg',
     },
     {
       name: 'Sai Nath',
@@ -60,7 +60,7 @@ const Reviews = () => {
       course: 'Full Stack',
       rating: 5,
       text: 'CynexAI\'s software testing course gave me a strong foundation in both manual and automation testing. The real-time projects and Selenium sessions helped me get placed quickly',
-      image: 'public/gallery_images/WhatsApp Image 2025-07-30 at 13.53.04_4aea19f7.jpg',
+      image: 'gallery_images/WhatsApp Image 2025-07-30 at 13.53.04_4aea19f7.jpg',
     },
   ];
 
