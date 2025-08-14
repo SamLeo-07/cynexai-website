@@ -13,8 +13,10 @@ const galleryImages = [
   '/gallery_images/DSC03284.jpgg',
   '/gallery_images/DSC03290.jpg',
   '/gallery_images/DSC03456.jpg',
-  '/gallery_images/DSC03467.jpg',
+  '/gallery_images/DSC03463.jpg',
   '/gallery_images/DSC03471.jpg',
+  '/gallery_images/6.png',
+  '/gallery_images/7.png',
   // Add more image paths as needed
 ];
 
