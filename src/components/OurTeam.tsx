@@ -35,7 +35,7 @@ const teamMembers = [
     }
   },
   {
-    name: 'Sandeep',
+    name: 'Sandeep Kumar',
     role: 'HR Manager',
     bio: 'Sandeep manages all human resources functions at CynexAI. His focus is on building a supportive and dynamic workplace culture, attracting top talent, and fostering professional growth for the team.',
     image: 'https://placehold.co/400x400/1C1C1C/white?text=Sandeep',
@@ -44,7 +44,7 @@ const teamMembers = [
     }
   },
   {
-    name: 'Saileja',
+    name: 'Sailaja',
     role: 'HR Recruiter',
     bio: 'Saileja is on the front lines of talent acquisition. As an HR Recruiter, she identifies and attracts brilliant minds to join the CynexAI team, playing a key role in building our innovative community.',
     image: 'https://placehold.co/400x400/1C1C1C/white?text=Saileja',
