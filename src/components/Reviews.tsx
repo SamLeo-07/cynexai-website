@@ -60,7 +60,7 @@ const Reviews = () => {
       course: 'Full Stack',
       rating: 5,
       text: 'CynexAI\'s software testing course gave me a strong foundation in both manual and automation testing. The real-time projects and Selenium sessions helped me get placed quickly',
-      image: 'gallery_images/WhatsApp Image 2025-07-30 at 13.53.04_4aea19f7.jpg',
+      image: 'gallery_images/WhatsApp Image 2025-07-30 at 13.50.41_ed43fe99.jpg',
     },
   ];
 
