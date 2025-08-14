@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, CheckCircle, User, Mail, Phone, Briefcase } from 'lucide-react';
+import { ArrowLeft, CheckCircle, User, Mail, Phone, Briefcase, XCircle } from 'lucide-react';
 
 const ApplicationForm = () => {
   const { courseId } = useParams();
@@ -13,17 +13,18 @@ const ApplicationForm = () => {
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [applicationId, setApplicationId] = useState(''); // New state for the application ID
 
+  // This object maps the URL courseId to the full course name.
   const courseNames = {
-    'data-science-ai': 'Data Science with AI',
-    'machine-learning': 'Machine Learning',
-    'llm-engineering': 'LLM Engineering',
-    'generative-ai': 'Generative AI',
-    'java-python': 'JAVA/Python',
-    'devops-aws': 'DevOps/AWS',
-    'web-development': 'Web Development',
-    'testing': 'Testing',
-    'sap': 'SAP'
+    'data-science-machine-learning': 'Data Science & Machine Learning',
+    'artificial-intelligence-generative-ai': 'Artificial Intelligence & Generative AI',
+    'full-stack-java-development': 'Full-Stack Java Development',
+    'devops-cloud-technologies': 'DevOps & Cloud Technologies',
+    'python-programming': 'Python Programming',
+    'software-testing-manual-automation': 'Software Testing (Manual & Automation)',
+    'sap-data-processing': 'SAP Data Processing'
   };
 
   const courseName = courseNames[courseId as keyof typeof courseNames] || 'Unknown Course';
@@ -39,10 +40,39 @@ const ApplicationForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    console.log('Application submitted:', { ...formData, courseId, courseName, submittedAt: new Date().toISOString() });
-    setIsLoading(false);
-    setIsSubmitted(true);
+    setError('');
+
+    // Generate a unique application ID
+    const newId = `CX-${Date.now().toString().slice(-6)}`;
+    setApplicationId(newId);
+
+    // IMPORTANT: Replace this URL with your deployed Google Apps Script Web App URL.
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw8QvbW81vI54G6BqfR_B8dhJ8YE3KfINn4ztIs1kikfsjE0YmWA7W58SgTaRVkdbifWQ/exec';
+
+    try {
+      const response = await fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          timestamp: new Date().toISOString(),
+          applicationId: newId, // Include the new application ID
+          ...formData,
+          courseId,
+          courseName,
+        }),
+      });
+
+      setIsSubmitted(true);
+      console.log('Application data sent to Google Apps Script successfully.');
+    } catch (err) {
+      console.error('Failed to submit application:', err);
+      setError('Failed to submit application. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   if (isSubmitted) {
@@ -69,21 +99,17 @@ const ApplicationForm = () => {
             <div className="space-y-3 mb-8 text-[#010203]/80">
               <div className="flex items-center justify-between text-sm">
                 <span>Application ID:</span>
-                <span className="font-mono">CX{Date.now().toString().slice(-6)}</span>
+                <span className="font-mono">{applicationId}</span>
               </div>
               <div className="flex items-center justify-between text-sm">
                 <span>Course:</span>
                 <span>{courseName}</span>
               </div>
-              <div className="flex items-center justify-between text-sm">
-                <span>Status:</span>
-                <span className="text-[#41c8df] font-medium">Under Review</span>
-              </div>
             </div>
             <div className="space-y-3">
               <Link
                 to="/"
-                className="w-full bg-[#41c8df] text-white py-3 px-4 rounded-lg font-medium block text-center hover:bg-[#c09a2f] transition-colors duration-300"
+                className="w-full bg-[#41c8df] text-[#010203] py-3 px-4 rounded-lg font-medium block text-center hover:bg-[#c09a2f] transition-colors duration-300"
               >
                 Back to Home
               </Link>
@@ -187,8 +213,8 @@ const ApplicationForm = () => {
             <motion.button
               type="submit"
               disabled={isLoading}
-              whileHover={{ scale: isLoading ? 1 : 1.02 }}
-              whileTap={{ scale: isLoading ? 1 : 0.98 }}
+              whileHover={{ scale: isLoading || error ? 1 : 1.02 }}
+              whileTap={{ scale: isLoading || error ? 1 : 0.98 }}
               className={`w-full py-4 px-6 rounded-lg font-semibold transition-colors duration-300 ${
                 isLoading
                   ? 'bg-[#CCCCCC] cursor-not-allowed'
@@ -204,6 +230,12 @@ const ApplicationForm = () => {
                 'Apply Now'
               )}
             </motion.button>
+            {error && (
+              <div className="mt-4 p-4 flex items-center bg-red-100 text-red-700 rounded-lg border border-red-200">
+                <XCircle className="w-5 h-5 mr-2 flex-shrink-0" />
+                <span>{error}</span>
+              </div>
+            )}
           </form>
           <div className="mt-8 p-4 bg-[#F5F5F5] rounded-lg border border-[#41c8df]/20">
             <h4 className="text-[#010203] font-medium mb-2">What happens next?</h4>

@@ -29,8 +29,8 @@ const Footer = () => {
       { name: 'SAP (Data Processing)', href: '/course/sap-data-processing' }, // Corrected ID
     ],
     company: [
-      { name: 'About Us', href: '#about' },
-      { name: 'Our Team', href: '#team' },
+      { name: 'About Us', href: 'about' },
+      { name: 'Our Team', href: 'team' },
       { name: 'Careers', href: '#careers' },
       { name: 'Contact', href: '#contact' },
       { name: 'Blog', href: '#blog' },

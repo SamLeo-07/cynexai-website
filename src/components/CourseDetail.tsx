@@ -458,7 +458,7 @@ const CourseDetail = () => {
 
                 <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4">
                   <Link
-                    to="/apply" // Changed link from /apply/${courseId} to /apply (generic)
+                    to={`/apply/${courseId}`}// Changed link from /apply/${courseId} to /apply (generic)
                     className="bg-[#41c8df] text-black hover:bg-yellow-600 px-8 py-4 rounded-lg font-semibold text-center transition-all duration-300" // Gold background, black text
                   >
                     Enroll Now
@@ -504,7 +504,7 @@ const CourseDetail = () => {
                 </div>
 
                 <Link
-                  to="/apply" // Changed link from /apply/${courseId} to /apply (generic)
+                  to={`/apply/${courseId}`} // Changed link from /apply/${courseId} to /apply (generic)
                   className="w-full bg-[#41c8df] text-black hover:bg-yellow-600 py-4 px-6 rounded-lg font-semibold text-center block transition-all duration-300" // Gold background, black text
                 >
                   Enroll Now

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence, easeOut, easeInOut } from 'framer-motion'; // Added easeOut and easeInOut
+import { motion, AnimatePresence, easeOut, easeInOut } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Star, Quote, ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -10,38 +10,57 @@ const Reviews = () => {
     threshold: 0.1,
   });
 
+  // ====================================================================
+  // UPDATED: Reviews data based on the provided images
+  // ====================================================================
   const reviews = [
     {
-      name: 'Priya Sharma',
-      role: 'Data Scientist at TCS',
-      course: 'Data Science with AI',
+      name: 'Anil Kumar',
+      role: 'Java Developer at BeamX Techlab',
+      course: 'Full Stack Java',
       rating: 5,
-      text: 'CynexAI transformed my career completely. The hands-on approach and real-world projects gave me the confidence to transition from a non-tech background to becoming a data scientist at a top company.',
-      image: '/Priya.png',
+      text: 'CynexAI gave me the skills and confidence I needed to land my first job in tech. The trainers are industry experts and the placement support is truly effective.',
+      image: 'uploaded:1.jpg-d77cc29d-3c32-4db4-85f7-a84e8b887870',
     },
     {
-      name: 'Rahul Kumar',
-      role: 'ML Engineer at Flipkart',
-      course: 'Machine Learning',
+      name: 'Suresh Kumar',
+      role: 'Python Developer at Wexl Edu Pvt Ltd',
+      course: 'Full Stack Python',
       rating: 5,
-      text: 'The instructors at CynexAI are industry experts who bring real-world experience to the classroom. The curriculum is cutting-edge and perfectly aligned with industry requirements.',
-      image: '/Rahul.png',
+      text: 'From day one, the learning experience was smooth, practical, and job-focused. I highly recommend CynexAI to anyone serious about starting a tech career.',
+      image: 'uploaded:2.jpg-5b6a741c-5dd0-4afa-9710-8f2777e2126a',
     },
     {
-      name: 'Sneha Patel',
-      role: 'Full Stack Developer at Infosys',
-      course: 'Web Development',
+      name: 'Y. Bhavana',
+      role: 'Web Developer at Zuper Pvt Ltd',
+      course: 'Web development',
       rating: 5,
-      text: 'From zero coding knowledge to landing my dream job in just 4 months! The support system and mentorship at CynexAI is unparalleled. Highly recommend to anyone looking to break into tech.',
-      image: '/Sneha.png',
+      text: 'The Web Development course at CynexAI helped me build real websites from scratch. HTML, CSS, JavaScript, and React were taught in a very easy-to-understand way.',
+      image: 'uploaded:4.jpg-410c8ccf-dae7-4001-a294-beb5d8af834f',
     },
     {
-      name: 'Arjun Reddy',
-      role: 'DevOps Engineer at Amazon',
-      course: 'DevOps/AWS',
+      name: 'K. Pullaiah',
+      role: 'Software Tester at Persistent Systems',
+      course: 'Testing (Manual + Automation)',
       rating: 5,
-      text: 'The practical labs and cloud projects were game-changers. I gained hands-on experience with AWS services that directly helped me in my interviews and current role. Worth every penny!',
-      image: '/Arjunreddy.png',
+      text: 'CynexAI\'s software testing course gave me a strong foundation in both manual and automation testing. The real-time projects and Selenium sessions helped me get placed quickly.',
+      image: 'uploaded:5.jpg-fa63c668-9046-43c1-b123-2a218a6fffed',
+    },
+    {
+      name: 'Chandrashekar',
+      role: 'Software Tester at Paramount Software',
+      course: 'Testing (Auto + Manual)',
+      rating: 5,
+      text: 'CynexAI\'s software testing course gave me a strong foundation in both manual and automation testing. The real-time projects and Selenium sessions helped me get placed quickly',
+      image: 'uploaded:6.jpg-b4a5fa89-9456-4eb3-9612-3644bd4f7eab',
+    },
+    {
+      name: 'Sai Nath',
+      role: 'Web Developer at Cognizent',
+      course: 'Full Stack',
+      rating: 5,
+      text: 'CynexAI\'s software testing course gave me a strong foundation in both manual and automation testing. The real-time projects and Selenium sessions helped me get placed quickly',
+      image: 'uploaded:7.jpg-ae7ad819-ade0-4516-8e39-6b07337d8dbd',
     },
   ];
 
@@ -79,7 +98,7 @@ const Reviews = () => {
       opacity: 1,
       transition: {
         duration: 0.6,
-        ease: easeOut, // Changed from "easeOut" (string) to easeOut (variable)
+        ease: easeOut,
       },
     },
   };
@@ -127,13 +146,10 @@ const Reviews = () => {
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentReview}
-                initial={{ opacity: 0, x: '100%' }} // Always slide in from the right
+                initial={{ opacity: 0, x: '100%' }}
                 animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: '-100%' }} // Always slide out to the left
-                // --- MODIFIED TRANSITION FOR SMOOTHER SLIDE ---
-                transition={{ duration: 0.7, ease: [0.6, 0.05, 0.01, 0.9] }} // Using a custom cubic-bezier for a smoother feel
-                // If you prefer a named ease, you could use:
-                // transition={{ duration: 0.7, ease: easeInOut }}
+                exit={{ opacity: 0, x: '-100%' }}
+                transition={{ duration: 0.7, ease: [0.6, 0.05, 0.01, 0.9] }}
                 className="bg-white rounded-3xl p-8 md:p-12 border border-[#41c8df]/30 shadow-xl transition-all duration-300"
               >
                 <div className="flex flex-col md:flex-row items-center gap-8">
@@ -144,6 +160,8 @@ const Reviews = () => {
                         src={reviews[currentReview].image}
                         alt={reviews[currentReview].name}
                         className="w-full h-full object-cover rounded-full"
+                        // Added a fallback for images
+                        onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/400x400/1C1C1C/white?text=User'; }}
                       />
                     </div>
                     <div className="absolute -top-2 -right-2 bg-[#41c8df] rounded-full p-2">
@@ -214,7 +232,7 @@ const Reviews = () => {
           </div>
 
           {/* All Reviews Grid (Hidden on Mobile) */}
-          <div className="hidden lg:grid grid-cols-4 gap-6 mt-16">
+          <div className="hidden lg:grid grid-cols-3 gap-6 mt-16">
             {reviews.map((review, index) => (
               <motion.div
                 key={index}
@@ -231,6 +249,7 @@ const Reviews = () => {
                     src={review.image}
                     alt={review.name}
                     className="w-10 h-10 rounded-full object-cover"
+                    onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/400x400/1C1C1C/white?text=User'; }}
                   />
                   <div>
                     <h5 className="text-sm font-medium text-black">{review.name}</h5>

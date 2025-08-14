@@ -1,12 +1,15 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import ScrollToTop from './utils/ScrollToTop';
 import { motion } from 'framer-motion';
+
+// Mock component imports to make the app runnable
+import ScrollToTop from './utils/ScrollToTop';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Courses from './components/Courses';
 import Skills from './components/Skills';
 import Reviews from './components/Reviews';
+import OurTeam from './components/OurTeam';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import CourseDetail from './components/CourseDetail';
@@ -16,6 +19,7 @@ import GalleryPage from './components/GalleryPage';
 import AdminPanel from './components/AdminPanel';
 import PaymentPage from './components/PaymentPage';
 import BrochurePage from './components/BrochurePage';
+import AboutUs from './components/AboutUs'; // <<<--- IMPORTED THE NEW COMPONENT
 
 function HomePage() {
   return (
@@ -28,6 +32,7 @@ function HomePage() {
       <Courses />
       <Skills />
       <Reviews />
+      <OurTeam />
       <Contact />
     </motion.div>
   );
@@ -41,6 +46,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<AboutUs />} /> {/* <<<--- ADDED THE NEW ROUTE */}
           <Route path="/course/:courseId" element={<CourseDetail />} />
           <Route path="/apply/:courseId" element={<ApplicationForm />} />
           <Route path="/webinar" element={<WebinarPortal />} />
@@ -54,5 +60,6 @@ function App() {
     </Router>
   );
 }
+
 
 export default App;

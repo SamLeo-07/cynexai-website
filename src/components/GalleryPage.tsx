@@ -7,12 +7,12 @@ import { Link } from 'react-router-dom';
 const galleryImages = [
   // IMPORTANT: Replace these with the actual paths to your images
   // These paths are relative to your 'public' folder
-  '/gallery_images/image1.jpg',
-  '/gallery_images/image2.png',
-  '/gallery_images/image3.jpeg',
-  '/gallery_images/image4.jpg',
-  '/gallery_images/image5.png',
-  '/gallery_images/image6.jpeg',
+  '/gallery_images/DSC03485.jpg',
+  '/gallery_images/DSC03284.png',
+  '/gallery_images/DSC03290.jpeg',
+  '/gallery_images/DSC03456.jpg',
+  '/gallery_images/DSC03467.png',
+  '/gallery_images/DSC03471.jpeg',
   // Add more image paths as needed
 ];
 
@@ -37,7 +37,8 @@ const GalleryPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white pt-20 pb-10"> {/* pt-20 for header space */}
+    // Changed bg-gray-900 to bg-white and text-white to text-gray-900 for readability.
+    <div className="min-h-screen bg-white text-gray-900 pt-20 pb-10">
       <section className="relative py-12 md:py-16 bg-gradient-to-br from-gray-800 to-gray-950">
         <div className="container mx-auto px-4 relative z-10">
           <Link to="/" className="text-[#41c8df] hover:text-white flex items-center mb-6">
