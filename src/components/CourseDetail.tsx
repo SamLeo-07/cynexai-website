@@ -26,7 +26,7 @@ const courseData = {
   'data-science-machine-learning': {
     title: 'Data Science & Machine Learning',
     subtitle: 'Unlock Insights from Data & Build Predictive Models',
-    description: 'Master data analysis, machine learning algorithms, and AI implementation for real-world applications.',
+    description: 'Master data analysis, machine learning algorithms, and AI implementation with our comprehensive Data Science course in Hyderabad. This program is designed for aspiring data scientists looking for the best AI training institute in KPHB.',
     image: 'https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=1200',
     duration: '6 months',
     placement: '95%',
@@ -69,7 +69,7 @@ const courseData = {
   'artificial-intelligence-generative-ai': {
     title: 'Artificial Intelligence & Generative AI',
     subtitle: 'Innovate with AI-Powered Content and Intelligent Systems',
-    description: 'Deep dive into advanced AI concepts, neural networks, and cutting-edge generative modeling techniques to create new content.',
+    description: 'Deep dive into advanced AI concepts with our Generative AI course in India. This online and classroom training in Hyderabad covers neural networks and cutting-edge generative models to build intelligent systems.',
     image: 'https://images.pexels.com/photos/8386434/pexels-photo-8386434.jpeg?auto=compress&cs=tinysrgb&w=1200',
     duration: '6 months',
     placement: '98%',
@@ -112,7 +112,7 @@ const courseData = {
   'full-stack-java-development': {
     title: 'Full Stack Java Development',
     subtitle: 'Become a Versatile Java Developer for Web & Enterprise',
-    description: 'Build robust web applications from frontend to backend using Java frameworks like Spring Boot, alongside modern frontend technologies.',
+    description: 'Enroll in our Full Stack Developer course in India to build robust web applications from frontend to backend. This program in Hyderabad covers Java, Spring Boot, and modern frontend technologies to make you a job-ready developer.',
     image: '/java.png',
     duration: '6 months',
     placement: '92%',
@@ -155,7 +155,7 @@ const courseData = {
   'devops-cloud-technologies': {
     title: 'DevOps & Cloud Technologies',
     subtitle: 'Streamline Software Delivery with Cloud & Automation',
-    description: 'Learn cloud infrastructure, CI/CD pipelines, and deployment strategies on leading cloud platforms like AWS, Azure, or GCP.',
+    description: 'Our DevOps & Cloud training helps you master cloud infrastructure, CI/CD pipelines, and deployment strategies. Learn how to become a DevOps engineer with hands-on training on AWS, Azure, and other cloud computing certification tools in Hyderabad.',
     image: 'https://images.pexels.com/photos/8386422/pexels-photo-8386422.jpeg?auto=compress&cs=tinysrgb&w=1200',
     duration: '6 months',
     placement: '96%',
@@ -198,7 +198,7 @@ const courseData = {
   'python-programming': {
     title: 'Python Programming',
     subtitle: 'Master the Versatile Language for Data, Web & Automation',
-    description: 'Master Python fundamentals for data analysis, web development, automation, and general-purpose programming.',
+    description: 'Master Python fundamentals with our dedicated Python for AI course. This program is perfect for beginners and professionals in Hyderabad looking to build a strong foundation for data analysis, web development, and automation.',
     image: 'https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=1200',
     duration: '6 months',
     placement: '90%',
@@ -240,7 +240,7 @@ const courseData = {
   'software-testing-manual-automation': {
     title: 'Software Testing (Manual + Automation)',
     subtitle: 'Ensure Quality & Reliability in Software Products',
-    description: 'Master software testing methodologies, automation frameworks, and quality assurance techniques for robust application development.',
+    description: 'Master software testing with our comprehensive course covering manual and automation frameworks. This training in KPHB, Hyderabad, prepares you for a successful career in quality assurance with hands-on experience.',
     image: 'https://images.pexels.com/photos/1181263/pexels-photo-1181263.jpeg?auto=compress&cs=tinysrgb&w=1200',
     duration: '6 months',
     placement: '91%',
@@ -283,7 +283,7 @@ const courseData = {
   'sap-data-processing': {
     title: 'SAP (Systems, Applications, and Products in Data Processing)',
     subtitle: 'Master Enterprise Resource Planning with SAP Solutions',
-    description: 'Enterprise resource planning with SAP modules, business process optimization, and implementation strategies for various industries.',
+    description: 'Learn enterprise resource planning with our expert-led SAP training in Hyderabad. This course covers key SAP modules, business process optimization, and implementation strategies for various industries.',
     image: 'https://images.pexels.com/photos/1181316/pexels-photo-1181316.jpeg?auto=compress&cs=tinysrgb&w=1200',
     duration: '6 months',
     placement: '94%',
@@ -474,7 +474,7 @@ const CourseDetail = () => {
               <motion.div
                 variants={itemVariants}
                 className="bg-black/50 backdrop-blur-sm rounded-2xl p-8 border border-white/20" // Darker card for contrast
-              >
+              > 
                 <div className="text-center mb-6">
                   <div className="text-3xl font-bold text-white mb-2">
                     Start Your Journey Today!
@@ -482,7 +482,7 @@ const CourseDetail = () => {
                   <div className="text-gray-400 text-lg">
                     Invest in your future with our industry-leading program.
                   </div>
-                </div>
+                </div> 
 
                 <div className="space-y-4 mb-6">
                   <div className="flex items-center justify-between">
@@ -502,7 +502,7 @@ const CourseDetail = () => {
                     <span className="text-white font-medium">Yes</span>
                   </div>
                 </div>
-
+ 
                 <Link
                   to={`/apply/${courseId}`} // Changed link from /apply/${courseId} to /apply (generic)
                   className="w-full bg-[#41c8df] text-black hover:bg-yellow-600 py-4 px-6 rounded-lg font-semibold text-center block transition-all duration-300" // Gold background, black text

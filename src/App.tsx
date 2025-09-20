@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { motion } from 'framer-motion';
 
 // Mock component imports to make the app runnable
 import ScrollToTop from './utils/ScrollToTop';
@@ -21,22 +20,16 @@ import PaymentPage from './components/PaymentPage';
 import BrochurePage from './components/BrochurePage';
 import AboutUs from './components/AboutUs'; // <<<--- IMPORTED THE NEW COMPONENT
 
-function HomePage() {
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-    >
-      <Hero />
-      <Courses />
-      <Skills />
-      <Reviews />
-      <OurTeam />
-      <Contact />
-    </motion.div>
-  );
-}
+const HomePage = () => (
+  <>
+    <Hero />
+    <Courses />
+    <Skills />
+    <Reviews />
+    <OurTeam />
+    <Contact />
+  </>
+);
 
 function App() {
   return (
