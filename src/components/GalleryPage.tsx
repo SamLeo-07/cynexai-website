@@ -9,12 +9,9 @@ import { Link } from 'react-router-dom';
 const galleryImages = [
   // IMPORTANT: Replace these with the actual paths to your images
   // These paths are relative to your 'public' folder
-  '/gallery_images/DSC03485.jpg',
-  '/gallery_images/DSC03467.jpg',
   '/gallery_images/DSC03290.jpg',
   '/gallery_images/DSC03456.jpg',
   '/gallery_images/DSC03463.jpg',
-  '/gallery_images/DSC03471.jpg',
   '/gallery_images/6.png',
   '/gallery_images/7.png',
   // Add more image paths as needed
