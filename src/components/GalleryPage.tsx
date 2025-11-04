@@ -11,7 +11,7 @@ const galleryImages = [
   // These paths are relative to your 'public' folder
   '/gallery_images/DSC03290.jpg',
   '/gallery_images/DSC03456.jpg',
-  '/gallery_images/DSC03463.jpg',
+  '/gallery_images/DSC03284.jpg',
   '/gallery_images/6.png',
   '/gallery_images/7.png',
   // Add more image paths as needed
