@@ -8,15 +8,6 @@ import { Linkedin } from 'lucide-react';
 // ====================================================================
 const teamMembers = [
   {
-    name: 'Lavanya Reddy',
-    role: 'CEO & Director',
-    bio: 'Lavanya is a visionary leader with a deep passion for technology and education. As the CEO, she steers CynexAI\'s strategic direction, ensuring the company remains at the forefront of AI innovation and talent development.',
-    image: 'https://placehold.co/400x400/1C1C1C/white?text=Lavanya',
-    socials: {
-      linkedin: '#'
-    }
-  },
-  {
     name: 'Siva Sai Datta',
     role: 'Vice President',
     bio: 'Siva Sai Datta drives operational excellence and growth as Vice President. With extensive experience in market expansion and strategic partnerships, he is instrumental in scaling CynexAI\'s reach and impact.',
