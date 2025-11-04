@@ -26,7 +26,6 @@ const HomePage = () => (
     <Courses />
     <Skills />
     <Reviews />
-    <OurTeam />
     <Contact />
   </>
 );
