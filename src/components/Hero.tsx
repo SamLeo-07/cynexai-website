@@ -80,7 +80,7 @@ const Hero = () => {
           >
             Master the Future of
             <br />
-            <span className="text-[#41c8df]">Technolog</span>
+            <span className="text-[#41c8df]">Technology</span>
           </motion.h1>
 
           <motion.p
